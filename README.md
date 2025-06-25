@@ -6,7 +6,9 @@
   </div>
 
   <!-- Enhanced Typing Animation with GitHub styling -->
-  ![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=600&height=40&lines=Hi+there+👋,+I'm+Md.+Rakib+Islam;Full+Stack+Web+Developer;MERN+Stack+Specialist;Open+Source+Contributor;JavaScript+%7C+React+%7C+Node.js+%7C+MongoDB;Always+Learning,+Always+Building+🧠)
+  <div style="margin: 1rem 0;">
+    <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=24&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&height=30&lines=Hi+there+👋,+I'm+Rakib;Full+Stack+Web+Developer;MERN+Stack+Specialist;Open+Source+Contributor" alt="Typing Animation" />
+  </div>
 
   <!-- Profile Metrics -->
   <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 0.5rem;">
@@ -84,11 +86,11 @@ current_focus = [
 
 ## 🚀 Active Projects
 
-| Project                                                                | Description                 | Tech Stack         | Status                                                         |
-| ---------------------------------------------------------------------- | --------------------------- | ------------------ | -------------------------------------------------------------- |
-| [Globira E-Commerce](https://github.com/CodesWithRakib/globira)        | Full-featured online store  | MERN + Firebase    | ![Status](https://img.shields.io/badge/🚀_In_Development-blue) |
-| [Tourism Portal](https://github.com/CodesWithRakib/tourism-next)       | Bangladesh travel guide     | Next.js + Tailwind | ![Status](https://img.shields.io/badge/✔️_Live-success)        |
-| [Plant Tracker](https://github.com/CodesWithRakib/mango-plant-tracker) | IoT plant monitoring system | React + Arduino    | ![Status](https://img.shields.io/badge/🔬_Experimental-orange) |
+| Project                                                                     | Description                 | Tech Stack          | Status                                                         |
+| --------------------------------------------------------------------------- | --------------------------- | ------------------- | -------------------------------------------------------------- |
+| [Globira E-Commerce](https://github.com/CodesWithRakib/globira-client-side) | Full-featured online store  | MERN + Firebase     | ![Status](https://img.shields.io/badge/✔️_Live-success) |
+| [Tourism Portal](https://github.com/CodesWithRakib/tourism-next)            | Bangladesh travel guide     | Next.js + Tailwind  | ![Status](https://img.shields.io/badge/🚀_In_Development-blue)        |
+| [Plant Tracker](https://github.com/CodesWithRakib/plant-care-client-side)   | IoT plant monitoring system | React.js + Tailwind | ![Status](https://img.shields.io/badge/✔️_Live-success)        |
 
 ---
 
@@ -110,7 +112,7 @@ current_focus = [
 
 <div align="center">
 
-<a href="https://linkedin.com/in/yourprofile">
+<a href="https://linkedin.com/in/codeswithrakib">
   <img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
 </a>
 <a href="mailto:r.s.rakib.webdev@gmail.com">
