@@ -6,9 +6,7 @@
   </div>
 
   <!-- Enhanced Typing Animation with GitHub styling -->
-  <div style="margin: 1rem 0;">
-    <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=24&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&height=30&lines=Hi+there+👋,+I'm+Rakib;Full+Stack+Web+Developer;MERN+Stack+Specialist;Open+Source+Contributor" alt="Typing Animation" />
-  </div>
+ ![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=600&height=40&lines=Hi+there+👋,+I'm+Md.+Rakib+Islam;Full+Stack+Web+Developer;MERN+Stack+Specialist;Open+Source+Contributor;JavaScript+%7C+React+%7C+Node.js+%7C+MongoDB;Always+Learning,+Always+Building+🧠)
 
   <!-- Profile Metrics -->
   <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 0.5rem;">
