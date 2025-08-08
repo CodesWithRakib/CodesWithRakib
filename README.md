@@ -1,82 +1,61 @@
-<!-- ====== DYNAMIC PROFILE HEADER ====== -->
+<!-- ====== MINIMAL DARK MODE GITHUB README ====== -->
 <div align="center">
-  <!-- Optimized Banner with GitHub-themed border -->
-  <div style="width: 100%; background: linear-gradient(to right, #ff8a00, #e52e71); padding: 1.5rem 0; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-    <img src="https://i.ibb.co/KjFx0PD5/Orange-Gradient-Modern-Geometric-Programmer-Profile-Linked-In-Banner.png" alt="Rakib Islam Banner" style="width: 94%; max-height: 280px; object-fit: contain; border-radius: 6px; border: 1px solid #30363d80" />
-  </div>
 
-  <!-- Enhanced Typing Animation with GitHub styling -->
- ![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=600&height=40&lines=Hi+there+👋,+I'm+Md.+Rakib+Islam;Full+Stack+Web+Developer;MERN+Stack+Specialist;Open+Source+Contributor;JavaScript+%7C+React+%7C+Node.js+%7C+MongoDB;Always+Learning,+Always+Building+🧠)
+  <!-- Simple Banner -->
+  <img src="https://i.ibb.co/KjFx0PD5/Orange-Gradient-Modern-Geometric-Programmer-Profile-Linked-In-Banner.png" alt="Rakib Islam Banner" style="width: 94%; max-height: 240px; object-fit: contain; border-radius: 6px; border: 1px solid #30363d80" />
 
-  <!-- Profile Metrics -->
-  <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 0.5rem;">
-    <img src="https://komarev.com/ghpvc/?username=CodesWithRakib&label=Profile+Views&color=238636&style=flat-square" alt="Profile Views" />
-    <img src="https://img.shields.io/github/followers/CodesWithRakib?label=GitHub+Followers&style=flat-square&color=238636" alt="GitHub Followers" />
-    <img src="https://img.shields.io/github/stars/CodesWithRakib?label=Repository+Stars&style=flat-square&color=238636" alt="GitHub Stars" />
-  </div>
+  <!-- Typing Animation -->
+  ![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=1000&color=F59E0B&center=true&vCenter=true&width=600&height=40&lines=Hi+there+👋,+I'm+Md.+Rakib+Islam;Full+Stack+Web+Developer;MERN+Stack+%2B+Next.js+Specialist;Always+Learning,+Always+Building+🧠)
+
+  <!-- Profile Stats -->
+  <img src="https://komarev.com/ghpvc/?username=CodesWithRakib&label=Profile+Views&color=F59E0B&style=flat-square" alt="Profile Views" />
+  <img src="https://img.shields.io/github/followers/CodesWithRakib?label=Followers&style=flat-square&color=F59E0B" alt="GitHub Followers" />
+  <img src="https://img.shields.io/github/stars/CodesWithRakib?label=Stars&style=flat-square&color=F59E0B" alt="GitHub Stars" />
 </div>
----
-
-## 🧑‍💻 Professional Profile
-
-**🎓 Education**
-
-- Self-taught in **Computer Science & Software Engineering**
-
-**💼 Professional Focus**
-
-- Building **production-grade web applications**
-- Specializing in **MERN Stack & Next.js**
-- Preparing for **technical interviews**
-
-**🌟 Development Philosophy**  
-_"Simple solutions > Complex code"_
-
-**🔧 Daily Toolkit**
-
-```javascript
-const devTools = [
-  "VS Code",
-  "Git/GitHub",
-  "Postman",
-  "Chrome DevTools",
-  "Vercel",
-  "Figma",
-];
-```
-
-**📚 Currently Mastering**
-
-```python
-current_focus = [
-  "TypeScript", "API Security",
-  "System Design", "DSA"
-]
-```
 
 ---
 
-## 🛠️ Tech Stack
+## 🧑‍💼 Md. Rakib Islam — Full Stack Web Developer
+
+### 👋 About Me
+I’m a **Full Stack Web Developer** specializing in **MERN Stack & Next.js**.  
+I focus on building **fast, scalable, and secure** web applications.  
+Passionate about **open-source**, problem-solving, and learning modern technologies.  
+Always looking for ways to **write cleaner and smarter code**.
+
+---
+
+## 📌 Current Activities
+- 🚀 Exploring **Next.js 15** & **React Server Components**  
+- 🛠 Developing a **Tourism Portal** using Next.js & Tailwind CSS  
+- 🔐 Learning **API Security** and **System Design**  
+- 📦 Building projects with **TypeScript** for type safety
+
+---
+
+## 🛠 Skills
 
 <div align="center">
 
 ### **Frontend**
-
-<img src="https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black&style=for-the-badge" />
-<img src="https://img.shields.io/badge/-Next.js-000000?logo=next.js&logoColor=white&style=for-the-badge" />
-<img src="https://img.shields.io/badge/-Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white&style=for-the-badge" />
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black&style=for-the-badge)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white&style=for-the-badge)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white&style=for-the-badge)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white&style=for-the-badge)
+![Redux](https://img.shields.io/badge/Redux-764ABC?logo=redux&logoColor=white&style=for-the-badge)
 
 ### **Backend**
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white&style=for-the-badge)
+![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white&style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white&style=for-the-badge)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black&style=for-the-badge)
 
-<img src="https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white&style=for-the-badge" />
-<img src="https://img.shields.io/badge/-Express-000000?logo=express&logoColor=white&style=for-the-badge" />
-<img src="https://img.shields.io/badge/-MongoDB-47A248?logo=mongodb&logoColor=white&style=for-the-badge" />
-
-### **Tools**
-
-<img src="https://img.shields.io/badge/-Git-F05032?logo=git&logoColor=white&style=for-the-badge" />
-<img src="https://img.shields.io/badge/-Docker-2496ED?logo=docker&logoColor=white&style=for-the-badge" />
-<img src="https://img.shields.io/badge/-Vercel-000000?logo=vercel&logoColor=white&style=for-the-badge" />
+### **DevOps & Tools**
+![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white&style=for-the-badge)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white&style=for-the-badge)
+![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white&style=for-the-badge)
+![Postman](https://img.shields.io/badge/Postman-FF6C37?logo=postman&logoColor=white&style=for-the-badge)
+![Figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white&style=for-the-badge)
 
 </div>
 
@@ -84,11 +63,11 @@ current_focus = [
 
 ## 🚀 Active Projects
 
-| Project                                                                     | Description                 | Tech Stack          | Status                                                         |
-| --------------------------------------------------------------------------- | --------------------------- | ------------------- | -------------------------------------------------------------- |
-| [Globira E-Commerce](https://github.com/CodesWithRakib/globira-client-side) | Full-featured online store  | MERN + Firebase     | ![Status](https://img.shields.io/badge/✔️_Live-success) |
-| [Tourism Portal](https://github.com/CodesWithRakib/tourism-next)            | Bangladesh travel guide     | Next.js + Tailwind  | ![Status](https://img.shields.io/badge/🚀_In_Development-blue)        |
-| [Plant Tracker](https://github.com/CodesWithRakib/plant-care-client-side)   | IoT plant monitoring system | React.js + Tailwind | ![Status](https://img.shields.io/badge/✔️_Live-success)        |
+| Project                                                                     | Description                 | Tech Stack                     | Status                                                         |
+| --------------------------------------------------------------------------- | --------------------------- | ------------------------------ | -------------------------------------------------------------- |
+| [Globira E-Commerce](https://github.com/CodesWithRakib/globira-client-side) | Full-featured online store  | MERN + Firebase                | ![Status](https://img.shields.io/badge/Live-success?color=10B981) |
+| [Tourism Portal](https://github.com/CodesWithRakib/tourism-next)            | Bangladesh travel guide     | Next.js + Tailwind + TypeScript | ![Status](https://img.shields.io/badge/In_Development-blue) |
+| [Plant Tracker](https://github.com/CodesWithRakib/plant-care-client-side)   | IoT plant monitoring system | React.js + Tailwind            | ![Status](https://img.shields.io/badge/Live-success?color=10B981) |
 
 ---
 
@@ -96,11 +75,9 @@ current_focus = [
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=CodesWithRakib&show_icons=true&theme=radical&hide_border=true&include_all_commits=true" width="47%" />
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=CodesWithRakib&theme=radical&hide_border=true" width="47%" />
-<br/>
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=CodesWithRakib&layout=compact&theme=radical&hide_border=true&langs_count=8" width="47%" />
-<img src="https://github-profile-trophy.vercel.app/?username=CodesWithRakib&theme=radical&no-frame=true&no-bg=true&column=4" width="47%" />
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=CodesWithRakib&show_icons=true&theme=github_dark&hide_border=true&include_all_commits=true&count_private=true)  
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com?user=CodesWithRakib&theme=github-dark&hide_border=true)  
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=CodesWithRakib&layout=compact&theme=github_dark&hide_border=true&langs_count=8)  
 
 </div>
 
@@ -110,25 +87,16 @@ current_focus = [
 
 <div align="center">
 
-<a href="https://linkedin.com/in/codeswithrakib">
-  <img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
-</a>
-<a href="mailto:r.s.rakib.webdev@gmail.com">
-  <img src="https://img.shields.io/badge/-Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
-</a>
-<a href="https://github.com/CodesWithRakib">
-  <img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
-</a>
-<a href="https://codeswithrakib.dev">
-  <img src="https://img.shields.io/badge/-Portfolio-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white" />
-</a>
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/codeswithrakib)
+[![Gmail](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:r.s.rakib.webdev@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/CodesWithRakib)
+[![Portfolio](https://img.shields.io/badge/Portfolio-F59E0B?style=for-the-badge&logo=google-chrome&logoColor=white)](https://codeswithrakib.dev)
 
 </div>
 
 ---
 
-> "First, solve the problem. Then, write the code."  
-> — _John Johnson_
+> _"First, solve the problem. Then, write the code."_ — **John Johnson**
 
 <div align="right">
   <a href="https://github.com/CodesWithRakib">
