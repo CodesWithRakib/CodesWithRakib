@@ -27,7 +27,7 @@ Always looking for ways to **write cleaner and smarter code**.
 
 ## 📌 Current Activities
 - 🚀 Exploring **Next.js 15** & **React Server Components**  
-- 🛠 Developing a **Tourism Portal** using Next.js & Tailwind CSS  
+- 🛠 Developing a **Job Marketplace** using Next.js & Redux  
 - 🔐 Learning **API Security** and **System Design**  
 - 📦 Building projects with **TypeScript** for type safety
 
@@ -66,7 +66,7 @@ Always looking for ways to **write cleaner and smarter code**.
 | Project                                                                     | Description                 | Tech Stack                     | Status                                                         |
 | --------------------------------------------------------------------------- | --------------------------- | ------------------------------ | -------------------------------------------------------------- |
 | [Globira E-Commerce](https://github.com/CodesWithRakib/globira-client-side) | Full-featured online store  | MERN + Firebase                | ![Status](https://img.shields.io/badge/Live-success?color=10B981) |
-| [Tourism Portal](https://github.com/CodesWithRakib/tourism-next)            | Bangladesh travel guide     | Next.js + Tailwind + TypeScript | ![Status](https://img.shields.io/badge/In_Development-blue) |
+| [Tourism Portal](https://github.com/CodesWithRakib/job-marketplace)         | Full stack Job Marketplace  | Next.js + Tailwind + TypeScript| ![Status](https://img.shields.io/badge/In_Development-blue) |
 | [Plant Tracker](https://github.com/CodesWithRakib/plant-care-client-side)   | IoT plant monitoring system | React.js + Tailwind            | ![Status](https://img.shields.io/badge/Live-success?color=10B981) |
 
 ---
