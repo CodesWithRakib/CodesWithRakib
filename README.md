@@ -2,7 +2,7 @@
 <div align="center">
 
   <!-- Simple Banner -->
-  <img src="https://i.ibb.co/KjFx0PD5/Orange-Gradient-Modern-Geometric-Programmer-Profile-Linked-In-Banner.png" alt="Rakib Islam Banner" style="width: 94%; max-height: 240px; object-fit: contain; border-radius: 6px; border: 1px solid #30363d80" />
+  <img src="https://i.ibb.co.com/7dXTHTcr/Md-rakib-islam.png" alt="Rakib Islam Banner" style="width: 94%; max-height: 240px; object-fit: contain; border-radius: 6px; border: 1px solid #30363d80" />
 
   <!-- Typing Animation -->
   ![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=1000&color=F59E0B&center=true&vCenter=true&width=600&height=40&lines=Hi+there+👋,+I'm+Md.+Rakib+Islam;Full+Stack+Web+Developer;MERN+Stack+%2B+Next.js+Specialist;Always+Learning,+Always+Building+🧠)
