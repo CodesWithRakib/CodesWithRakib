@@ -32,3 +32,12 @@ test("SEO Artifacts - OpenGraph dynamic image generator exists", () => {
   assert.ok(content.includes("1200"), "Should define 1200 width");
   assert.ok(content.includes("630"), "Should define 630 height");
 });
+
+test("SEO Artifacts - Custom 404 page exists and provides return navigation", () => {
+  const notFoundPath = path.resolve("app/not-found.tsx");
+  assert.ok(fs.existsSync(notFoundPath), "app/not-found.tsx must exist");
+
+  const content = fs.readFileSync(notFoundPath, "utf8");
+  assert.ok(content.includes("Return to Homepage"), "Should provide link to return to homepage");
+  assert.ok(content.includes('href="/"'), "Should link to root /");
+});

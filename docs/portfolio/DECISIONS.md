@@ -370,3 +370,23 @@ In Phase 08, the portfolio required comprehensive search engine optimization (SE
 - Maximizes search visibility, social click-through, and recruiter trust.
 - Hardens the site against web vulnerabilities while maintaining zero breaking changes.
 - Eliminates dependency bloat by leveraging built-in Next.js and Node.js capabilities.
+
+---
+
+## ADR 019: Custom Brand-Consistent 404 Route and Production Readiness Protocol
+
+### Context
+In default Next.js setups, mistyped or outdated URLs display an unstyled black-and-white error screen (`404 | This page could not be found`), creating a jarring visitor experience, abandoning navigation, and eroding recruiter trust. Furthermore, before production deployment to Vercel, operational procedures must be thoroughly documented without leaking environment secrets.
+
+### Decision
+1. **Custom Brand-Consistent 404 Route (`app/not-found.tsx`)**:
+   - Implement a custom `not-found.tsx` component wrapped automatically in the site's root layout (`Navbar`, `Footer`, `ThemeProvider`).
+   - Feature an explicit `404 ERROR — ROUTE NOT FOUND` monospace badge, clear human-readable explanation, and two high-visibility action buttons (`Return to Homepage` and `Explore Projects`).
+   - Add automated test verification in `tests/seo-artifacts.test.mjs`.
+2. **Explicit Zero-Config Vercel Deployment Specification (`DEPLOYMENT_CHECKLIST.md`)**:
+   - Formalize environment variable boundaries (ensuring `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, and `CONTACT_FROM_EMAIL` remain strictly server-side).
+   - Document pre-deployment verification gates (`pnpm test`, `pnpm run typecheck`, `pnpm run build`), post-deployment smoke tests, and instant rollback procedures.
+
+### Rationale
+- Preserves design integrity, visual polish, and navigation recovery on all mistyped paths.
+- Provides a foolproof, repeatable deployment guide for production hosting at `https://codeswithrakib.vercel.app`.
