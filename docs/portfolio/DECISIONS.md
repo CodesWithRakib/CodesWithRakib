@@ -209,3 +209,32 @@ Implement a **terminal-style Architectural Snapshot Card (`Rakib.profile.ts`)** 
 - Communicates authentic technical craft to recruiters and hiring leads within 5 seconds.
 - Demonstrates TypeScript syntax, object modeling, and clean code aesthetics directly in the visual hero composition.
 - Eliminates visual clutter, fake avatars, and unverified decorative animations.
+
+
+---
+
+## ADR 014: Interactive Tabbed Case Studies with Verifiable File References and Hash Synchronization
+
+### Context
+Technical recruiters and engineering managers evaluate candidate portfolios with distinct levels of interest:
+1. Fast-scanning recruiters want a high-level summary of flagship applications, core stack, and role responsibilities.
+2. Senior engineering managers and staff interviewers want to inspect real architectural depth: concrete file paths, state machines, contract packages, and deliberate trade-offs.
+
+A naive single-page dump of three extensive case studies creates overwhelming vertical scroll fatigue. Conversely, hiding case studies behind separate full-page routes causes page navigation latency and reduces recruiter retention.
+
+### Decision
+Implement a two-tiered presentation architecture on the home page:
+1. **Featured Projects Showcase (`#projects`)**: A high-impact 3-column card overview communicating project titles, native Bengali names, domain taglines, verified implementation badges, role pills, architecture highlights, and core stack tags.
+2. **Deep-Dive Technical Case Studies (`#case-studies`)**: A client-rendered interactive tab viewer (`CaseStudiesSection.tsx`) allowing users to seamlessly switch between the 3 flagship monorepos (OgroniEdu, Dhruto, Gramer Bazar SaaS).
+3. **Cross-Section Event & Hash Synchronization**:
+   - Clicking "Inspect Case Study" on any featured card dispatches a `select-case-study` event and scrolls smoothly to `#case-studies`.
+   - URL hash synchronization (`#case-study-ogroniedu`, `#case-study-dhruto`, `#case-study-gramer-bazar`) enables direct link sharing to specific case studies.
+4. **Verifiable File Paths with One-Click Copying**:
+   - Concrete file paths from the real repositories (e.g., `packages/contracts/src/types/index.ts`, `apps/api/src/parcels/state-machine/parcel-state.machine.ts`) are displayed with monospace styling and one-click clipboard copying.
+5. **Separate Early/Foundational Milestones Subsection**:
+   - Secondary exploratory projects (Globira E-Commerce, Plant Tracker) are clearly demarcated in a foundational milestones subsection to illustrate technical growth without diluting the flagship monorepo standard.
+
+### Rationale
+- Zero page reloads or route transition delays; all data is instantly available in the bundle.
+- Directly supports both fast scanning (30-second recruiter review) and deep technical evaluation (5-minute engineering manager review).
+- 100% transparent and verifiable against real local repository source code.
