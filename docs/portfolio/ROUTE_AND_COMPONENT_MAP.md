@@ -1,7 +1,7 @@
-# Route & Component Architecture Map — Phase 05 Status
+# Route & Component Architecture Map — Phase 06 Status
 
 **Subject:** Md. Rakib Islam — Developer Portfolio  
-**Status:** Phase 05 Implemented (Professional Experience, Technical Skills & Engineering Strengths Complete)  
+**Status:** Phase 06 Implemented (Resume, Contact & Recruiter Conversion Complete)  
 **Architecture:** Next.js 16 App Router (React Server Components by default; Client Components restricted strictly to interactive leaf nodes)
 
 ---
@@ -12,8 +12,18 @@
 app/layout.tsx (Server Component)
  ├── ThemeProvider (Client Component — theme state only)
  ├── SkipToContent (Server Component — accessible keyboard skip anchor)
- ├── Navbar (Client Component — brand identity, scroll spy, mobile drawer)
- └── app/page.tsx (Server Component)
+ ├── Navbar (Client Component — brand identity, scroll spy, mobile drawer, resume link)
+ ├── app/resume/page.tsx (Server Component — /resume route) [PHASE 06 VERIFIED]
+ │    ├── ReturnLink (/ to homepage)
+ │    ├── StatusHero (Curated asset view if public/resume.pdf exists; honest request view if pending)
+ │    ├── DirectActionButtons (Request via Email, LinkedIn, GitHub)
+ │    └── InBrowserPDFViewer (Auto-enabled when public/resume.pdf is detected)
+ ├── app/api/contact/route.ts (Dynamic Route Handler — /api/contact) [PHASE 06 VERIFIED]
+ │    ├── IPRateLimiter (30-second sliding window mitigation)
+ │    ├── ZodPayloadValidator (contactFormSchema with field-level errors)
+ │    ├── HoneypotMitigation (Hidden botField filter)
+ │    └── DeliveryGateway (Resend integration when RESEND_API_KEY is present; honest 503 fallback when unconfigured)
+ └── app/page.tsx (Server Component — / route)
       │
       ├── HeroSection (Server Component — components/sections/HeroSection.tsx) [PHASE 03 VERIFIED]
       │    ├── StatusBadge ("Available for select Frontend & Full-Stack opportunities")
@@ -50,32 +60,25 @@ app/layout.tsx (Server Component)
       │
       ├── ExperienceSection (Server Component — components/sections/ExperienceSection.tsx) [PHASE 05 VERIFIED]
       │    ├── SectionHeader ("PROFESSIONAL WORK EXPERIENCE")
-      │    └── SOFOF Tech Presentation Card:
-      │         ├── Header Row (Junior Frontend Developer, SOFOF Tech, Present, Dhaka Bangladesh)
-      │         ├── Role Overview (Client SaaS platforms, WebRTC consultations, RTL layouts)
-      │         ├── Verified Contributions & Practical Responsibilities (6 Action+Tech+Purpose cards)
-      │         ├── Production Client Platforms Mentioned (Tamkeen, MyCoifeur, Deshbyte)
-      │         └── Daily Production Technologies Tags (Next.js 16, React 19, TS, RTK, Agora RTC, etc.)
+      │    └── SOFOF Tech Presentation Card (Junior Frontend Developer, 6 verified responsibilities, client platforms)
       │
       ├── SkillsSection (Server Component — components/sections/SkillsSection.tsx) [PHASE 05 VERIFIED]
       │    ├── SectionHeader ("TECHNICAL CAPABILITIES & PROFICIENCY")
       │    ├── Classification Policy Banner (Zero arbitrary percentage meters disclosure)
-      │    └── 4 Structured Skill Category Cards:
-      │         ├── Frontend Development (Primary Focus & Daily Production)
-      │         ├── State Management & Forms (Daily Production Practice)
-      │         ├── Backend & Database Architecture (Demonstrated in Monorepos)
-      │         └── Engineering Workflows & Tools (Active Practice & Growth)
+      │    └── 4 Structured Skill Category Cards (Frontend, State/Forms, Backend/DB, Workflows/Tools)
       │
       ├── EngineeringStrengthsSection (Server Component — components/sections/EngineeringStrengthsSection.tsx) [PHASE 05 VERIFIED]
       │    ├── SectionHeader ("ENGINEERING STRENGTHS & PRINCIPLES")
-      │    └── 4 Practical Pillars:
-      │         ├── Maintainable Component & UI Architecture (Practical impact + OgroniEdu link)
-      │         ├── Type Safety Across System Boundaries (Practical impact + Shared contracts link)
-      │         ├── Complex SaaS Workflow & State Modeling (Practical impact + Dhruto state machine link)
-      │         └── Bidirectional (RTL/LTR) & Accessible Interfaces (Practical impact + SOFOF Tech link)
+      │    └── 4 Practical Pillars (Maintainable UI, Type Safety Boundaries, SaaS Modeling, Resilient UX)
       │
-      ├── #contact Target (Server Component — Direct Verified Channels queued for Phase 06)
-      │    └── DirectContactButtons (Email mailto, LinkedIn, GitHub)
+      ├── ContactSection (Client Component — components/sections/ContactSection.tsx) [PHASE 06 VERIFIED]
+      │    ├── SectionHeader ("GET IN TOUCH & CONNECT")
+      │    ├── Recruiter Quick Contact Card (Availability, Location, SLA, One-Click Copy Email, LinkedIn, GitHub, Resume Link)
+      │    └── Production Contact Form:
+      │         ├── Status Feedback Banner (Success delivery / Honest fallback notice)
+      │         ├── Zod-Validated Form Fields (Name, Email, Subject, Message with character counter)
+      │         ├── Honeypot Bot Mitigation (Hidden botField)
+      │         └── Send Message Action with Submitting Spinner & Fallback mailto trigger
       │
       └── Footer (Server Component — components/layout/Footer.tsx) [PHASE 02 VERIFIED]
            ├── Copyright & Stack Disclosure
@@ -93,14 +96,15 @@ app/layout.tsx (Server Component)
 | **AboutSection**| `components/sections/AboutSection.tsx`| **Server Component** | Editorial narrative, focus cards, strengths grid |
 | **FeaturedProjectsSection** | `components/sections/FeaturedProjectsSection.tsx` | **Client Component** | Cross-component event dispatching to activate case study tabs |
 | **CaseStudiesSection** | `components/sections/CaseStudiesSection.tsx` | **Client Component** | Tab switching, URL hash sync, copy-to-clipboard file paths |
-| **ExperienceSection** | `components/sections/ExperienceSection.tsx` | **Server Component** | Static markup for SOFOF Tech role, zero hydration overhead |
+| **ExperienceSection** | `components/sections/ExperienceSection.tsx` | **Server Component** | Static markup for SOFOF Tech role |
 | **SkillsSection** | `components/sections/SkillsSection.tsx` | **Server Component** | Categorized capability cards with zero percentage bars |
 | **EngineeringStrengthsSection**| `components/sections/EngineeringStrengthsSection.tsx`| **Server Component** | 4 core principles with cross-links to case studies |
+| **ContactSection** | `components/sections/ContactSection.tsx` | **Client Component** | Form state, React Hook Form validation, copy-to-clipboard |
+| **ResumePage** | `app/resume/page.tsx` | **Server Component** | Static `/resume` route with asset detection |
+| **ContactApiRoute** | `app/api/contact/route.ts` | **API Route Handler** | Server-side validation, rate limiting, and email dispatch |
 | **Navbar** | `components/layout/Navbar.tsx` | **Client Component** | Mobile hamburger drawer state management |
 | **ThemeToggle** | `components/layout/ThemeToggle.tsx`| **Client Component** | `useSyncExternalStore` theme switching |
 | **Footer** | `components/layout/Footer.tsx` | **Server Component** | Static semantic footer with inline SVG icons |
-| **Container** | `components/layout/Container.tsx` | **Server Component** | Layout wrapper (`max-w-6xl` responsive padding) |
-| **SectionHeader**| `components/shared/SectionHeader.tsx`| **Server Component** | Reusable H2 + badge typography primitive |
 
 ---
 
@@ -110,12 +114,11 @@ app/layout.tsx (Server Component)
 | :--- | :--- | :--- | :--- |
 | **Explore My Work** | Hero Primary Action | `#projects` | Smooth scrolls to `#projects` showcase |
 | **Inspect Case Study** | Featured Card Action | `#case-studies` | Dispatches `select-case-study` event and switches active tab |
-| **Experience Nav Link** | Navbar Item | `#experience` | Smooth scrolls to SOFOF Tech experience section |
-| **Skills Nav Link** | Navbar Item | `#skills` | Smooth scrolls to categorized capabilities section |
-| **Principles Nav Link** | Navbar Item | `#principles` | Smooth scrolls to engineering strengths section |
-| **Inspect OgroniEdu Architecture** | Principles Card Action | `#case-study-ogroniedu` | Jumps to OgroniEdu case study tab |
-| **Inspect Shared Contracts** | Principles Card Action | `#case-study-ogroniedu` | Jumps to OgroniEdu case study tab |
-| **Inspect Dhruto State Machine** | Principles Card Action | `#case-study-dhruto` | Jumps to Dhruto case study tab |
-| **View SOFOF Tech Experience** | Principles Card Action | `#experience` | Scrolls to SOFOF Tech experience |
-| **Get In Touch** | Hero Secondary Action | `#contact` | Smooth scrolls to `#contact` |
-| **Resume PDF** | Hero & Navbar Action | `/resume` | Static link configured to canonical resume asset |
+| **Copy Email Button** | Contact Card Action | Clipboard | Copies `codeswithrakib@gmail.com` with visual feedback |
+| **Access Resume Overview**| Contact Card Action | `/resume` | Navigates to `/resume` route |
+| **Resume Navbar Action** | Navbar Item | `/resume` | Navigates to `/resume` route |
+| **Request Resume via Email**| Resume Page Action | `mailto:codeswithrakib@gmail.com` | Opens email client with prefilled subject |
+| **Return to Portfolio** | Resume Page Action | `/` | Navigates back to homepage |
+| **Send Message** | Contact Form Button | `POST /api/contact` | Validated by Zod, handles loading & feedback |
+| **LinkedIn Profile** | Contact & Hero Actions | `https://linkedin.com/in/codeswithrakib` | Opens verified profile in new tab |
+| **GitHub Profile** | Contact & Hero Actions | `https://github.com/CodesWithRakib` | Opens verified profile in new tab |

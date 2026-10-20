@@ -263,3 +263,35 @@ Developer portfolios frequently feature arbitrary percentage bars (e.g. "React 9
 - Elevates technical credibility and transparency.
 - Directly satisfies senior tech leads who inspect portfolio code quality before technical screens.
 - Completely prevents resume exaggeration while highlighting real, verifiable strengths.
+
+
+---
+
+## ADR 016: Transparent Contact Form Delivery Architecture with Anti-Spam Safeguards and Honest Resume Handling
+
+### Context
+Portfolio contact forms and resume buttons frequently suffer from deceptive patterns:
+1. Contact forms that appear functional but silently discard messages or display fake "Message Sent!" toasts without any backend delivery provider configured.
+2. Missing resume buttons that lead to broken 404 links or generic placeholder PDFs.
+3. Contact endpoints vulnerable to automated bot spam and rapid repeated submissions.
+
+### Decision
+1. **Server-Side Validation & Anti-Spam Safeguards (`app/api/contact/route.ts`)**:
+   - Validate every incoming submission using `contactFormSchema` (Zod).
+   - Implement an in-memory IP rate limiter enforcing a 30-second cooldown per IP to prevent spam flood.
+   - Include a hidden honeypot field (`botField`) that rejects automated bot submissions with HTTP 400.
+2. **Honest Delivery Transparency (Zero Fake Success)**:
+   - When `RESEND_API_KEY` is present, the server dispatches real emails via Resend's API.
+   - When `RESEND_API_KEY` is absent (such as in local development without credentials committed), the server transparently informs the visitor via status 503 or development simulation.
+   - The UI displays an actionable fallback message with a direct `mailto:codeswithrakib@gmail.com` link, ensuring the visitor's typed message is never lost.
+3. **Honest Resume Access Handling (`app/resume/page.tsx`)**:
+   - Rather than creating an empty PDF or linking to a 404, implement a dedicated `/resume` route that dynamically checks for `public/resume.pdf`.
+   - If present, it embeds an in-browser PDF viewer and download action.
+   - If pending, it honestly explains that the formal resume is updated on request, provides verified live portfolio evidence links, and offers a one-click email request button.
+4. **Frictionless Recruiter Conversion**:
+   - Provide a prominent one-click "Copy Email" button with instant visual confirmation.
+   - Clearly display timezone (UTC+6, Dhaka), role availability, and response SLA.
+
+### Rationale
+- Completely adheres to the core principle of zero hallucination and professional honesty.
+- Delivers a production-grade user experience for recruiters with multiple redundant channels to establish contact.
