@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { Metadata } from "next";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
@@ -18,10 +19,22 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-export const metadata = {
-  title: "Resume & CV | Md. Rakib Islam",
+export const metadata: Metadata = {
+  title: "Resume & CV",
   description:
-    "Review or request the resume of Md. Rakib Islam, Frontend Developer at SOFOF Tech.",
+    "Review or request the resume of Md. Rakib Islam, Frontend Developer at SOFOF Tech specializing in React, Next.js, and TypeScript.",
+  alternates: {
+    canonical: `${siteConfig.url}/resume`,
+  },
+  openGraph: {
+    title: `Resume & CV | ${siteConfig.name}`,
+    description:
+      "Review or request the resume of Md. Rakib Islam, Frontend Developer at SOFOF Tech.",
+    url: `${siteConfig.url}/resume`,
+    siteName: siteConfig.name,
+    locale: "en_US",
+    type: "profile",
+  },
 };
 
 export default function ResumePage() {

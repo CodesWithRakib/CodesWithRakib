@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  alternates: {
+    canonical: siteConfig.url,
+  },
   keywords: [
     "Frontend Developer",
     "React Developer",
@@ -53,6 +56,42 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLdPerson = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: siteConfig.author.name,
+  jobTitle: siteConfig.author.role,
+  worksFor: {
+    "@type": "Organization",
+    name: siteConfig.author.company,
+  },
+  url: siteConfig.url,
+  sameAs: [siteConfig.author.github, siteConfig.author.linkedin],
+  knowsAbout: [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "NestJS",
+    "PostgreSQL",
+    "Frontend Architecture",
+    "SaaS Development",
+    "REST APIs",
+  ],
+};
+
+const jsonLdWebSite = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: `${siteConfig.name} — Frontend Developer Portfolio`,
+  url: siteConfig.url,
+  description: siteConfig.description,
+  author: {
+    "@type": "Person",
+    name: siteConfig.author.name,
+  },
+};
+
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
@@ -70,6 +109,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary-subtle selection:text-primary-subtle-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPerson) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebSite) }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

@@ -330,3 +330,43 @@ Developer portfolios frequently look polished on high-resolution desktop monitor
 - Guarantees 100% compliance across all 10 standard device viewports (`320px` to `1920px`).
 - Elevates the portfolio to WCAG 2.2 AA accessibility standards.
 - Delivers an intuitive, flawless experience for technical evaluators on both mobile phones and desktop keyboards.
+
+---
+
+## ADR 018: Next.js Metadata Architecture, Security Headers, and Native Automated Testing Suite
+
+### Context
+In Phase 08, the portfolio required comprehensive search engine optimization (SEO), social sharing previews, HTTP defense headers, and an automated verification test suite:
+1. Search engines require structured sitemaps (`/sitemap.xml`) and crawl policies (`/robots.txt`) with exact production canonical URLs.
+2. Social platforms (LinkedIn, Twitter, Slack) require high-resolution (1200x630) OpenGraph cards.
+3. Search engines benefit from structured data (JSON-LD) to parse professional identity and employment without hallucination.
+4. Production web servers must be shielded against MIME sniffing, clickjacking, insecure HTTP downgrade, and cross-site execution via hardened HTTP headers and Content Security Policy (CSP).
+5. Automated testing should prevent regressions without bloating project dependencies or introducing complex testing harnesses.
+
+### Decision
+1. **Dynamic App Router Metadata Generation (`app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`)**:
+   - Utilize Next.js 16 native metadata file conventions instead of static manual text files.
+   - Restrict sitemap strictly to verified public indexable routes (`/` priority 1.0, `/resume` priority 0.8).
+   - Disallow `/api/` in `app/robots.ts` while allowing indexable routes.
+   - Generate dynamic 1200x630 OpenGraph and Twitter cards using `ImageResponse` with clean Satori CSS and design system brand tokens.
+2. **Canonical URL Hygiene and Title Deduplication**:
+   - Configure metadata base and canonical alternates pointing to `https://codeswithrakib.vercel.app`.
+   - Prevent duplicated title suffixes (`"Resume & CV | Md. Rakib Islam | Md. Rakib Islam"`) by allowing the layout title template (`%s | Md. Rakib Islam`) to handle title formatting.
+3. **Truthful JSON-LD Structured Data (`Person` & `WebSite`)**:
+   - Embed schema.org `Person` and `WebSite` JSON-LD schemas directly into the root layout.
+   - Restrict properties to verified commercial experience (Frontend Developer at SOFOF Tech), real GitHub/LinkedIn profiles, and inspectable technologies.
+4. **Hardened HTTP Response Headers (`next.config.ts`)**:
+   - Configure `X-Content-Type-Options: nosniff`
+   - Configure `X-Frame-Options: DENY`
+   - Configure `Referrer-Policy: strict-origin-when-cross-origin`
+   - Configure `Permissions-Policy: camera=(), microphone=(), geolocation=(), browsing-topics=()`
+   - Configure `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
+   - Configure a tailored `Content-Security-Policy` permitting essential Next.js inline scripts/styles and authorized image origins while enforcing `frame-ancestors 'none'` and `base-uri 'self'`.
+5. **Zero-Dependency Native Automated Test Suite (`node:test`)**:
+   - Utilize Node.js's native test runner (`node:test` and `node:assert/strict`) via `"test": "node --test tests/**/*.test.mjs"`.
+   - Implement 13 automated tests verifying contact schema constraints, security headers, sitemap/robots contracts, and site configuration integrity. Runs in ~320ms with 0 third-party test dependencies.
+
+### Rationale
+- Maximizes search visibility, social click-through, and recruiter trust.
+- Hardens the site against web vulnerabilities while maintaining zero breaking changes.
+- Eliminates dependency bloat by leveraging built-in Next.js and Node.js capabilities.
