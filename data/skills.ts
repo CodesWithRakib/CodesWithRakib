@@ -1,61 +1,124 @@
-export interface SkillCategory {
-  title: string;
-  tier: "production" | "learning";
-  skills: {
-    name: string;
-    description: string;
-  }[];
+export interface SkillItem {
+  name: string;
+  context: string;
 }
 
-export const skillsData: SkillCategory[] = [
+export interface SkillGroup {
+  id: string;
+  title: string;
+  badge: string;
+  hierarchy: "primary" | "additional" | "developing";
+  summary: string;
+  skills: SkillItem[];
+}
+
+export const skillsData: SkillGroup[] = [
   {
+    id: "frontend-core",
     title: "Frontend Development",
-    tier: "production",
+    badge: "Primary Focus & Daily Production",
+    hierarchy: "primary",
+    summary:
+      "Core production stack applied daily at SOFOF Tech and across flagship applications with strict attention to performance and type safety.",
     skills: [
-      { name: "React", description: "Hooks, component lifecycles, and modern rendering patterns" },
-      { name: "Next.js", description: "App Router, Server Components (RSC), and hybrid rendering" },
-      { name: "TypeScript", description: "Strict typing, generics, interfaces, and DTO contracts" },
-      { name: "Tailwind CSS", description: "Design tokens, utility-first styling, and mobile responsiveness" },
-      { name: "shadcn/ui & Radix UI", description: "Accessible, unstyled headless UI primitives" },
+      {
+        name: "React 19 & Next.js 16",
+        context: "App Router, Server Components (RSC), Client leaf nodes, and route handlers",
+      },
+      {
+        name: "TypeScript",
+        context: "Strict typing, generics, interfaces, and isomorphic DTO validation",
+      },
+      {
+        name: "Tailwind CSS 4",
+        context: "Utility-first design tokens, responsive layouts, and modern CSS variables",
+      },
+      {
+        name: "UI Primitives & Systems",
+        context: "shadcn/ui, Radix UI headless primitives, Lucide icons, and Figma token translation",
+      },
+      {
+        name: "Bidirectional & i18n",
+        context: "Arabic RTL layouts, bidi text reshaping (bidi-js), and next-intl routing",
+      },
     ],
   },
   {
+    id: "state-forms",
     title: "State Management & Forms",
-    tier: "production",
+    badge: "Daily Production Practice",
+    hierarchy: "primary",
+    summary:
+      "Managing complex client state, predictable data fetching, and bulletproof input validation pipelines.",
     skills: [
-      { name: "Redux Toolkit", description: "Predictable client store with slices and selectors" },
-      { name: "RTK Query", description: "Data fetching, caching, and tag-based invalidation" },
-      { name: "React Hook Form", description: "High-performance form state without unnecessary re-renders" },
-      { name: "Zod", description: "Schema-based runtime validation and isomorphic type inference" },
+      {
+        name: "Redux Toolkit & RTK Query",
+        context: "Normalized caching, optimistic updates, tag invalidation, and persistent slices",
+      },
+      {
+        name: "React Hook Form & Zod",
+        context: "High-performance uncontroller forms with runtime schema validation",
+      },
+      {
+        name: "REST API Integration",
+        context: "Typed fetch clients, error boundaries, retry policies, and loading skeletons",
+      },
+      {
+        name: "Real-Time & Multimedia",
+        context: "Socket.io event subscriptions, WebRTC audio/video (Agora RTC), and Web Audio API",
+      },
     ],
   },
   {
-    title: "Backend Development",
-    tier: "production",
+    id: "backend-databases",
+    title: "Backend & Database Architecture",
+    badge: "Demonstrated in Monorepos",
+    hierarchy: "additional",
+    summary:
+      "Applied practical full-stack capabilities built and verified in flagship monorepos (OgroniEdu, Dhruto, Gramer Bazar).",
     skills: [
-      { name: "NestJS", description: "Modular monoliths, dependency injection, and decorators" },
-      { name: "Node.js & Express", description: "RESTful API development and middleware pipelines" },
-      { name: "REST APIs & Swagger", description: "Self-documenting OpenAPI endpoints and DTO contracts" },
-      { name: "WebSockets & Socket.io", description: "Authenticated real-time bidirectional communication" },
+      {
+        name: "NestJS & Node.js",
+        context: "Modular controllers, dependency injection, validation pipes, and guards",
+      },
+      {
+        name: "Express.js",
+        context: "RESTful endpoints, custom middleware pipelines, and CORS configuration",
+      },
+      {
+        name: "PostgreSQL & TypeORM",
+        context: "Relational data modeling, foreign keys, migrations, and ACID transactions",
+      },
+      {
+        name: "MongoDB & Mongoose",
+        context: "Document schemas, embedded documents, and query indexing",
+      },
     ],
   },
   {
-    title: "Databases & Data Modeling",
-    tier: "production",
+    id: "engineering-workflows",
+    title: "Engineering Workflows & Tools",
+    badge: "Active Practice & Growth",
+    hierarchy: "developing",
+    summary:
+      "Modern development tooling, repository hygiene, asynchronous queues, and testing frameworks.",
     skills: [
-      { name: "PostgreSQL", description: "Relational modeling, foreign keys, and ACID transactions" },
-      { name: "TypeORM", description: "Entity definitions, query builder, and migration versioning" },
-      { name: "MongoDB & Mongoose", description: "Document collections and schema validation" },
-    ],
-  },
-  {
-    title: "Actively Learning & System Architecture",
-    tier: "learning",
-    skills: [
-      { name: "Redis & BullMQ", description: "Asynchronous job queues and worker scheduling (applied in Dhruto)" },
-      { name: "Testing (Vitest & Playwright)", description: "Unit, integration, and cross-browser end-to-end tests" },
-      { name: "Docker", description: "Containerized development environments and multi-stage builds" },
-      { name: "System Design", description: "API rate limiting, caching strategies, and scalable SaaS topology" },
+      {
+        name: "Monorepo Tooling",
+        context: "Turborepo, pnpm workspaces, and shared packages (@contracts)",
+      },
+      {
+        name: "Background Queues & Caching",
+        context: "BullMQ job workers and Redis caching (implemented in Dhruto & Gramer Bazar)",
+      },
+      {
+        name: "Git & GitHub Workflows",
+        context: "Feature branching, PR reviews, semantic commits, and issue tracking",
+      },
+      {
+        name: "Testing & Code Quality",
+        context: "Vitest unit tests, Autocannon load testing scripts, ESLint 9, and Prettier",
+      },
     ],
   },
 ];

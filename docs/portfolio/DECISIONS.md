@@ -238,3 +238,28 @@ Implement a two-tiered presentation architecture on the home page:
 - Zero page reloads or route transition delays; all data is instantly available in the bundle.
 - Directly supports both fast scanning (30-second recruiter review) and deep technical evaluation (5-minute engineering manager review).
 - 100% transparent and verifiable against real local repository source code.
+
+
+---
+
+## ADR 015: Categorized Contextual Skills and Evidence-First Engineering Strengths over Arbitrary Percentage Gauges
+
+### Context
+Developer portfolios frequently feature arbitrary percentage bars (e.g. "React 95%", "TypeScript 85%") or endless grids of tech badges. Technical recruiters, engineering leads, and hiring managers routinely disregard these metrics because:
+1. Percentages are subjective, unverifiable, and convey no concrete operational context.
+2. Undifferentiated badge clouds obscure a candidate's actual day-to-day focus versus technologies merely explored once.
+
+### Decision
+1. **Eliminate All Percentage Gauges and Proficiency Sliders**: Display zero progress bars, percentage circles, or arbitrary scores.
+2. **Context-Rich Skill Rows**: Pair each technology with a concise description of *how* Rakib uses it in production or monorepos (e.g. `React 19 & Next.js 16: App Router, Server Components (RSC), Client leaf nodes, and route handlers`).
+3. **Transparent Capability Hierarchy**:
+   - *Core Production (Frontend & State)*: Reflects daily commercial work at SOFOF Tech.
+   - *Monorepo Verified (Backend & Databases)*: Demonstrates full-stack capability backed by inspectable source code (NestJS, TypeORM, PostgreSQL, MongoDB).
+   - *Active Practice & Growth (Workflows & Queues)*: Accurately communicates ongoing development in BullMQ, Redis, and testing.
+4. **Concrete Evidence Linking for Engineering Strengths**:
+   - Rather than abstract statements ("strong problem solver"), present 4 concrete engineering strengths where each strength explicitly cites verified source code or commercial projects (with direct deep links to `#case-study-ogroniedu`, `#case-study-dhruto`, or `#experience`).
+
+### Rationale
+- Elevates technical credibility and transparency.
+- Directly satisfies senior tech leads who inspect portfolio code quality before technical screens.
+- Completely prevents resume exaggeration while highlighting real, verifiable strengths.

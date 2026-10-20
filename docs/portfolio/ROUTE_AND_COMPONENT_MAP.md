@@ -1,7 +1,7 @@
-# Route & Component Architecture Map — Phase 04 Status
+# Route & Component Architecture Map — Phase 05 Status
 
 **Subject:** Md. Rakib Islam — Developer Portfolio  
-**Status:** Phase 04 Implemented (Featured Projects & Deep-Dive Case Studies Complete)  
+**Status:** Phase 05 Implemented (Professional Experience, Technical Skills & Engineering Strengths Complete)  
 **Architecture:** Next.js 16 App Router (React Server Components by default; Client Components restricted strictly to interactive leaf nodes)
 
 ---
@@ -32,10 +32,7 @@ app/layout.tsx (Server Component)
       ├── FeaturedProjectsSection (Client Component — components/sections/FeaturedProjectsSection.tsx) [PHASE 04 VERIFIED]
       │    ├── SectionHeader ("FLAGSHIP MONOREPOS & SAAS ARCHITECTURE")
       │    ├── QuickLink (All Repositories on GitHub)
-      │    └── 3 Flagship Project Showcase Cards:
-      │         ├── OgroniEdu (EdTech & Marketplace Monorepo — Next.js 16, NestJS 12, RTK Query, Web Audio API)
-      │         ├── Dhruto (Logistics & Parcel Processing — 21-State Machine, BullMQ, Redis, PostgreSQL)
-      │         └── Gramer Bazar SaaS (Hyperlocal Rural E-Commerce — Faceted Filter Sidebar, Socket.io, Autocannon)
+      │    └── 3 Flagship Project Showcase Cards (OgroniEdu, Dhruto, Gramer Bazar SaaS)
       │
       ├── CaseStudiesSection (Client Component — components/sections/CaseStudiesSection.tsx) [PHASE 04 VERIFIED]
       │    ├── SectionHeader ("DEEP-DIVE TECHNICAL CASE STUDIES")
@@ -49,11 +46,33 @@ app/layout.tsx (Server Component)
       │    │    ├── Verified Status & Delivery Matrix (Implemented vs. Active In-Progress vs. Roadmap)
       │    │    ├── Deployment & Staging Callout (Explicit environment transparency)
       │    │    └── Recommended Repository Inspection Paths (Hiring manager code review guidance)
-      │    └── Foundational Milestones Sub-Section:
-      │         ├── Globira E-Commerce (Full-Stack MERN Project)
-      │         └── Plant Tracker (Frontend Client-Side Application)
+      │    └── Foundational Milestones Sub-Section (Globira E-Commerce, Plant Tracker)
       │
-      ├── #experience & #skills Target (Server Component — SOFOF Tech Banner queued for Phase 05)
+      ├── ExperienceSection (Server Component — components/sections/ExperienceSection.tsx) [PHASE 05 VERIFIED]
+      │    ├── SectionHeader ("PROFESSIONAL WORK EXPERIENCE")
+      │    └── SOFOF Tech Presentation Card:
+      │         ├── Header Row (Junior Frontend Developer, SOFOF Tech, Present, Dhaka Bangladesh)
+      │         ├── Role Overview (Client SaaS platforms, WebRTC consultations, RTL layouts)
+      │         ├── Verified Contributions & Practical Responsibilities (6 Action+Tech+Purpose cards)
+      │         ├── Production Client Platforms Mentioned (Tamkeen, MyCoifeur, Deshbyte)
+      │         └── Daily Production Technologies Tags (Next.js 16, React 19, TS, RTK, Agora RTC, etc.)
+      │
+      ├── SkillsSection (Server Component — components/sections/SkillsSection.tsx) [PHASE 05 VERIFIED]
+      │    ├── SectionHeader ("TECHNICAL CAPABILITIES & PROFICIENCY")
+      │    ├── Classification Policy Banner (Zero arbitrary percentage meters disclosure)
+      │    └── 4 Structured Skill Category Cards:
+      │         ├── Frontend Development (Primary Focus & Daily Production)
+      │         ├── State Management & Forms (Daily Production Practice)
+      │         ├── Backend & Database Architecture (Demonstrated in Monorepos)
+      │         └── Engineering Workflows & Tools (Active Practice & Growth)
+      │
+      ├── EngineeringStrengthsSection (Server Component — components/sections/EngineeringStrengthsSection.tsx) [PHASE 05 VERIFIED]
+      │    ├── SectionHeader ("ENGINEERING STRENGTHS & PRINCIPLES")
+      │    └── 4 Practical Pillars:
+      │         ├── Maintainable Component & UI Architecture (Practical impact + OgroniEdu link)
+      │         ├── Type Safety Across System Boundaries (Practical impact + Shared contracts link)
+      │         ├── Complex SaaS Workflow & State Modeling (Practical impact + Dhruto state machine link)
+      │         └── Bidirectional (RTL/LTR) & Accessible Interfaces (Practical impact + SOFOF Tech link)
       │
       ├── #contact Target (Server Component — Direct Verified Channels queued for Phase 06)
       │    └── DirectContactButtons (Email mailto, LinkedIn, GitHub)
@@ -74,6 +93,9 @@ app/layout.tsx (Server Component)
 | **AboutSection**| `components/sections/AboutSection.tsx`| **Server Component** | Editorial narrative, focus cards, strengths grid |
 | **FeaturedProjectsSection** | `components/sections/FeaturedProjectsSection.tsx` | **Client Component** | Cross-component event dispatching to activate case study tabs |
 | **CaseStudiesSection** | `components/sections/CaseStudiesSection.tsx` | **Client Component** | Tab switching, URL hash sync, copy-to-clipboard file paths |
+| **ExperienceSection** | `components/sections/ExperienceSection.tsx` | **Server Component** | Static markup for SOFOF Tech role, zero hydration overhead |
+| **SkillsSection** | `components/sections/SkillsSection.tsx` | **Server Component** | Categorized capability cards with zero percentage bars |
+| **EngineeringStrengthsSection**| `components/sections/EngineeringStrengthsSection.tsx`| **Server Component** | 4 core principles with cross-links to case studies |
 | **Navbar** | `components/layout/Navbar.tsx` | **Client Component** | Mobile hamburger drawer state management |
 | **ThemeToggle** | `components/layout/ThemeToggle.tsx`| **Client Component** | `useSyncExternalStore` theme switching |
 | **Footer** | `components/layout/Footer.tsx` | **Server Component** | Static semantic footer with inline SVG icons |
@@ -88,10 +110,12 @@ app/layout.tsx (Server Component)
 | :--- | :--- | :--- | :--- |
 | **Explore My Work** | Hero Primary Action | `#projects` | Smooth scrolls to `#projects` showcase |
 | **Inspect Case Study** | Featured Card Action | `#case-studies` | Dispatches `select-case-study` event and switches active tab |
-| **Source Repo Buttons** | Project Cards / Hero | GitHub URLs | Direct verified links to project monorepos |
-| **Copy Path Buttons** | Case Study File References | Clipboard | Copies exact file path to clipboard with 2s visual confirmation |
+| **Experience Nav Link** | Navbar Item | `#experience` | Smooth scrolls to SOFOF Tech experience section |
+| **Skills Nav Link** | Navbar Item | `#skills` | Smooth scrolls to categorized capabilities section |
+| **Principles Nav Link** | Navbar Item | `#principles` | Smooth scrolls to engineering strengths section |
+| **Inspect OgroniEdu Architecture** | Principles Card Action | `#case-study-ogroniedu` | Jumps to OgroniEdu case study tab |
+| **Inspect Shared Contracts** | Principles Card Action | `#case-study-ogroniedu` | Jumps to OgroniEdu case study tab |
+| **Inspect Dhruto State Machine** | Principles Card Action | `#case-study-dhruto` | Jumps to Dhruto case study tab |
+| **View SOFOF Tech Experience** | Principles Card Action | `#experience` | Scrolls to SOFOF Tech experience |
 | **Get In Touch** | Hero Secondary Action | `#contact` | Smooth scrolls to `#contact` |
 | **Resume PDF** | Hero & Navbar Action | `/resume` | Static link configured to canonical resume asset |
-| **GitHub Profile** | Hero & Contact Action | `https://github.com/CodesWithRakib` | Opens verified profile in new tab |
-| **LinkedIn Profile**| Hero & Contact Action | `https://linkedin.com/in/codeswithrakib` | Opens verified profile in new tab |
-| **Direct Email** | Hero & Contact Action | `mailto:codeswithrakib@gmail.com` | Opens default mail client |
