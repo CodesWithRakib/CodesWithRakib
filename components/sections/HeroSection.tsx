@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import { profileData } from "@/data/profile";
 import { siteConfig } from "@/config/site";
 import { Container } from "@/components/layout/Container";
@@ -58,27 +59,25 @@ export function HeroSection() {
                 </Button>
               </a>
 
-              <a
-                href={siteConfig.links.resume}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/resume"
                 className="w-full sm:w-auto"
               >
                 <Button variant="outline" size="lg" className="w-full sm:w-auto gap-2 font-mono text-xs">
                   <FileText className="h-4 w-4 text-muted-foreground" />
                   <span>Resume PDF</span>
                 </Button>
-              </a>
+              </Link>
             </div>
 
             {/* Verified Social Links */}
-            <div className="flex items-center gap-6 pt-4 border-t border-border/80 w-full text-xs font-mono text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-4 border-t border-border/80 w-full text-xs font-mono text-muted-foreground">
               <span className="text-foreground font-semibold">Verify Profile:</span>
               <a
                 href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+                className="inline-flex items-center gap-1.5 py-1.5 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs"
                 aria-label="GitHub Profile"
               >
                 <Icons.gitHub className="h-4 w-4" />
@@ -88,7 +87,7 @@ export function HeroSection() {
                 href={siteConfig.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+                className="inline-flex items-center gap-1.5 py-1.5 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs"
                 aria-label="LinkedIn Profile"
               >
                 <Icons.linkedIn className="h-4 w-4" />
@@ -96,7 +95,7 @@ export function HeroSection() {
               </a>
               <a
                 href={siteConfig.links.email}
-                className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+                className="inline-flex items-center gap-1.5 py-1.5 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs"
                 aria-label="Send direct email"
               >
                 <Mail className="h-4 w-4" />

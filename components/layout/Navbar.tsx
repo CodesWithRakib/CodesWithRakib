@@ -11,13 +11,35 @@ import { ThemeToggle } from "@/components/layout/ThemeToggle";
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
+  // Close mobile menu on Escape key press
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md transition-colors">
       <Container className="flex h-16 items-center justify-between">
         {/* Brand Identity */}
         <Link
           href="/"
-          className="group flex items-center gap-2.5 text-foreground hover:opacity-90 transition-opacity"
+          className="group flex items-center gap-2.5 text-foreground hover:opacity-90 transition-opacity focus-visible:ring-2 focus-visible:ring-primary rounded-lg p-1 -ml-1"
+          aria-label={`${siteConfig.name} - Homepage`}
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-mono font-bold text-sm shadow-xs">
             RI
@@ -38,13 +60,13 @@ export function Navbar() {
           aria-label="Main Navigation"
         >
           {siteConfig.navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
-              className="transition-colors hover:text-foreground hover:underline underline-offset-4 decoration-primary"
+              className="transition-colors hover:text-foreground hover:underline underline-offset-4 decoration-primary focus-visible:ring-2 focus-visible:ring-primary rounded-md px-1 py-0.5"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -52,62 +74,59 @@ export function Navbar() {
         <div className="flex items-center gap-2 sm:gap-3">
           <ThemeToggle />
 
-          <a
-            href={siteConfig.links.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex"
-          >
+          <Link href="/resume" className="hidden sm:inline-flex">
             <Button variant="secondary" size="sm" className="gap-1.5 font-mono text-xs">
               <FileText className="h-3.5 w-3.5" />
               <span>Resume</span>
             </Button>
-          </a>
+          </Link>
 
-          {/* Mobile Menu Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden text-muted-foreground"
+          {/* Mobile Menu Toggle (WCAG 44x44px target) */}
+          <button
+            type="button"
+            className="md:hidden flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-primary transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation-menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+          </button>
         </div>
       </Container>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-border bg-background px-4 py-4 space-y-3 transition-all animate-in fade-in slide-in-from-top-2">
-          <nav className="flex flex-col space-y-2.5" aria-label="Mobile Navigation">
+        <div
+          id="mobile-navigation-menu"
+          className="md:hidden border-b border-border bg-background px-4 py-4 space-y-3 transition-all animate-in fade-in slide-in-from-top-2 shadow-lg"
+        >
+          <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
             {siteConfig.navItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-foreground py-2 px-3 rounded-md hover:bg-muted transition-colors"
+                className="text-sm font-medium text-foreground py-2.5 px-3 rounded-lg hover:bg-muted focus-visible:ring-2 focus-visible:ring-primary transition-colors min-h-[44px] flex items-center"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
-          <div className="pt-2 border-t border-border flex items-center justify-between">
+          <div className="pt-3 border-t border-border flex items-center justify-between">
             <span className="text-xs text-muted-foreground font-mono">
               Available for opportunities
             </span>
-            <a
-              href={siteConfig.links.resume}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/resume"
+              onClick={() => setMobileMenuOpen(false)}
               className="inline-flex"
             >
               <Button variant="primary" size="sm" className="gap-1.5 font-mono text-xs">
                 <FileText className="h-3.5 w-3.5" />
-                <span>Resume PDF</span>
+                <span>Resume Overview</span>
               </Button>
-            </a>
+            </Link>
           </div>
         </div>
       )}

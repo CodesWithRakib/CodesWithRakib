@@ -265,6 +265,7 @@ export function ContactSection() {
                   autoComplete="off"
                   className="hidden pointer-events-none"
                   aria-hidden="true"
+                  aria-label="Do not fill this field"
                   {...register("botField")}
                 />
 
@@ -281,15 +282,18 @@ export function ContactSection() {
                     <input
                       id="contact-name"
                       type="text"
+                      autoComplete="name"
                       placeholder="e.g. Sarah Jenkins"
                       disabled={isSubmitting}
+                      aria-invalid={errors.name ? "true" : "false"}
+                      aria-describedby={errors.name ? "name-error" : undefined}
                       className={`w-full px-3.5 py-2.5 rounded-lg bg-surface border text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-primary/40 transition-colors ${
                         errors.name ? "border-red-500" : "border-border"
                       }`}
                       {...register("name")}
                     />
                     {errors.name && (
-                      <p className="text-[11px] text-red-600 dark:text-red-400 font-mono">
+                      <p id="name-error" role="alert" className="text-[11px] text-red-600 dark:text-red-400 font-mono">
                         {errors.name.message}
                       </p>
                     )}
@@ -306,15 +310,18 @@ export function ContactSection() {
                     <input
                       id="contact-email"
                       type="email"
+                      autoComplete="email"
                       placeholder="e.g. sarah@company.com"
                       disabled={isSubmitting}
+                      aria-invalid={errors.email ? "true" : "false"}
+                      aria-describedby={errors.email ? "email-error" : undefined}
                       className={`w-full px-3.5 py-2.5 rounded-lg bg-surface border text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-primary/40 transition-colors ${
                         errors.email ? "border-red-500" : "border-border"
                       }`}
                       {...register("email")}
                     />
                     {errors.email && (
-                      <p className="text-[11px] text-red-600 dark:text-red-400 font-mono">
+                      <p id="email-error" role="alert" className="text-[11px] text-red-600 dark:text-red-400 font-mono">
                         {errors.email.message}
                       </p>
                     )}
@@ -334,13 +341,15 @@ export function ContactSection() {
                     type="text"
                     placeholder="e.g. Frontend Engineering Opportunity / Contract"
                     disabled={isSubmitting}
+                    aria-invalid={errors.subject ? "true" : "false"}
+                    aria-describedby={errors.subject ? "subject-error" : undefined}
                     className={`w-full px-3.5 py-2.5 rounded-lg bg-surface border text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-primary/40 transition-colors ${
                       errors.subject ? "border-red-500" : "border-border"
                     }`}
                     {...register("subject")}
                   />
                   {errors.subject && (
-                    <p className="text-[11px] text-red-600 dark:text-red-400 font-mono">
+                    <p id="subject-error" role="alert" className="text-[11px] text-red-600 dark:text-red-400 font-mono">
                       {errors.subject.message}
                     </p>
                   )}
@@ -364,6 +373,8 @@ export function ContactSection() {
                     rows={5}
                     placeholder="Provide details about your project, engineering role, or collaboration request..."
                     disabled={isSubmitting}
+                    aria-invalid={errors.message ? "true" : "false"}
+                    aria-describedby={errors.message ? "message-error" : undefined}
                     className={`w-full px-3.5 py-2.5 rounded-lg bg-surface border text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-primary/40 transition-colors resize-y min-h-[120px] ${
                       errors.message ? "border-red-500" : "border-border"
                     }`}
@@ -373,7 +384,7 @@ export function ContactSection() {
                     })}
                   />
                   {errors.message && (
-                    <p className="text-[11px] text-red-600 dark:text-red-400 font-mono">
+                    <p id="message-error" role="alert" className="text-[11px] text-red-600 dark:text-red-400 font-mono">
                       {errors.message.message}
                     </p>
                   )}

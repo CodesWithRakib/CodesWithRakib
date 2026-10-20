@@ -77,7 +77,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SkipToContent />
-          <div className="relative flex min-h-screen flex-col">
+          <div className="relative flex min-h-screen flex-col overflow-x-clip">
             <Navbar />
             <main id="main-content" className="flex-1">
               {children}

@@ -86,7 +86,7 @@ export function CaseStudiesSection() {
           aria-label="Flagship Project Case Studies"
           className="flex flex-wrap items-center gap-2 p-1.5 rounded-xl border border-border bg-card/80 backdrop-blur-xs mb-10 max-w-3xl"
         >
-          {projectsData.map((project) => {
+          {projectsData.map((project, index) => {
             const isActive = project.id === activeProjectId;
             return (
               <button
@@ -95,13 +95,36 @@ export function CaseStudiesSection() {
                 id={`tab-${project.id}`}
                 aria-selected={isActive}
                 aria-controls={`panel-${project.id}`}
+                tabIndex={isActive ? 0 : -1}
+                onKeyDown={(e) => {
+                  let targetIndex = -1;
+                  if (e.key === "ArrowRight") {
+                    targetIndex = (index + 1) % projectsData.length;
+                  } else if (e.key === "ArrowLeft") {
+                    targetIndex = (index - 1 + projectsData.length) % projectsData.length;
+                  } else if (e.key === "Home") {
+                    targetIndex = 0;
+                  } else if (e.key === "End") {
+                    targetIndex = projectsData.length - 1;
+                  }
+
+                  if (targetIndex !== -1) {
+                    e.preventDefault();
+                    const nextProject = projectsData[targetIndex];
+                    setActiveProjectId(nextProject.id);
+                    document.getElementById(`tab-${nextProject.id}`)?.focus();
+                    if (typeof window !== "undefined") {
+                      window.history.replaceState(null, "", `#case-study-${nextProject.id}`);
+                    }
+                  }
+                }}
                 onClick={() => {
                   setActiveProjectId(project.id);
                   if (typeof window !== "undefined") {
                     window.history.replaceState(null, "", `#case-study-${project.id}`);
                   }
                 }}
-                className={`flex-1 min-w-[200px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono font-medium transition-all ${
+                className={`flex-1 min-w-[200px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono font-medium transition-all focus-visible:ring-2 focus-visible:ring-primary ${
                   isActive
                     ? "bg-primary text-primary-foreground shadow-xs"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
@@ -291,8 +314,10 @@ export function CaseStudiesSection() {
                   {detail.fileRef && (
                     <div className="pt-2">
                       <button
+                        type="button"
                         onClick={() => handleCopyPath(detail.fileRef!)}
-                        className="w-full text-left flex items-center justify-between gap-2 px-2.5 py-1.5 rounded bg-muted/70 hover:bg-muted text-[11px] font-mono text-foreground/80 border border-border/80 transition-colors group-hover:border-primary/30"
+                        aria-label={`Copy repository path: ${detail.fileRef}`}
+                        className="w-full text-left flex items-center justify-between gap-2 px-2.5 py-1.5 rounded bg-muted/70 hover:bg-muted text-[11px] font-mono text-foreground/80 border border-border/80 transition-colors group-hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary min-h-[36px]"
                         title="Click to copy file reference"
                       >
                         <span className="truncate text-primary font-medium">

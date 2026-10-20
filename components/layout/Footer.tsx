@@ -20,12 +20,12 @@ export function Footer() {
         </div>
 
         {/* Right: Social Links & Back to Top */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-3">
           <a
             href={siteConfig.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-colors text-muted-foreground"
+            className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-muted hover:text-foreground transition-colors text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="GitHub Profile"
           >
             <Icons.gitHub className="h-4 w-4" />
@@ -34,14 +34,14 @@ export function Footer() {
             href={siteConfig.links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-colors text-muted-foreground"
+            className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-muted hover:text-foreground transition-colors text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="LinkedIn Profile"
           >
             <Icons.linkedIn className="h-4 w-4" />
           </a>
           <a
             href={siteConfig.links.email}
-            className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-colors text-muted-foreground"
+            className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-muted hover:text-foreground transition-colors text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Send Email"
           >
             <Mail className="h-4 w-4" />
@@ -49,8 +49,8 @@ export function Footer() {
 
           <a
             href="#main-content"
-            className="flex items-center gap-1 text-xs font-mono p-2 rounded-lg hover:bg-muted hover:text-foreground transition-colors text-muted-foreground ml-2"
-            aria-label="Back to top"
+            className="flex items-center gap-1.5 text-xs font-mono px-3 py-2 min-h-[44px] rounded-lg hover:bg-muted hover:text-foreground transition-colors text-muted-foreground ml-2 focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label="Back to top of page"
           >
             <span>Top</span>
             <ArrowUp className="h-3.5 w-3.5" />

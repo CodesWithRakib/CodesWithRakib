@@ -167,8 +167,9 @@ export function FeaturedProjectsSection() {
                   <Button
                     variant="primary"
                     size="sm"
-                    className="w-full sm:flex-1 gap-1.5 font-mono text-xs"
+                    className="w-full sm:flex-1 gap-1.5 font-mono text-xs min-h-[40px]"
                     onClick={() => handleSelectCaseStudy(project.id)}
+                    aria-label={`Inspect ${project.title} architectural case study`}
                   >
                     <span>Inspect Case Study</span>
                     <ArrowRight className="h-3.5 w-3.5" />
