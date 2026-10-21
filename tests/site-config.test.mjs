@@ -8,8 +8,8 @@ test("Site Configuration - Verified Production Identity", () => {
 
   // Verify production domain
   assert.ok(
-    configContent.includes('url: "https://codeswithrakib.vercel.app"'),
-    "Expected canonical URL to be https://codeswithrakib.vercel.app"
+    configContent.includes("https://codeswithrakib.github.io"),
+    "Expected canonical URL to be https://codeswithrakib.github.io"
   );
 
   // Verify author name

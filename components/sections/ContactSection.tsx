@@ -70,12 +70,32 @@ export function ContactSection() {
     setIsSubmitting(true);
     setServerStatus(null);
 
+    const contactApiUrl =
+      process.env.NEXT_PUBLIC_CONTACT_API_URL || "/api/contact";
+
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(contactApiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        let errorMessage =
+          "The contact service could not process the request. Please email me directly.";
+        try {
+          const errJson = await response.json();
+          if (errJson?.error) errorMessage = errJson.error;
+        } catch {
+          // If response is not JSON (e.g. 404 HTML on static host without backend)
+        }
+        setServerStatus({
+          success: false,
+          error: errorMessage,
+          deliveryStatus: "fallback_required",
+        });
+        return;
+      }
 
       const result: ContactApiResponse = await response.json();
       setServerStatus(result);
@@ -88,7 +108,7 @@ export function ContactSection() {
       setServerStatus({
         success: false,
         error:
-          "The contact server could not be reached. Email me directly and I will reply from there.",
+          "The contact server could not be reached directly. Please email me directly at codeswithrakib@gmail.com.",
         deliveryStatus: "fallback_required",
       });
     } finally {

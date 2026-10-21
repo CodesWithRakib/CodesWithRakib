@@ -31,7 +31,7 @@ export const siteConfig: SiteConfig = {
   title: "Md. Rakib Islam | Frontend Developer | React, Next.js, TypeScript",
   description:
     "Portfolio of Md. Rakib Islam, Frontend Developer at SOFOF Tech specializing in React, Next.js, TypeScript, and production SaaS architecture.",
-  url: "https://codeswithrakib.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://codeswithrakib.github.io",
   author: {
     name: "Md. Rakib Islam",
     role: "Frontend Developer",

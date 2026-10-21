@@ -10,6 +10,7 @@ export default [
     ignores: [
       "**/dist/**",
       "**/build/**",
+      "**/out/**",
       "**/.next/**",
       "**/node_modules/**",
       "**/*.d.ts",
