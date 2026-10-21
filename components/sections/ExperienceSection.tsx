@@ -2,6 +2,7 @@ import * as React from "react";
 import { Container } from "@/components/layout/Container";
 import { Badge } from "@/components/ui/badge";
 import { SectionHeader } from "@/components/shared/SectionHeader";
+import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { experienceData } from "@/data/experience";
 import {
   MapPin,
@@ -19,14 +20,17 @@ export function ExperienceSection() {
     <section id="experience" className="py-20 sm:py-24 border-t border-border bg-background">
       <Container>
         {/* Section Header */}
-        <SectionHeader
-          badge="PROFESSIONAL WORK EXPERIENCE"
-          title="Production Frontend Engineering at SOFOF Tech"
-          description="Real-world client deliverables, interactive SaaS portals, and bidirectional internationalization built with strict adherence to maintainable architecture."
-        />
+        <ScrollReveal direction="up">
+          <SectionHeader
+            badge="PROFESSIONAL WORK EXPERIENCE"
+            title="Production Frontend Engineering at SOFOF Tech"
+            description="Real-world client deliverables, interactive SaaS portals, and bidirectional internationalization built with strict adherence to maintainable architecture."
+          />
+        </ScrollReveal>
 
         {/* Experience Presentation Card */}
-        <div className="relative border border-border bg-card rounded-2xl p-6 sm:p-8 md:p-10 shadow-xs overflow-hidden">
+        <ScrollReveal direction="up" delayMs={100}>
+          <div className="relative border border-border bg-card rounded-2xl p-6 sm:p-8 md:p-10 shadow-xs overflow-hidden">
           {/* Subtle top indicator bar */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/30 via-primary to-accent/40 opacity-80" />
 
@@ -145,6 +149,7 @@ export function ExperienceSection() {
             </div>
           </div>
         </div>
+      </ScrollReveal>
       </Container>
     </section>
   );

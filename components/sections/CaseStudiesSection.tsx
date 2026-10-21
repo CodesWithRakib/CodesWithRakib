@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SectionHeader } from "@/components/shared/SectionHeader";
+import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { projectsData, earlyProjectsData } from "@/data/projects";
 import { Icons } from "@/components/shared/Icons";
 import {
@@ -74,18 +75,21 @@ export function CaseStudiesSection() {
     <section id="case-studies" className="py-20 sm:py-24 border-t border-border bg-surface/30">
       <Container>
         {/* Section Header */}
-        <SectionHeader
-          badge="DEEP-DIVE TECHNICAL CASE STUDIES"
-          title="Under the Hood: Architecture, Contracts & Code"
-          description="In-depth technical evaluations of domain-specific architectures, type-safe API contracts, and trade-offs. Inspect exact repository file paths and verified status breakdowns."
-        />
+        <ScrollReveal direction="up">
+          <SectionHeader
+            badge="DEEP-DIVE TECHNICAL CASE STUDIES"
+            title="Under the Hood: Architecture, Contracts & Code"
+            description="In-depth technical evaluations of domain-specific architectures, type-safe API contracts, and trade-offs. Inspect exact repository file paths and verified status breakdowns."
+          />
+        </ScrollReveal>
 
         {/* Project Selector Tabs */}
-        <div
-          role="tablist"
-          aria-label="Flagship Project Case Studies"
-          className="flex flex-wrap items-center gap-2 p-1.5 rounded-xl border border-border bg-card/80 backdrop-blur-xs mb-10 max-w-3xl"
-        >
+        <ScrollReveal direction="up" delayMs={100}>
+          <div
+            role="tablist"
+            aria-label="Flagship Project Case Studies"
+            className="flex flex-wrap items-center gap-2 p-1.5 rounded-xl border border-border bg-card/80 backdrop-blur-xs mb-10 max-w-3xl"
+          >
           {projectsData.map((project, index) => {
             const isActive = project.id === activeProjectId;
             return (
@@ -144,6 +148,7 @@ export function CaseStudiesSection() {
             );
           })}
         </div>
+      </ScrollReveal>
 
         {/* Selected Project Case Study Panel */}
         <div
@@ -504,73 +509,75 @@ export function CaseStudiesSection() {
         </div>
 
         {/* 7. Secondary / Foundational Projects Showcase */}
-        <div className="mt-20 pt-16 border-t border-border">
-          <div className="mb-8">
-            <span className="inline-block text-xs font-mono font-medium tracking-wider uppercase text-muted-foreground mb-1">
-              FOUNDATIONAL MILESTONES
-            </span>
-            <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-              Early Exploratory & Client-Side Projects
-            </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl leading-relaxed">
-              Earlier projects developed while building full-stack fundamentals in MERN workflows, authentication, and client-side state persistence prior to engineering enterprise monorepos.
-            </p>
-          </div>
+        <ScrollReveal direction="up" delayMs={100}>
+          <div className="mt-20 pt-16 border-t border-border">
+            <div className="mb-8">
+              <span className="inline-block text-xs font-mono font-medium tracking-wider uppercase text-muted-foreground mb-1">
+                FOUNDATIONAL MILESTONES
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+                Early Exploratory & Client-Side Projects
+              </h3>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl leading-relaxed">
+                Earlier projects developed while building full-stack fundamentals in MERN workflows, authentication, and client-side state persistence prior to engineering enterprise monorepos.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {earlyProjectsData.map((project, idx) => (
-              <div
-                key={idx}
-                className="p-6 rounded-xl border border-border bg-card/60 backdrop-blur-xs flex flex-col justify-between space-y-4 hover:border-primary/30 transition-colors"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[11px] font-mono text-muted-foreground font-medium px-2 py-0.5 rounded bg-muted border border-border">
-                      {project.category}
-                    </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {earlyProjectsData.map((project, idx) => (
+                <div
+                  key={idx}
+                  className="p-6 rounded-xl border border-border bg-card/60 backdrop-blur-xs flex flex-col justify-between space-y-4 hover:border-primary/30 transition-colors"
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-mono text-muted-foreground font-medium px-2 py-0.5 rounded bg-muted border border-border">
+                        {project.category}
+                      </span>
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-foreground transition-colors p-1"
+                        aria-label={`View ${project.title} on GitHub`}
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    </div>
+
+                    <h4 className="text-base font-bold text-foreground">{project.title}</h4>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  <div className="space-y-3 pt-2 border-t border-border/60">
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.techStack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-foreground/80 border border-border/70"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
                     <a
                       href={project.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-foreground transition-colors p-1"
-                      aria-label={`View ${project.title} on GitHub`}
+                      className="inline-flex text-xs font-mono text-primary hover:underline items-center gap-1"
                     >
-                      <ExternalLink className="h-3.5 w-3.5" />
+                      <span>View Repository</span>
+                      <ArrowUpRight className="h-3 w-3" />
                     </a>
                   </div>
-
-                  <h4 className="text-base font-bold text-foreground">{project.title}</h4>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {project.description}
-                  </p>
                 </div>
-
-                <div className="space-y-3 pt-2 border-t border-border/60">
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.techStack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-foreground/80 border border-border/70"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <a
-                    href={project.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex text-xs font-mono text-primary hover:underline items-center gap-1"
-                  >
-                    <span>View Repository</span>
-                    <ArrowUpRight className="h-3 w-3" />
-                  </a>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </Container>
     </section>
   );

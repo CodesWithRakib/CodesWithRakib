@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { SectionHeader } from "@/components/shared/SectionHeader";
+import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/shared/Icons";
 import {
@@ -96,16 +97,19 @@ export function ContactSection() {
     <section id="contact" className="py-20 sm:py-24 border-t border-border bg-surface/30">
       <Container>
         {/* Section Header */}
-        <SectionHeader
-          badge="GET IN TOUCH & CONNECT"
-          title="Let's Discuss Engineering Opportunities"
-          description="I am actively considering Frontend and full-stack software engineering opportunities. Send a message through the form below, reach out directly via email, or connect on LinkedIn."
-        />
+        <ScrollReveal direction="up">
+          <SectionHeader
+            badge="GET IN TOUCH & CONNECT"
+            title="Let's Discuss Engineering Opportunities"
+            description="I am actively considering Frontend and full-stack software engineering opportunities. Send a message through the form below, reach out directly via email, or connect on LinkedIn."
+          />
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Left Column: Direct Verified Channels & Recruiter Profile (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
-            <Card className="border-border bg-card p-6 sm:p-8 space-y-6 shadow-xs">
+            <ScrollReveal direction="left" delayMs={100}>
+              <Card className="border-border bg-card p-6 sm:p-8 space-y-6 shadow-xs">
               <div className="space-y-2">
                 <Badge variant="primary" className="text-xs font-mono">
                   DIRECT ACCESS
@@ -209,10 +213,12 @@ export function ContactSection() {
                 </div>
               </div>
             </Card>
+            </ScrollReveal>
           </div>
 
           {/* Right Column: Production Contact Form (7 cols) */}
           <div className="lg:col-span-7">
+            <ScrollReveal direction="right" delayMs={150}>
             <Card className="border-border bg-card p-6 sm:p-8 shadow-xs">
               <CardHeader className="p-0 pb-6 space-y-1">
                 <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
@@ -421,6 +427,7 @@ export function ContactSection() {
                 </div>
               </form>
             </Card>
+            </ScrollReveal>
           </div>
         </div>
       </Container>

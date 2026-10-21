@@ -10,6 +10,17 @@ import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  // Track scroll position for subtle elevation
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 16);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close mobile menu on Escape key press
   React.useEffect(() => {
@@ -33,15 +44,21 @@ export function Navbar() {
   }, [mobileMenuOpen]);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md transition-colors">
+    <header
+      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+        isScrolled
+          ? "border-b border-border/90 bg-background/90 backdrop-blur-md shadow-xs"
+          : "border-b border-transparent bg-background/60 backdrop-blur-sm"
+      }`}
+    >
       <Container className="flex h-16 items-center justify-between">
-        {/* Brand Identity */}
+        {/* Brand Identity - Personal Developer First */}
         <Link
           href="/"
-          className="group flex items-center gap-2.5 text-foreground hover:opacity-90 transition-opacity focus-visible:ring-2 focus-visible:ring-primary rounded-lg p-1 -ml-1"
-          aria-label={`${siteConfig.name} - Homepage`}
+          className="group flex items-center gap-2.5 text-foreground hover:opacity-95 transition-opacity focus-visible:ring-2 focus-visible:ring-primary rounded-lg p-1 -ml-1"
+          aria-label={`${siteConfig.name} - Software Engineer Homepage`}
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-mono font-bold text-sm shadow-xs">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-mono font-bold text-sm shadow-xs transition-transform duration-200 group-hover:scale-105">
             RI
           </span>
           <div className="flex flex-col">
@@ -49,7 +66,7 @@ export function Navbar() {
               {siteConfig.name}
             </span>
             <span className="text-[11px] font-mono text-muted-foreground leading-tight mt-0.5">
-              Frontend @ SOFOF Tech
+              Software Engineer
             </span>
           </div>
         </Link>
