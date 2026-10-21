@@ -4,12 +4,21 @@ import * as React from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowUpRight,
+  Check,
+  CheckCircle2,
+  Copy,
+  Loader2,
+  Mail,
+  MapPin,
+  Send,
+  TriangleAlert,
+} from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { SectionHeader } from "@/components/shared/SectionHeader";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
+import { GsapReveal } from "@/components/motion/GsapReveal";
 import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/shared/Icons";
 import {
@@ -17,24 +26,16 @@ import {
   ContactFormData,
   ContactApiResponse,
 } from "@/lib/validations/contact";
-import {
-  Mail,
-  Copy,
-  Check,
-  Send,
-  Loader2,
-  AlertCircle,
-  CheckCircle2,
-  Clock,
-  MapPin,
-  Briefcase,
-  FileText,
-  ExternalLink,
-} from "lucide-react";
+import { EASE_OUT } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+
+const fieldClass =
+  "w-full rounded-none border-0 border-b border-border bg-transparent px-0 py-2.5 text-[13px] text-foreground placeholder:text-muted-foreground transition-colors focus:border-primary focus:outline-none focus:ring-0 disabled:opacity-60";
 
 export function ContactSection() {
   const [copiedEmail, setCopiedEmail] = React.useState(false);
-  const [serverStatus, setServerStatus] = React.useState<ContactApiResponse | null>(null);
+  const [serverStatus, setServerStatus] =
+    React.useState<ContactApiResponse | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [messageLength, setMessageLength] = React.useState(0);
 
@@ -54,12 +55,15 @@ export function ContactSection() {
     },
   });
 
-  const handleCopyEmail = () => {
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText(siteConfig.author.email);
-      setCopiedEmail(true);
-      setTimeout(() => setCopiedEmail(false), 2000);
-    }
+  React.useEffect(() => {
+    if (!copiedEmail) return;
+    const timer = window.setTimeout(() => setCopiedEmail(false), 2000);
+    return () => window.clearTimeout(timer);
+  }, [copiedEmail]);
+
+  const copyEmail = () => {
+    navigator.clipboard?.writeText(siteConfig.author.email);
+    setCopiedEmail(true);
   };
 
   const onSubmit = async (data: ContactFormData) => {
@@ -74,7 +78,6 @@ export function ContactSection() {
       });
 
       const result: ContactApiResponse = await response.json();
-
       setServerStatus(result);
 
       if (result.success) {
@@ -85,7 +88,7 @@ export function ContactSection() {
       setServerStatus({
         success: false,
         error:
-          "Unable to reach the contact server. Please reach out directly to codeswithrakib@gmail.com.",
+          "The contact server could not be reached. Email me directly and I will reply from there.",
         deliveryStatus: "fallback_required",
       });
     } finally {
@@ -94,341 +97,403 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 sm:py-24 border-t border-border bg-surface/30">
+    <section
+      id="contact"
+      className="relative scroll-mt-20 overflow-hidden border-t border-border/70 py-20 sm:py-28"
+    >
+      <div
+        aria-hidden="true"
+        className="wash-light absolute inset-0 -z-10 opacity-70"
+      />
       <Container>
-        {/* Section Header */}
-        <ScrollReveal direction="up">
-          <SectionHeader
-            badge="GET IN TOUCH & CONNECT"
-            title="Let's Discuss Engineering Opportunities"
-            description="I am actively considering Frontend and full-stack software engineering opportunities. Send a message through the form below, reach out directly via email, or connect on LinkedIn."
-          />
-        </ScrollReveal>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-          {/* Left Column: Direct Verified Channels & Recruiter Profile (5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
-            <ScrollReveal direction="left" delayMs={100}>
-              <Card className="border-border bg-card p-6 sm:p-8 space-y-6 shadow-xs">
-              <div className="space-y-2">
-                <Badge variant="primary" className="text-xs font-mono">
-                  DIRECT ACCESS
-                </Badge>
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-                  Recruiter & Team Quick Contact
-                </h3>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                  Feel free to reach out directly through any of these verified communication channels.
-                </p>
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-12">
+          <GsapReveal className="lg:col-span-6">
+            <div className="lg:sticky lg:top-28">
+              <div data-reveal className="flex items-center gap-3">
+                <span className="font-mono text-[11px] text-primary">06</span>
+                <span aria-hidden="true" className="h-px w-8 bg-primary/45" />
+                <span className="eyebrow">Contact</span>
               </div>
 
-              {/* Status Context List */}
-              <div className="space-y-3 pt-2 border-t border-border/80">
-                <div className="flex items-center gap-2.5 text-xs text-foreground/85">
-                  <Briefcase className="h-4 w-4 text-primary shrink-0" />
-                  <span>
-                    <strong>Availability: </strong>Frontend & Full-Stack Roles
-                  </span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs text-foreground/85">
-                  <MapPin className="h-4 w-4 text-primary shrink-0" />
-                  <span>
-                    <strong>Location: </strong>Dhaka, Bangladesh (UTC+6)
-                  </span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs text-foreground/85">
-                  <Clock className="h-4 w-4 text-primary shrink-0" />
-                  <span>
-                    <strong>Response SLA: </strong>Within 24 hours guaranteed
-                  </span>
-                </div>
-              </div>
+              <h2
+                data-reveal
+                className="mt-6 max-w-lg text-balance font-display text-[clamp(2.7rem,5.6vw,4.6rem)] leading-[0.9] tracking-[-0.03em] text-foreground"
+              >
+                Let&apos;s build something{" "}
+                <span className="italic text-primary">worth shipping.</span>
+              </h2>
 
-              {/* Verified Action Channels */}
-              <div className="space-y-3 pt-2 border-t border-border/80">
-                {/* One-Click Copy Email */}
-                <div className="p-3.5 rounded-xl border border-border bg-surface flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <Mail className="h-4 w-4 text-primary shrink-0" />
-                    <span className="text-xs font-mono font-medium truncate text-foreground">
-                      {siteConfig.author.email}
-                    </span>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8 gap-1.5 font-mono text-[11px] shrink-0"
-                    onClick={handleCopyEmail}
-                    title="Copy email to clipboard"
+              <p
+                data-reveal
+                className="mt-6 max-w-md text-pretty text-[13.5px] leading-relaxed text-muted-foreground"
+              >
+                I&apos;m open to frontend and full-stack roles, and to selective
+                contract work. The fastest way to reach me is email — the form
+                works too.
+              </p>
+
+              <div data-reveal className="mt-8">
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href={`mailto:${siteConfig.author.email}`}
+                    className="underline-sweep font-display text-[clamp(1.35rem,2.6vw,1.9rem)] leading-none text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                  >
+                    {siteConfig.author.email}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={copyEmail}
+                    aria-label={
+                      copiedEmail ? "Email copied" : "Copy email address"
+                    }
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     {copiedEmail ? (
-                      <>
-                        <Check className="h-3.5 w-3.5 text-emerald-500" />
-                        <span className="text-emerald-500">Copied</span>
-                      </>
+                      <Check className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
                     ) : (
-                      <>
-                        <Copy className="h-3.5 w-3.5" />
-                        <span>Copy</span>
-                      </>
+                      <Copy className="h-3.5 w-3.5" aria-hidden="true" />
                     )}
-                  </Button>
-                </div>
-
-                {/* Direct Link Buttons */}
-                <div className="grid grid-cols-2 gap-2.5">
-                  <a
-                    href={siteConfig.links.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button variant="outline" size="sm" className="w-full gap-2 font-mono text-xs">
-                      <Icons.linkedIn className="h-3.5 w-3.5" />
-                      <span>LinkedIn</span>
-                      <ExternalLink className="h-3 w-3 text-muted-foreground ml-auto" />
-                    </Button>
-                  </a>
-
-                  <a
-                    href={siteConfig.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button variant="outline" size="sm" className="w-full gap-2 font-mono text-xs">
-                      <Icons.gitHub className="h-3.5 w-3.5" />
-                      <span>GitHub</span>
-                      <ExternalLink className="h-3 w-3 text-muted-foreground ml-auto" />
-                    </Button>
-                  </a>
-                </div>
-
-                {/* Resume Access Button */}
-                <div className="pt-2">
-                  <Link href="/resume" className="block w-full">
-                    <Button variant="secondary" size="sm" className="w-full gap-2 font-mono text-xs">
-                      <FileText className="h-3.5 w-3.5" />
-                      <span>Access Resume / CV Overview</span>
-                    </Button>
-                  </Link>
+                  </button>
+                  <span aria-live="polite" className="sr-only">
+                    {copiedEmail ? "Email address copied to clipboard" : ""}
+                  </span>
                 </div>
               </div>
-            </Card>
-            </ScrollReveal>
-          </div>
 
-          {/* Right Column: Production Contact Form (7 cols) */}
-          <div className="lg:col-span-7">
-            <ScrollReveal direction="right" delayMs={150}>
-            <Card className="border-border bg-card p-6 sm:p-8 shadow-xs">
-              <CardHeader className="p-0 pb-6 space-y-1">
-                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-                  Send a Direct Message
-                </CardTitle>
-                <p className="text-xs sm:text-sm text-muted-foreground">
-                  Validated with React Hook Form and Zod with server-side rate limiting.
-                </p>
-              </CardHeader>
-
-              {/* Server Status Feedback Banner */}
-              {serverStatus && (
-                <div
-                  className={`p-4 rounded-xl border mb-6 text-xs leading-relaxed flex items-start gap-3 ${
-                    serverStatus.success
-                      ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-400"
-                      : "bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-400"
-                  }`}
-                  role="alert"
-                >
-                  {serverStatus.success ? (
-                    <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
-                  ) : (
-                    <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                  )}
-                  <div className="space-y-1">
-                    <p className="font-medium">{serverStatus.message || serverStatus.error}</p>
-                    {serverStatus.deliveryStatus === "fallback_required" && (
-                      <p className="text-[11px] opacity-90">
-                        You can also send your message directly via email to{" "}
-                        <a
-                          href={`mailto:${siteConfig.author.email}`}
-                          className="underline font-mono font-semibold"
-                        >
-                          {siteConfig.author.email}
-                        </a>
-                        .
-                      </p>
-                    )}
+              <dl
+                data-reveal
+                className="mt-8 grid max-w-md grid-cols-1 gap-3 border-t border-border/80 pt-5 sm:grid-cols-2"
+              >
+                <div className="flex items-start gap-2">
+                  <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  <div>
+                    <dt className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                      Availability
+                    </dt>
+                    <dd className="mt-1 text-[11px] font-medium text-foreground">
+                      Frontend &amp; full-stack roles
+                    </dd>
                   </div>
                 </div>
-              )}
+                <div className="flex items-start gap-2">
+                  <MapPin
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary"
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <dt className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                      Location
+                    </dt>
+                    <dd className="mt-1 text-[11px] font-medium text-foreground">
+                      Dhaka, Bangladesh · UTC+6
+                    </dd>
+                  </div>
+                </div>
+              </dl>
 
-              {/* Form Element */}
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-                {/* Honeypot field (hidden from human users) */}
+              <div
+                data-reveal
+                className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3"
+              >
+                <a
+                  href={siteConfig.links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-1.5 text-[11px] font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                >
+                  <Icons.linkedIn className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span className="underline-sweep">LinkedIn</span>
+                  <ArrowUpRight
+                    className="h-3 w-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </a>
+                <a
+                  href={siteConfig.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-1.5 text-[11px] font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                >
+                  <Icons.gitHub className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span className="underline-sweep">GitHub</span>
+                  <ArrowUpRight
+                    className="h-3 w-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </a>
+                <Link
+                  href="/resume"
+                  className="underline-sweep text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                >
+                  Résumé &amp; CV
+                </Link>
+              </div>
+            </div>
+          </GsapReveal>
+
+          <GsapReveal className="lg:col-span-6" delay={0.1}>
+            <div data-reveal className="border-t border-border/80 pt-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="font-display text-2xl text-foreground">
+                  Send a note
+                </h3>
+                <span className="font-mono text-[8px] uppercase tracking-[0.14em] text-muted-foreground">
+                  Validated · rate limited
+                </span>
+              </div>
+              <p className="mt-2 text-[11.5px] leading-relaxed text-muted-foreground">
+                Share the role, the product, or the problem. No newsletters, no
+                spam lists.
+              </p>
+
+              <AnimatePresence initial={false}>
+                {serverStatus && (
+                  <motion.div
+                    key="contact-status"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: EASE_OUT }}
+                    className="overflow-hidden"
+                  >
+                    <div
+                      role="alert"
+                      className={cn(
+                        "mt-5 flex items-start gap-2.5 border-l-2 py-1 pl-3 text-[11.5px] leading-relaxed",
+                        serverStatus.success
+                          ? "border-accent text-foreground"
+                          : "border-error text-foreground"
+                      )}
+                    >
+                      {serverStatus.success ? (
+                        <CheckCircle2
+                          className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <TriangleAlert
+                          className="mt-0.5 h-3.5 w-3.5 shrink-0 text-error"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <div>
+                        <p>{serverStatus.message ?? serverStatus.error}</p>
+                        {serverStatus.deliveryStatus ===
+                          "fallback_required" &&
+                          !serverStatus.error?.includes(
+                            siteConfig.author.email
+                          ) && (
+                          <p className="mt-1 text-muted-foreground">
+                            You can also email{" "}
+                            <a
+                              href={`mailto:${siteConfig.author.email}`}
+                              className="font-medium text-primary underline underline-offset-2"
+                            >
+                              {siteConfig.author.email}
+                            </a>
+                            .
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="mt-6 space-y-5"
+                noValidate
+              >
                 <input
                   type="text"
                   tabIndex={-1}
                   autoComplete="off"
-                  className="hidden pointer-events-none"
+                  className="pointer-events-none hidden"
                   aria-hidden="true"
                   aria-label="Do not fill this field"
                   {...register("botField")}
                 />
 
-                {/* Name & Email Row */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Name Field */}
-                  <div className="space-y-1.5">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
                     <label
                       htmlFor="contact-name"
-                      className="text-xs font-mono font-medium text-foreground block"
+                      className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground"
                     >
-                      Your Name <span className="text-primary">*</span>
+                      Name <span className="text-primary">*</span>
                     </label>
                     <input
                       id="contact-name"
                       type="text"
                       autoComplete="name"
-                      placeholder="e.g. Sarah Jenkins"
+                      placeholder="Your name"
                       disabled={isSubmitting}
                       aria-invalid={errors.name ? "true" : "false"}
                       aria-describedby={errors.name ? "name-error" : undefined}
-                      className={`w-full px-3.5 py-2.5 rounded-lg bg-surface border text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-primary/40 transition-colors ${
-                        errors.name ? "border-red-500" : "border-border"
-                      }`}
+                      className={cn(
+                        fieldClass,
+                        errors.name && "border-error"
+                      )}
                       {...register("name")}
                     />
                     {errors.name && (
-                      <p id="name-error" role="alert" className="text-[11px] text-red-600 dark:text-red-400 font-mono">
+                      <p
+                        id="name-error"
+                        role="alert"
+                        className="mt-1.5 font-mono text-[9px] text-error"
+                      >
                         {errors.name.message}
                       </p>
                     )}
                   </div>
 
-                  {/* Email Field */}
-                  <div className="space-y-1.5">
+                  <div>
                     <label
                       htmlFor="contact-email"
-                      className="text-xs font-mono font-medium text-foreground block"
+                      className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground"
                     >
-                      Your Email <span className="text-primary">*</span>
+                      Email <span className="text-primary">*</span>
                     </label>
                     <input
                       id="contact-email"
                       type="email"
                       autoComplete="email"
-                      placeholder="e.g. sarah@company.com"
+                      placeholder="you@company.com"
                       disabled={isSubmitting}
                       aria-invalid={errors.email ? "true" : "false"}
                       aria-describedby={errors.email ? "email-error" : undefined}
-                      className={`w-full px-3.5 py-2.5 rounded-lg bg-surface border text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-primary/40 transition-colors ${
-                        errors.email ? "border-red-500" : "border-border"
-                      }`}
+                      className={cn(
+                        fieldClass,
+                        errors.email && "border-error"
+                      )}
                       {...register("email")}
                     />
                     {errors.email && (
-                      <p id="email-error" role="alert" className="text-[11px] text-red-600 dark:text-red-400 font-mono">
+                      <p
+                        id="email-error"
+                        role="alert"
+                        className="mt-1.5 font-mono text-[9px] text-error"
+                      >
                         {errors.email.message}
                       </p>
                     )}
                   </div>
                 </div>
 
-                {/* Subject Field */}
-                <div className="space-y-1.5">
+                <div>
                   <label
                     htmlFor="contact-subject"
-                    className="text-xs font-mono font-medium text-foreground block"
+                    className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground"
                   >
                     Subject <span className="text-primary">*</span>
                   </label>
                   <input
                     id="contact-subject"
                     type="text"
-                    placeholder="e.g. Frontend Engineering Opportunity / Contract"
+                    placeholder="Role, project or collaboration"
                     disabled={isSubmitting}
                     aria-invalid={errors.subject ? "true" : "false"}
-                    aria-describedby={errors.subject ? "subject-error" : undefined}
-                    className={`w-full px-3.5 py-2.5 rounded-lg bg-surface border text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-primary/40 transition-colors ${
-                      errors.subject ? "border-red-500" : "border-border"
-                    }`}
+                    aria-describedby={
+                      errors.subject ? "subject-error" : undefined
+                    }
+                    className={cn(
+                      fieldClass,
+                      errors.subject && "border-error"
+                    )}
                     {...register("subject")}
                   />
                   {errors.subject && (
-                    <p id="subject-error" role="alert" className="text-[11px] text-red-600 dark:text-red-400 font-mono">
+                    <p
+                      id="subject-error"
+                      role="alert"
+                      className="mt-1.5 font-mono text-[9px] text-error"
+                    >
                       {errors.subject.message}
                     </p>
                   )}
                 </div>
 
-                {/* Message Field */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
+                <div>
+                  <div className="flex items-baseline justify-between gap-2">
                     <label
                       htmlFor="contact-message"
-                      className="text-xs font-mono font-medium text-foreground block"
+                      className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground"
                     >
                       Message <span className="text-primary">*</span>
                     </label>
-                    <span className="text-[11px] font-mono text-muted-foreground">
+                    <span className="font-mono text-[8px] text-muted-foreground">
                       {messageLength} / 2000
                     </span>
                   </div>
                   <textarea
                     id="contact-message"
-                    rows={5}
-                    placeholder="Provide details about your project, engineering role, or collaboration request..."
+                    rows={4}
+                    placeholder="A little context about the team, product or problem…"
                     disabled={isSubmitting}
                     aria-invalid={errors.message ? "true" : "false"}
-                    aria-describedby={errors.message ? "message-error" : undefined}
-                    className={`w-full px-3.5 py-2.5 rounded-lg bg-surface border text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-primary/40 transition-colors resize-y min-h-[120px] ${
-                      errors.message ? "border-red-500" : "border-border"
-                    }`}
+                    aria-describedby={
+                      errors.message ? "message-error" : undefined
+                    }
+                    className={cn(
+                      fieldClass,
+                      "resize-y",
+                      errors.message && "border-error"
+                    )}
                     {...register("message", {
-                      onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                        setMessageLength(e.target.value.length),
+                      onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                        setMessageLength(event.target.value.length),
                     })}
                   />
                   {errors.message && (
-                    <p id="message-error" role="alert" className="text-[11px] text-red-600 dark:text-red-400 font-mono">
+                    <p
+                      id="message-error"
+                      role="alert"
+                      className="mt-1.5 font-mono text-[9px] text-error"
+                    >
                       {errors.message.message}
                     </p>
                   )}
                 </div>
 
-                {/* Action Buttons */}
-                <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex flex-col gap-4 pt-1 sm:flex-row sm:items-center sm:justify-between">
                   <Button
                     type="submit"
                     variant="primary"
                     size="lg"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto gap-2 font-mono text-xs"
+                    className="group w-full gap-2 sm:w-auto"
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        <span>Sending Message...</span>
+                        <Loader2
+                          className="h-4 w-4 animate-spin"
+                          aria-hidden="true"
+                        />
+                        <span>Sending…</span>
                       </>
                     ) : (
                       <>
-                        <Send className="h-4 w-4" />
-                        <span>Send Message</span>
+                        <span>Send message</span>
+                        <Send
+                          className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                          aria-hidden="true"
+                        />
                       </>
                     )}
                   </Button>
 
                   <a
                     href={`mailto:${siteConfig.author.email}?subject=Inquiry%20via%20Portfolio`}
-                    className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors underline"
+                    className="inline-flex items-center gap-1.5 text-[10.5px] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
-                    Prefer your native email app?
+                    <Mail className="h-3 w-3" aria-hidden="true" />
+                    Prefer your email app?
                   </a>
                 </div>
               </form>
-            </Card>
-            </ScrollReveal>
-          </div>
+            </div>
+          </GsapReveal>
         </div>
       </Container>
     </section>

@@ -1,115 +1,76 @@
 import * as React from "react";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
 import { SectionHeader } from "@/components/shared/SectionHeader";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
-import { engineeringStrengthsData, EngineeringStrength } from "@/data/principles";
-import {
-  ShieldCheck,
-  Cpu,
-  Layers,
-  Workflow,
-  Sparkles,
-  ArrowRight,
-  FileCode2,
-} from "lucide-react";
+import { GsapReveal } from "@/components/motion/GsapReveal";
+import { engineeringStrengthsData } from "@/data/principles";
 
 export function EngineeringStrengthsSection() {
-  const getStrengthIcon = (id: string) => {
-    switch (id) {
-      case "maintainable-ui":
-        return <Layers className="h-5 w-5 text-primary" />;
-      case "type-safety-boundaries":
-        return <ShieldCheck className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />;
-      case "workflow-modeling":
-        return <Workflow className="h-5 w-5 text-teal-600 dark:text-teal-400" />;
-      case "resilient-ux-localization":
-        return <Cpu className="h-5 w-5 text-amber-600 dark:text-amber-400" />;
-      default:
-        return <Sparkles className="h-5 w-5 text-primary" />;
-    }
-  };
-
   return (
-    <section id="principles" className="py-20 sm:py-24 border-t border-border bg-background">
+    <section id="principles" className="scroll-mt-20 py-20 sm:py-28">
       <Container>
-        {/* Section Header */}
-        <ScrollReveal direction="up">
-          <SectionHeader
-            badge="ENGINEERING STRENGTHS & PRINCIPLES"
-            title="How I Approach Solving Engineering Problems"
-            description="Four practical engineering pillars grounded in production deliverables at SOFOF Tech and verified across local monorepo architectures."
-          />
-        </ScrollReveal>
+        <GsapReveal>
+          <div data-reveal>
+            <SectionHeader
+              index="05"
+              badge="Approach"
+              title="How I make engineering decisions."
+              description="Four habits that show up in the code: boundaries before cleverness, contracts before integration, and a clear state model before a feature ships."
+            />
+          </div>
+        </GsapReveal>
 
-        {/* 4 Engineering Strengths Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {engineeringStrengthsData.map((strength: EngineeringStrength, idx: number) => (
-            <ScrollReveal key={strength.id} direction="up" delayMs={idx * 80}>
-              <Card
-                className="h-full border-border bg-card flex flex-col justify-between p-6 sm:p-8 hover:border-primary/40 transition-all duration-300 relative group overflow-hidden shadow-xs"
-                hoverEffect
+        <div className="mt-14">
+          {engineeringStrengthsData.map((principle, index) => (
+            <GsapReveal key={principle.id}>
+              <article
+                data-reveal
+                className="group grid grid-cols-1 gap-4 border-t border-border/80 py-7 sm:grid-cols-12 sm:gap-6"
               >
-                <div className="space-y-4">
-                  {/* Header Icon & Tagline */}
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="p-2.5 rounded-xl bg-surface border border-border group-hover:border-primary/30 transition-colors">
-                      {getStrengthIcon(strength.id)}
-                    </div>
-                    <Badge variant="outline" className="text-[11px] font-mono text-muted-foreground bg-muted/40">
-                      Verified Craft
-                    </Badge>
-                  </div>
+                <div className="sm:col-span-1">
+                  <span className="font-mono text-[10px] text-primary">
+                    0{index + 1}
+                  </span>
+                </div>
 
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                      {strength.title}
-                    </h3>
-                    <p className="text-xs font-mono text-primary font-medium mt-1">
-                      {strength.tagline}
-                    </p>
-                  </div>
-
-                  {/* Practical Value Box */}
-                  <div className="p-3.5 rounded-lg bg-surface border border-border/80 text-xs leading-relaxed space-y-1">
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground font-semibold block">
-                      Practical Impact
-                    </span>
-                    <p className="text-foreground/90 font-medium">{strength.practicalValue}</p>
-                  </div>
-
-                  {/* Description Narrative */}
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    {strength.description}
+                <div className="sm:col-span-5">
+                  <h3 className="max-w-xs text-balance font-display text-[clamp(1.4rem,2.2vw,1.8rem)] leading-[1.05] tracking-[-0.015em] text-foreground">
+                    {principle.title}
+                  </h3>
+                  <p className="mt-2 max-w-sm text-[11px] font-medium leading-snug text-primary">
+                    {principle.tagline}
                   </p>
                 </div>
 
-                {/* Evidence & Action Link Footer */}
-                <div className="mt-6 pt-4 border-t border-border/70 space-y-3">
-                  <div className="flex items-start gap-2 text-xs text-muted-foreground">
-                    <FileCode2 className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
-                    <span className="text-[11px] leading-snug">
-                      <strong className="text-foreground font-mono">Evidence: </strong>
-                      {strength.evidence}
+                <div className="sm:col-span-6">
+                  <p className="max-w-xl text-pretty text-[12px] leading-relaxed text-muted-foreground">
+                    {principle.description}
+                  </p>
+                  <p className="mt-3 max-w-xl font-mono text-[9px] leading-relaxed text-muted-foreground">
+                    <span className="uppercase tracking-[0.14em] text-foreground/70">
+                      Evidence ·{" "}
                     </span>
-                  </div>
-
-                  {strength.projectLink && (
-                    <div className="pt-1">
-                      <a
-                        href={strength.projectLink.href}
-                        className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-primary hover:underline"
-                      >
-                        <span>{strength.projectLink.label}</span>
-                        <ArrowRight className="h-3 w-3" />
-                      </a>
-                    </div>
+                    {principle.evidence}
+                  </p>
+                  {principle.projectLink && (
+                    <a
+                      href={principle.projectLink.href}
+                      className="mt-3 inline-flex items-center gap-1.5 text-[10px] font-medium text-primary transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      <span className="underline-sweep">
+                        {principle.projectLink.label}
+                      </span>
+                      <ArrowUpRight
+                        className="h-3 w-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        aria-hidden="true"
+                      />
+                    </a>
                   )}
                 </div>
-              </Card>
-            </ScrollReveal>
+              </article>
+            </GsapReveal>
           ))}
+          <div className="border-t border-border/80" />
         </div>
       </Container>
     </section>

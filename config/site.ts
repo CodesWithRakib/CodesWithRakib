@@ -41,11 +41,11 @@ export const siteConfig: SiteConfig = {
     linkedin: "https://linkedin.com/in/codeswithrakib",
   },
   navItems: [
-    { label: "Projects", href: "/#projects" },
+    { label: "Work", href: "/#projects" },
     { label: "Case Studies", href: "/#case-studies" },
     { label: "Experience", href: "/#experience" },
     { label: "Skills", href: "/#skills" },
-    { label: "Principles", href: "/#principles" },
+    { label: "Approach", href: "/#principles" },
     { label: "Contact", href: "/#contact" },
   ],
   links: {

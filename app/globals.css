@@ -4,91 +4,128 @@
 
 @layer base {
   :root {
-    /* --- Neutral Surfaces & Contrast --- */
-    --background: #ffffff;
-    --surface: #f8fafc;
-    --surface-raised: #ffffff;
-    --foreground: #0f172a;
-    --muted: #f1f5f9;
-    --muted-foreground: #475569;
-    --border: #e2e8f0;
-    --border-subtle: #f1f5f9;
+    /* --- Paper & ink surfaces (light: warm editorial paper) --- */
+    --background: #f4efe6;
+    --surface: #faf6ef;
+    --surface-raised: #fffcf6;
+    --foreground: #191510;
+    --muted: #eae3d6;
+    --muted-foreground: #62594b;
+    --border: #d8cfbf;
+    --border-subtle: #e7dfd1;
 
-    /* --- Refined Primary Brand Accent (Deep Emerald / Forest) --- */
-    --primary: #065f46;
-    --primary-hover: #044e3a;
-    --primary-foreground: #ffffff;
-    --primary-subtle: #ecfdf5;
-    --primary-subtle-foreground: #065f46;
+    /* --- Oxide accent (restrained burnt sienna) --- */
+    --primary: #9c3b12;
+    --primary-hover: #7c2d0b;
+    --primary-foreground: #fff8f0;
+    --primary-subtle: #f2e2d5;
+    --primary-subtle-foreground: #84300d;
 
-    /* --- Secondary Accent (Teal / Cyan touch) --- */
-    --accent: #0d9488;
-    --accent-hover: #0f766e;
-    --accent-foreground: #ffffff;
-    --accent-subtle: #f0fdfa;
-    --accent-subtle-foreground: #0d9488;
+    /* --- Moss secondary --- */
+    --accent: #315c46;
+    --accent-hover: #244735;
+    --accent-foreground: #f6faf5;
+    --accent-subtle: #e2eae1;
+    --accent-subtle-foreground: #315c46;
 
-    /* --- Interactive & Focus Ring --- */
-    --ring: #059669;
-    --ring-offset: #ffffff;
+    --ring: #9c3b12;
+    --ring-offset: #f4efe6;
 
-    /* --- Status Semantics --- */
-    --success: #16a34a;
-    --success-subtle: #f0fdf4;
-    --warning: #d97706;
-    --warning-subtle: #fffbeb;
-    --error: #dc2626;
-    --error-subtle: #fef2f2;
+    --success: #2f6b45;
+    --success-subtle: #e3ece3;
+    --warning: #9a5b13;
+    --warning-subtle: #f4e7d4;
+    --error: #a52a1f;
+    --error-subtle: #f6e0dc;
 
-    /* --- Card / Popover compatibility --- */
-    --card: #ffffff;
-    --card-foreground: #0f172a;
-    --popover: #ffffff;
-    --popover-foreground: #0f172a;
+    --card: #fbf7f0;
+    --card-foreground: #191510;
+    --popover: #fffcf6;
+    --popover-foreground: #191510;
+
+    /* --- Art-direction tokens (light) --- */
+    --wash-1: 226 196 168;
+    --wash-2: 195 208 188;
+    --grid-line: 73 62 47;
+    --grid-opacity: 0.055;
+    --grain-opacity: 0.028;
+    --grain-blend: multiply;
+    --panel-line: #d3c7b4;
+    --panel-glass: rgba(255, 252, 246, 0.72);
+    --shadow-soft: 0 1px 2px rgba(50, 38, 24, 0.04), 0 12px 32px -18px rgba(50, 38, 24, 0.28);
+    --shadow-lift: 0 2px 4px rgba(50, 38, 24, 0.05), 0 32px 64px -32px rgba(50, 38, 24, 0.4);
+    --selection-fg: #fff8f0;
+
+    /* --- Three.js scene palette (kept in tokens so the scene follows the theme) --- */
+    --scene-panel: #faf4e7;
+    --scene-chrome: #e6dbc8;
+    --scene-line: #c2b198;
+    --scene-ink: #2a241c;
+    --scene-accent: #a63e14;
+    --scene-secondary: #3c5a46;
+    --scene-screen: #f2eadb;
   }
 
   .dark {
-    /* --- Neutral Surfaces & Contrast (Dark Mode) --- */
-    --background: #09090b;
-    --surface: #141417;
-    --surface-raised: #1c1c21;
-    --foreground: #f8fafc;
-    --muted: #1e1e24;
-    --muted-foreground: #94a3b8;
-    --border: #27272a;
-    --border-subtle: #18181b;
+    /* --- Midnight studio surfaces --- */
+    --background: #0a0d10;
+    --surface: #11161a;
+    --surface-raised: #171d22;
+    --foreground: #f1ede4;
+    --muted: #1b2227;
+    --muted-foreground: #a2a9a3;
+    --border: #263039;
+    --border-subtle: #1a2127;
 
-    /* --- Primary Brand Accent (Dark Mode Luminous Emerald) --- */
-    --primary: #34d399;
-    --primary-hover: #10b981;
-    --primary-foreground: #064e3b;
-    --primary-subtle: #022c22;
-    --primary-subtle-foreground: #6ee7b7;
+    /* --- Citrine accent (luminous, restrained) --- */
+    --primary: #e9b86a;
+    --primary-hover: #f3c87d;
+    --primary-foreground: #1a1206;
+    --primary-subtle: #2a2114;
+    --primary-subtle-foreground: #f0c87f;
 
-    /* --- Secondary Accent (Dark Mode Teal) --- */
-    --accent: #2dd4bf;
-    --accent-hover: #14b8a6;
-    --accent-foreground: #042f2e;
-    --accent-subtle: #042f2e;
-    --accent-subtle-foreground: #5eead4;
+    /* --- Sage secondary --- */
+    --accent: #8fc0a9;
+    --accent-hover: #a3cfb9;
+    --accent-foreground: #06231a;
+    --accent-subtle: #12241c;
+    --accent-subtle-foreground: #a7d3bd;
 
-    /* --- Interactive & Focus Ring --- */
-    --ring: #34d399;
-    --ring-offset: #09090b;
+    --ring: #e9b86a;
+    --ring-offset: #0a0d10;
 
-    /* --- Status Semantics --- */
-    --success: #22c55e;
-    --success-subtle: #052e16;
-    --warning: #fbbf24;
-    --warning-subtle: #451a03;
-    --error: #f87171;
-    --error-subtle: #450a0a;
+    --success: #6fc79a;
+    --success-subtle: #0e241a;
+    --warning: #e9b86a;
+    --warning-subtle: #2a2114;
+    --error: #f08b80;
+    --error-subtle: #2b1311;
 
-    /* --- Card / Popover compatibility --- */
-    --card: #141417;
-    --card-foreground: #f8fafc;
-    --popover: #1c1c21;
-    --popover-foreground: #f8fafc;
+    --card: #101519;
+    --card-foreground: #f1ede4;
+    --popover: #171d22;
+    --popover-foreground: #f1ede4;
+
+    /* --- Art-direction tokens (dark: distinct, not inverted) --- */
+    --wash-1: 92 72 40;
+    --wash-2: 40 74 60;
+    --grid-line: 180 200 196;
+    --grid-opacity: 0.05;
+    --grain-opacity: 0.04;
+    --grain-blend: screen;
+    --panel-line: #2f3c45;
+    --panel-glass: rgba(17, 22, 26, 0.72);
+    --shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.03), 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+    --shadow-lift: 0 1px 0 rgba(255, 255, 255, 0.05), 0 48px 80px -40px rgba(0, 0, 0, 0.95);
+    --selection-fg: #1a1206;
+
+    --scene-panel: #1b2730;
+    --scene-chrome: #273741;
+    --scene-line: #405563;
+    --scene-ink: #e4efee;
+    --scene-accent: #e9b86a;
+    --scene-secondary: #8fc0a9;
+    --scene-screen: #111c23;
   }
 }
 
@@ -129,16 +166,25 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
 
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: var(--font-sans-face), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-display-face), "Iowan Old Style", "Palatino Linotype",
+    Palatino, "Book Antiqua", Georgia, serif;
+  --font-mono: var(--font-mono-face), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
 }
 
-/* --- Base HTML defaults --- */
+/* --- Base document --- */
 html {
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -146,74 +192,174 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* --- 3D Perspective & Transform Utilities --- */
-.perspective-1000 {
-  perspective: 1000px;
+::selection {
+  background-color: var(--primary);
+  color: var(--selection-fg);
 }
 
-.perspective-1200 {
-  perspective: 1200px;
+/* --- Editorial utilities --- */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  .rule {
+    border-top: 1px solid var(--border);
+  }
+
+  .hairline {
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--border) 12%,
+      var(--border) 88%,
+      transparent
+    );
+    height: 1px;
+  }
+
+  .paper-grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: var(--grain-blend);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .blueprint-grid {
+    background-image: linear-gradient(
+        to right,
+        rgb(var(--grid-line) / var(--grid-opacity)) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(var(--grid-line) / var(--grid-opacity)) 1px,
+        transparent 1px
+      );
+    background-size: 88px 88px;
+    background-position: center top;
+  }
+
+  .wash-light {
+    background:
+      radial-gradient(
+        58rem 40rem at 82% 6%,
+        rgb(var(--wash-1) / 0.34),
+        transparent 62%
+      ),
+      radial-gradient(
+        44rem 36rem at 6% 30%,
+        rgb(var(--wash-2) / 0.26),
+        transparent 60%
+      );
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-lift {
+    box-shadow: var(--shadow-lift);
+  }
+
+  .panel-edge {
+    border: 1px solid var(--border);
+    background: var(--panel-glass);
+    backdrop-filter: blur(18px) saturate(120%);
+  }
+
+  .surface-plate {
+    border: 1px solid var(--border);
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.035), transparent 45%),
+      var(--card);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 62%, transparent 100%);
+  }
+
+  .step-rule {
+    counter-reset: step;
+  }
+
+  .underline-sweep {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .underline-sweep:hover,
+  .underline-sweep:focus-visible {
+    background-size: 100% 1px;
+  }
 }
 
-.transform-style-3d {
-  transform-style: preserve-3d;
+/* --- Hero scroll cue --- */
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  55% {
+    transform: translateY(280%);
+  }
+  100% {
+    transform: translateY(280%);
+  }
 }
 
-.backface-hidden {
-  backface-visibility: hidden;
-}
-
-/* Subtle Floating Animation for 3D depth elements */
-@keyframes float-slow {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+/* --- Subtle CSS-only drift (disabled for reduced motion) --- */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translateY(-6px) rotate(0.5deg);
+    transform: translate3d(0, -8px, 0);
   }
 }
 
-@keyframes float-reverse {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(6px) rotate(-0.5deg);
+@media (prefers-reduced-motion: no-preference) {
+  .animate-drift {
+    animation: drift 9s ease-in-out infinite;
   }
 }
 
-.animate-float-slow {
-  animation: float-slow 6s ease-in-out infinite;
-}
-
-.animate-float-reverse {
-  animation: float-reverse 7s ease-in-out infinite;
-}
-
-/* Subtle Engineering Grid Background */
-.bg-tech-grid {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-}
-
-.dark .bg-tech-grid {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-}
-
-/* --- Visible Keyboard Focus States (WCAG 2.1 AA) --- */
+/* --- Visible keyboard focus (WCAG 2.2) --- */
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
-/* --- Accessibility: Respect reduced motion preferences --- */
+/* --- Accessibility: reduced motion --- */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {

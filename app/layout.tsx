@@ -1,10 +1,32 @@
 import type { Metadata, Viewport } from "next";
+import { Instrument_Serif, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SkipToContent } from "@/components/shared/SkipToContent";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
+
+const displayFace = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-display-face",
+  display: "swap",
+});
+
+const sansFace = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-sans-face",
+  display: "swap",
+});
+
+const monoFace = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono-face",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -94,8 +116,8 @@ const jsonLdWebSite = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
+    { media: "(prefers-color-scheme: light)", color: "#f4efe6" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0d10" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -107,8 +129,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary-subtle selection:text-primary-subtle-foreground">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${displayFace.variable} ${sansFace.variable} ${monoFace.variable}`}
+    >
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPerson) }}
@@ -119,12 +145,14 @@ export default function RootLayout({
         />
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
           enableSystem
+          enableColorScheme
           disableTransitionOnChange
         >
+          <div aria-hidden="true" className="paper-grain" />
           <SkipToContent />
-          <div className="relative flex min-h-screen flex-col overflow-x-clip">
+          <div className="relative flex min-h-screen flex-col">
             <Navbar />
             <main id="main-content" className="flex-1">
               {children}

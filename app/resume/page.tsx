@@ -3,33 +3,30 @@ import type { Metadata } from "next";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Download,
+  ExternalLink,
+  Mail,
+  MapPin,
+} from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/shared/Icons";
-import {
-  FileText,
-  Mail,
-  ArrowLeft,
-  Download,
-  AlertCircle,
-  ExternalLink,
-  Briefcase,
-  CheckCircle2,
-} from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Resume & CV",
+  title: "Résumé & CV",
   description:
-    "Review or request the resume of Md. Rakib Islam, Frontend Developer at SOFOF Tech specializing in React, Next.js, and TypeScript.",
+    "Review or request the résumé of Md. Rakib Islam, Frontend Developer at SOFOF Tech specializing in React, Next.js, and TypeScript.",
   alternates: {
     canonical: `${siteConfig.url}/resume`,
   },
   openGraph: {
-    title: `Resume & CV | ${siteConfig.name}`,
+    title: `Résumé & CV | ${siteConfig.name}`,
     description:
-      "Review or request the resume of Md. Rakib Islam, Frontend Developer at SOFOF Tech.",
+      "Review or request the résumé of Md. Rakib Islam, Frontend Developer at SOFOF Tech.",
     url: `${siteConfig.url}/resume`,
     siteName: siteConfig.name,
     locale: "en_US",
@@ -42,162 +39,194 @@ export default function ResumePage() {
   const hasResumeFile = fs.existsSync(resumeFilePath);
 
   return (
-    <div className="py-16 sm:py-24 min-h-[80vh] flex flex-col justify-center">
-      <Container className="max-w-4xl">
-        {/* Back Link */}
-        <div className="mb-8">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            <span>Return to Portfolio</span>
-          </Link>
-        </div>
+    <div className="relative py-16 sm:py-24">
+      <div
+        aria-hidden="true"
+        className="wash-light absolute inset-x-0 top-0 -z-10 h-96 opacity-60"
+      />
+      <Container className="max-w-3xl">
+        <Link
+          href="/"
+          className="group inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+        >
+          <ArrowLeft
+            className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5"
+            aria-hidden="true"
+          />
+          Return to portfolio
+        </Link>
+
+        <header className="mt-10">
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[10px] text-primary">CV</span>
+            <span aria-hidden="true" className="h-px w-8 bg-primary/45" />
+            <span className="eyebrow">Document</span>
+          </div>
+          <h1 className="mt-5 text-balance font-display text-[clamp(2.6rem,6vw,4.2rem)] leading-[0.92] tracking-[-0.03em] text-foreground">
+            Résumé &amp; professional profile.
+          </h1>
+          <p className="mt-5 max-w-xl text-pretty text-[13.5px] leading-relaxed text-muted-foreground">
+            Frontend developer at SOFOF Tech. React, Next.js and TypeScript in
+            production, with full-stack work across NestJS, PostgreSQL and Redis.
+          </p>
+
+          <dl className="mt-7 flex flex-wrap gap-x-8 gap-y-3 border-t border-border/80 pt-5">
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              <dt className="sr-only">Availability</dt>
+              <dd className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                Open to frontend &amp; full-stack roles
+              </dd>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+              <dt className="sr-only">Location</dt>
+              <dd className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                Dhaka, Bangladesh · UTC+6
+              </dd>
+            </div>
+          </dl>
+        </header>
 
         {hasResumeFile ? (
-          /* When resume.pdf is present in public/ */
-          <div className="space-y-8">
-            <div className="p-8 rounded-2xl border border-border bg-card shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <div className="space-y-2">
-                <Badge variant="primary" className="text-xs font-mono">
-                  CURATED ASSET
-                </Badge>
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-                  Md. Rakib Islam — Resume
-                </h1>
-                <p className="text-sm text-muted-foreground">
-                  Frontend Developer at SOFOF Tech · React, Next.js, TypeScript
+          <div className="mt-12">
+            <div className="flex flex-col gap-5 border-t border-border/80 pt-6 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="font-display text-2xl text-foreground">
+                  Latest PDF
+                </p>
+                <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                  Md. Rakib Islam · Frontend developer
                 </p>
               </div>
-
-              <div className="flex flex-wrap items-center gap-3 shrink-0">
-                <a href="/resume.pdf" download="Md_Rakib_Islam_Resume.pdf">
-                  <Button variant="primary" size="lg" className="gap-2 font-mono text-xs">
-                    <Download className="h-4 w-4" />
-                    <span>Download PDF</span>
-                  </Button>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="/resume.pdf"
+                  download="Md_Rakib_Islam_Resume.pdf"
+                  className={buttonVariants({ variant: "primary", size: "lg" })}
+                >
+                  <Download className="h-4 w-4" aria-hidden="true" />
+                  Download PDF
                 </a>
-                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" size="lg" className="gap-2 font-mono text-xs">
-                    <ExternalLink className="h-4 w-4" />
-                    <span>Open in Tab</span>
-                  </Button>
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonVariants({
+                    variant: "secondary",
+                    size: "lg",
+                  })}
+                >
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                  Open in tab
                 </a>
               </div>
             </div>
 
-            <div className="border border-border rounded-xl overflow-hidden bg-card h-[750px] shadow-xs">
+            <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
               <iframe
                 src="/resume.pdf"
-                className="w-full h-full border-0"
-                title="Md. Rakib Islam Resume"
+                title="Md. Rakib Islam résumé"
+                className="h-[750px] w-full border-0"
               />
             </div>
           </div>
         ) : (
-          /* When resume.pdf is pending user placement */
-          <div className="p-8 sm:p-12 rounded-2xl border border-border bg-card shadow-xs space-y-8 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/30 via-primary to-accent/40 opacity-80" />
+          <div className="mt-12">
+            <div className="border-t border-border/80 pt-6">
+              <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-primary">
+                Current copy
+              </span>
+              <h2 className="mt-3 max-w-xl text-balance font-display text-[clamp(1.7rem,3.4vw,2.4rem)] leading-[1.02] text-foreground">
+                The full CV is available on request.
+              </h2>
+              <p className="mt-4 max-w-xl text-[12.5px] leading-relaxed text-muted-foreground">
+                I keep the PDF updated with commercial work at SOFOF Tech rather
+                than publish a stale download. Request the latest copy, or use the
+                portfolio evidence below — every project claim links to a
+                repository.
+              </p>
 
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="p-2 rounded-lg bg-primary-subtle text-primary border border-primary/20">
-                  <FileText className="h-5 w-5" />
-                </span>
-                <Badge variant="outline" className="text-xs font-mono text-muted-foreground">
-                  Resume Status
-                </Badge>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <a
+                  href={`mailto:${siteConfig.author.email}?subject=Résumé%20request%20—%20Md.%20Rakib%20Islam`}
+                  className={buttonVariants({ variant: "primary", size: "lg" })}
+                >
+                  <Mail className="h-4 w-4" aria-hidden="true" />
+                  Request the latest CV
+                </a>
+                <a
+                  href={siteConfig.links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonVariants({
+                    variant: "secondary",
+                    size: "lg",
+                  })}
+                >
+                  <Icons.linkedIn className="h-4 w-4" aria-hidden="true" />
+                  LinkedIn
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-                Resume & Professional Profile Access
-              </h1>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
-                To guarantee hiring teams receive the most accurate representation of my current commercial deliverables at SOFOF Tech and flagship monorepos, my formal resume PDF is updated periodically.
-              </p>
-            </div>
+              <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-6 border-t border-border/80 pt-6 sm:grid-cols-2">
+                <div>
+                  <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                    What the CV covers
+                  </span>
+                  <ul className="mt-3 space-y-2 text-[11.5px] leading-relaxed text-foreground/85">
+                    <li>Commercial frontend work at SOFOF Tech</li>
+                    <li>Selected projects and architectural decisions</li>
+                    <li>Frontend and full-stack technical scope</li>
+                    <li>Location, availability and contact details</li>
+                  </ul>
+                </div>
 
-            {/* Direct Verification Alternatives */}
-            <div className="p-5 rounded-xl border border-border bg-surface/60 space-y-3">
-              <span className="text-xs font-mono uppercase tracking-wider text-primary font-bold flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4" />
-                Live Portfolio Evidence Available Immediately
-              </span>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                All technical details, employment responsibilities, and architecture highlights on this site are verified directly against production source code:
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                <Link
-                  href="/#experience"
-                  className="p-3 rounded-lg bg-card border border-border/80 hover:border-primary/40 transition-colors flex items-center justify-between group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
-                      SOFOF Tech Experience
-                    </span>
-                    <p className="text-[11px] text-muted-foreground">
-                      Client deliverables & responsibilities
-                    </p>
-                  </div>
-                  <Briefcase className="h-4 w-4 text-primary shrink-0" />
-                </Link>
-
-                <Link
-                  href="/#case-studies"
-                  className="p-3 rounded-lg bg-card border border-border/80 hover:border-primary/40 transition-colors flex items-center justify-between group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
-                      Engineering Case Studies
-                    </span>
-                    <p className="text-[11px] text-muted-foreground">
-                      OgroniEdu, Dhruto, and Gramer Bazar
-                    </p>
-                  </div>
-                  <ExternalLink className="h-4 w-4 text-primary shrink-0" />
-                </Link>
+                <div>
+                  <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Inspect now
+                  </span>
+                  <ul className="mt-3 space-y-3">
+                    <li>
+                      <Link
+                        href="/#experience"
+                        className="group inline-flex items-center gap-1.5 text-[11.5px] font-medium text-foreground transition-colors hover:text-primary"
+                      >
+                        <span className="underline-sweep">Experience</span>
+                        <ArrowUpRight
+                          className="h-3 w-3"
+                          aria-hidden="true"
+                        />
+                      </Link>
+                      <p className="mt-0.5 text-[10px] text-muted-foreground">
+                        Responsibilities and production platforms
+                      </p>
+                    </li>
+                    <li>
+                      <Link
+                        href="/#case-studies"
+                        className="group inline-flex items-center gap-1.5 text-[11.5px] font-medium text-foreground transition-colors hover:text-primary"
+                      >
+                        <span className="underline-sweep">Case studies</span>
+                        <ArrowUpRight
+                          className="h-3 w-3"
+                          aria-hidden="true"
+                        />
+                      </Link>
+                      <p className="mt-0.5 text-[10px] text-muted-foreground">
+                        Architecture, trade-offs and code references
+                      </p>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <a href={`mailto:${siteConfig.author.email}?subject=Resume%20Request%20-%20Md.%20Rakib%20Islam`}>
-                <Button variant="primary" size="lg" className="gap-2 font-mono text-xs">
-                  <Mail className="h-4 w-4" />
-                  <span>Request Updated Resume via Email</span>
-                </Button>
-              </a>
-
-              <a
-                href={siteConfig.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button variant="secondary" size="lg" className="gap-2 font-mono text-xs">
-                  <Icons.linkedIn className="h-4 w-4" />
-                  <span>View LinkedIn Profile</span>
-                </Button>
-              </a>
-
-              <a
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button variant="outline" size="lg" className="gap-2 font-mono text-xs">
-                  <Icons.gitHub className="h-4 w-4" />
-                  <span>Inspect GitHub Code</span>
-                </Button>
-              </a>
-            </div>
-
-            {/* Developer Integration Callout */}
-            <div className="p-3.5 rounded-lg bg-surface border border-border/80 text-[11px] font-mono text-muted-foreground flex items-center gap-2">
-              <AlertCircle className="h-3.5 w-3.5 text-primary shrink-0" />
-              <span>
-                Developer Note: Placing <code>public/resume.pdf</code> will automatically activate the interactive in-browser PDF viewer and download buttons on this route.
-              </span>
+              <p className="mt-10 border-t border-border/70 pt-4 font-mono text-[8.5px] leading-relaxed text-muted-foreground">
+                Owner note · adding <code>public/resume.pdf</code> automatically
+                replaces this state with the embedded viewer and download
+                actions.
+              </p>
             </div>
           </div>
         )}

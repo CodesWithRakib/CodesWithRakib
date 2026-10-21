@@ -2,151 +2,233 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X, FileText } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { Container } from "@/components/layout/Container";
-import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { EASE_OUT, springSoft } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+
+const sectionIds = siteConfig.navItems.map((item) => item.href.split("#")[1]);
 
 export function Navbar() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [activeSection, setActiveSection] = React.useState<string>("");
+  const menuButtonRef = React.useRef<HTMLButtonElement>(null);
+  const firstMenuLinkRef = React.useRef<HTMLAnchorElement>(null);
 
-  // Track scroll position for subtle elevation
   React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 16);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 12);
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on Escape key press
+  // Scroll-spy: underline the section currently in the reading band.
   React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileMenuOpen) {
+    if (pathname !== "/") return;
+
+    const sections = sectionIds
+      .map((id) => document.getElementById(id ?? ""))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    if (!sections.length || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        }
+      },
+      { rootMargin: "-32% 0px -58% 0px", threshold: 0 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  React.useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
         setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
       }
     };
 
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeyDown);
-    } else {
-      document.body.style.overflow = "";
-    }
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setMobileMenuOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleResize);
+    const focusTimer = window.setTimeout(
+      () => firstMenuLinkRef.current?.focus(),
+      120
+    );
 
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleResize);
+      window.clearTimeout(focusTimer);
     };
   }, [mobileMenuOpen]);
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-        isScrolled
-          ? "border-b border-border/90 bg-background/90 backdrop-blur-md shadow-xs"
-          : "border-b border-transparent bg-background/60 backdrop-blur-sm"
-      }`}
+      className={cn(
+        "sticky top-0 z-50 w-full transition-[background-color,border-color,backdrop-filter] duration-300",
+        isScrolled || mobileMenuOpen
+          ? "border-b border-border/80 bg-background/85 backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent"
+      )}
     >
-      <Container className="flex h-16 items-center justify-between">
-        {/* Brand Identity - Personal Developer First */}
+      <Container className="relative flex h-[72px] items-center justify-between gap-6">
         <Link
           href="/"
-          className="group flex items-center gap-2.5 text-foreground hover:opacity-95 transition-opacity focus-visible:ring-2 focus-visible:ring-primary rounded-lg p-1 -ml-1"
-          aria-label={`${siteConfig.name} - Software Engineer Homepage`}
+          onClick={() => setMobileMenuOpen(false)}
+          className="group flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-mono font-bold text-sm shadow-xs transition-transform duration-200 group-hover:scale-105">
-            RI
+          <span className="flex flex-col">
+            <span className="flex items-baseline gap-1.5">
+              <span className="font-display text-[1.4rem] leading-none tracking-[-0.01em] text-foreground">
+                Rakib Islam
+              </span>
+              <span
+                aria-hidden="true"
+                className="mb-[3px] h-1.5 w-1.5 rounded-full bg-primary transition-transform duration-300 group-hover:scale-125"
+              />
+            </span>
+            <span className="sr-only">, </span>
+            <span className="mt-1 font-mono text-[9px] uppercase leading-none tracking-[0.22em] text-muted-foreground">
+              Frontend developer
+            </span>
           </span>
-          <div className="flex flex-col">
-            <span className="font-semibold text-sm sm:text-base leading-none text-foreground tracking-tight">
-              {siteConfig.name}
-            </span>
-            <span className="text-[11px] font-mono text-muted-foreground leading-tight mt-0.5">
-              Software Engineer
-            </span>
-          </div>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav
-          className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground"
-          aria-label="Main Navigation"
+          aria-label="Main navigation"
+          className="hidden items-center gap-7 md:flex"
         >
-          {siteConfig.navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="transition-colors hover:text-foreground hover:underline underline-offset-4 decoration-primary focus-visible:ring-2 focus-visible:ring-primary rounded-md px-1 py-0.5"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {siteConfig.navItems.map((item) => {
+            const id = item.href.split("#")[1] ?? "";
+            const isActive = pathname === "/" && activeSection === id;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? "location" : undefined}
+                className={cn(
+                  "relative py-1.5 text-[13px] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background",
+                  isActive
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {item.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active-indicator"
+                    className="absolute -bottom-0.5 left-0 right-0 h-px bg-primary"
+                    transition={springSoft}
+                    aria-hidden="true"
+                  />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Header Right Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-4">
           <ThemeToggle />
 
-          <Link href="/resume" className="hidden sm:inline-flex">
-            <Button variant="secondary" size="sm" className="gap-1.5 font-mono text-xs">
-              <FileText className="h-3.5 w-3.5" />
-              <span>Resume</span>
-            </Button>
+          <Link
+            href="/resume"
+            className="hidden items-center gap-1 text-[12px] font-medium text-foreground underline-sweep sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+          >
+            <span>Résumé</span>
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
           </Link>
 
-          {/* Mobile Menu Toggle (WCAG 44x44px target) */}
           <button
+            ref={menuButtonRef}
             type="button"
-            className="md:hidden flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-primary transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background md:hidden"
+            onClick={() => setMobileMenuOpen((open) => !open)}
             aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation-menu"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden="true" />
+            )}
           </button>
         </div>
-      </Container>
 
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div
-          id="mobile-navigation-menu"
-          className="md:hidden border-b border-border bg-background px-4 py-4 space-y-3 transition-all animate-in fade-in slide-in-from-top-2 shadow-lg"
-        >
-          <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
-            {siteConfig.navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-foreground py-2.5 px-3 rounded-lg hover:bg-muted focus-visible:ring-2 focus-visible:ring-primary transition-colors min-h-[44px] flex items-center"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="pt-3 border-t border-border flex items-center justify-between">
-            <span className="text-xs text-muted-foreground font-mono">
-              Available for opportunities
-            </span>
-            <Link
-              href="/resume"
-              onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex"
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              id="mobile-navigation-menu"
+              key="mobile-menu"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.32, ease: EASE_OUT }}
+              className="absolute left-0 right-0 top-full overflow-hidden border-b border-border bg-background/98 backdrop-blur-xl md:hidden"
             >
-              <Button variant="primary" size="sm" className="gap-1.5 font-mono text-xs">
-                <FileText className="h-3.5 w-3.5" />
-                <span>Resume Overview</span>
-              </Button>
-            </Link>
-          </div>
-        </div>
-      )}
+              <div className="max-h-[calc(100svh-72px)] overflow-y-auto px-5 pb-8 pt-4 sm:px-8">
+                <nav aria-label="Mobile navigation" className="flex flex-col">
+                  {siteConfig.navItems.map((item, index) => (
+                    <Link
+                      key={item.href}
+                      ref={index === 0 ? firstMenuLinkRef : undefined}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="group flex items-baseline justify-between border-b border-border/70 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                    >
+                      <span className="font-display text-[1.75rem] leading-none text-foreground">
+                        {item.label}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="font-mono text-[10px] tracking-[0.16em] text-muted-foreground"
+                      >
+                        0{index + 1}
+                      </span>
+                    </Link>
+                  ))}
+                </nav>
+
+                <div className="mt-6 flex items-center justify-between gap-4">
+                  <span className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.16em] text-muted-foreground">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                    Open to work
+                  </span>
+                  <ThemeToggle />
+                </div>
+
+                <Link
+                  href="/resume"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3.5 text-sm font-medium text-primary-foreground"
+                >
+                  <span>View résumé</span>
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Container>
     </header>
   );
 }

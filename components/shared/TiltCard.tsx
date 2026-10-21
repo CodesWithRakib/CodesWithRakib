@@ -1,109 +1,84 @@
 "use client";
 
 import * as React from "react";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface TiltCardProps {
   children: React.ReactNode;
   className?: string;
+  /** Maximum tilt in degrees on each axis. */
   maxTilt?: number;
   scale?: number;
   glare?: boolean;
 }
 
+/**
+ * Framer Motion owns pointer-driven depth here. GSAP never animates these
+ * properties, so there is no competing writer on the same element.
+ */
 export function TiltCard({
   children,
   className = "",
-  maxTilt = 8,
-  scale = 1.015,
-  glare = true,
+  maxTilt = 5,
+  scale = 1.012,
+  glare = false,
 }: TiltCardProps) {
-  const cardRef = React.useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = React.useState<string>("");
-  const [glareStyle, setGlareStyle] = React.useState<React.CSSProperties>({
-    opacity: 0,
+  const ref = React.useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+
+  const rotateX = useSpring(useMotionValue(0), {
+    stiffness: 140,
+    damping: 20,
+    mass: 0.5,
   });
-  const [isHovered, setIsHovered] = React.useState(false);
+  const rotateY = useSpring(useMotionValue(0), {
+    stiffness: 140,
+    damping: 20,
+    mass: 0.5,
+  });
 
-  const isTouchOrReducedMotion = React.useSyncExternalStore(
-    (callback) => {
-      if (typeof window === "undefined") return () => {};
-      const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-      mq.addEventListener("change", callback);
-      return () => mq.removeEventListener("change", callback);
-    },
-    () => {
-      if (typeof window === "undefined") return false;
-      const hasTouch = "ontouchstart" in window || (navigator.maxTouchPoints > 0);
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-      return hasTouch || prefersReducedMotion;
-    },
-    () => false
-  );
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isTouchOrReducedMotion || !cardRef.current) return;
-
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-    const rotateX = (-y * maxTilt * 2).toFixed(2);
-    const rotateY = (x * maxTilt * 2).toFixed(2);
-
-    setTransform(
-      `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${scale}, ${scale}, ${scale})`
-    );
-
-    if (glare) {
-      const glareX = Math.round((x + 0.5) * 100);
-      const glareY = Math.round((y + 0.5) * 100);
-      setGlareStyle({
-        opacity: 0.15,
-        background: `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 60%)`,
-      });
-    }
+  const reset = () => {
+    rotateX.set(0);
+    rotateY.set(0);
   };
 
-  const handleMouseEnter = () => {
-    if (isTouchOrReducedMotion) return;
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    if (isTouchOrReducedMotion) return;
-    setIsHovered(false);
-    setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
-    setGlareStyle({ opacity: 0 });
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (reduced || event.pointerType !== "mouse" || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    rotateY.set(x * maxTilt * 2);
+    rotateX.set(-y * maxTilt * 2);
   };
 
   return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+    <motion.div
+      ref={ref}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={reset}
+      onBlur={reset}
       style={{
-        transform: transform || undefined,
-        transition: isHovered
-          ? "transform 0.12s ease-out"
-          : "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-        transformStyle: "preserve-3d",
+        rotateX: reduced ? 0 : rotateX,
+        rotateY: reduced ? 0 : rotateY,
+        transformPerspective: 1200,
       }}
-      className={`relative ${className}`}
+      whileHover={reduced ? undefined : { scale }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      className={cn("relative", className)}
     >
       {children}
-      {glare && !isTouchOrReducedMotion && (
+      {glare && !reduced && (
         <div
           aria-hidden="true"
-          style={{
-            ...glareStyle,
-            transition: "opacity 0.3s ease-out",
-          }}
-          className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] mix-blend-overlay"
+          className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] bg-[radial-gradient(420px_circle_at_50%_0%,rgba(255,255,255,0.14),transparent_70%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         />
       )}
-    </div>
+    </motion.div>
   );
 }

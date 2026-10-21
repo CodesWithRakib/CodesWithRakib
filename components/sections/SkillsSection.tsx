@@ -1,130 +1,91 @@
 import * as React from "react";
 import { Container } from "@/components/layout/Container";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { SectionHeader } from "@/components/shared/SectionHeader";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
-import { skillsData, SkillGroup } from "@/data/skills";
-import {
-  Code2,
-  Database,
-  Layers,
-  Workflow,
-  ShieldCheck,
-  CheckCircle2,
-} from "lucide-react";
+import { GsapReveal } from "@/components/motion/GsapReveal";
+import { skillsData } from "@/data/skills";
+
+const hierarchyLabel: Record<string, string> = {
+  primary: "Daily production",
+  additional: "Verified in monorepos",
+  developing: "Active practice",
+};
 
 export function SkillsSection() {
-  const getCategoryIcon = (id: string) => {
-    switch (id) {
-      case "frontend-core":
-        return <Code2 className="h-4 w-4 text-primary" />;
-      case "state-forms":
-        return <Layers className="h-4 w-4 text-primary" />;
-      case "backend-databases":
-        return <Database className="h-4 w-4 text-teal-600 dark:text-teal-400" />;
-      case "engineering-workflows":
-        return <Workflow className="h-4 w-4 text-amber-600 dark:text-amber-400" />;
-      default:
-        return <Code2 className="h-4 w-4 text-primary" />;
-    }
-  };
-
-  const getHierarchyBadge = (hierarchy: SkillGroup["hierarchy"]) => {
-    switch (hierarchy) {
-      case "primary":
-        return (
-          <Badge variant="primary" className="text-[11px] font-mono">
-            Core Production
-          </Badge>
-        );
-      case "additional":
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20">
-            Monorepo Verified
-          </span>
-        );
-      case "developing":
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-            Active Practice
-          </span>
-        );
-    }
-  };
-
   return (
-    <section id="skills" className="py-20 sm:py-24 border-t border-border bg-surface/30">
+    <section
+      id="skills"
+      className="scroll-mt-20 border-y border-border/70 bg-surface/40 py-20 sm:py-28"
+    >
       <Container>
-        {/* Section Header */}
-        <ScrollReveal direction="up">
-          <SectionHeader
-            badge="TECHNICAL CAPABILITIES & PROFICIENCY"
-            title="Technologies Grounded in Practical Engineering"
-            description="Distinguishing daily production frontend tools from verified full-stack monorepo implementations and active areas of architectural practice. Zero arbitrary percentage meters."
-          />
-        </ScrollReveal>
-
-        {/* Classification Policy Note */}
-        <ScrollReveal direction="up" delayMs={50}>
-          <div className="mb-10 p-4 rounded-xl border border-border bg-card flex items-start gap-3 text-xs leading-relaxed text-muted-foreground max-w-4xl">
-            <ShieldCheck className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-            <div>
-              <strong className="text-foreground font-mono">Classification Policy: </strong>
-              Core frontend tooling reflects daily professional production at SOFOF Tech; backend, database, and queue tools reflect verified implementation in flagship monorepos (OgroniEdu, Dhruto, Gramer Bazar). No arbitrary proficiency scores.
-            </div>
+        <GsapReveal>
+          <div data-reveal>
+            <SectionHeader
+              index="04"
+              badge="Capabilities"
+              title="Tools chosen for the work, not the résumé."
+              description="Grouped by where each tool actually appears: daily production, verified monorepo builds, or active practice. No proficiency percentages."
+            />
           </div>
-        </ScrollReveal>
+        </GsapReveal>
 
-        {/* 4 Skill Category Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {skillsData.map((category, catIdx) => (
-            <ScrollReveal key={category.id} direction="up" delayMs={catIdx * 80}>
-              <Card
-                className="h-full border-border bg-card flex flex-col justify-between shadow-xs hover:border-primary/30 transition-colors"
-              >
-                <CardHeader className="pb-4 space-y-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <span className="p-1.5 rounded-md bg-surface border border-border">
-                        {getCategoryIcon(category.id)}
+        <div className="mt-14 grid grid-cols-1 gap-x-14 gap-y-12 lg:grid-cols-2">
+          {skillsData.map((category, index) => (
+            <GsapReveal key={category.id}>
+              <div data-reveal>
+                <div className="flex items-baseline gap-3 border-t border-border/80 pt-4">
+                  <span className="font-mono text-[9px] text-primary">
+                    0{index + 1}
+                  </span>
+                  <h3 className="flex-1 font-display text-[1.65rem] leading-none tracking-[-0.015em] text-foreground">
+                    {category.title}
+                  </h3>
+                  <span className="font-mono text-[8px] uppercase tracking-[0.14em] text-muted-foreground">
+                    {hierarchyLabel[category.hierarchy]}
+                  </span>
+                </div>
+
+                <p className="mt-3 max-w-md text-[11.5px] leading-relaxed text-muted-foreground">
+                  {category.summary}
+                </p>
+
+                <ul className="mt-4">
+                  {category.skills.map((skill) => (
+                    <li
+                      key={skill.name}
+                      className="flex flex-col gap-1 border-b border-border/60 py-2.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+                    >
+                      <span className="shrink-0 text-[12px] font-medium text-foreground">
+                        {skill.name}
                       </span>
-                      <CardTitle className="text-lg sm:text-xl font-bold tracking-tight text-foreground">
-                        {category.title}
-                      </CardTitle>
-                    </div>
-                    {getHierarchyBadge(category.hierarchy)}
-                  </div>
-
-                  <CardDescription className="text-xs text-muted-foreground leading-relaxed">
-                    {category.summary}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="pt-2 pb-6">
-                  <div className="space-y-3 pt-3 border-t border-border/70">
-                    {category.skills.map((skill, idx) => (
-                      <div
-                        key={idx}
-                        className="p-3 rounded-lg bg-surface/60 border border-border/80 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 hover:border-primary/20 transition-colors"
-                      >
-                        <div className="flex items-center gap-2 shrink-0">
-                          <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" />
-                          <span className="text-xs font-mono font-bold text-foreground">
-                            {skill.name}
-                          </span>
-                        </div>
-                        <span className="text-[11px] text-muted-foreground leading-snug sm:text-right">
-                          {skill.context}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </ScrollReveal>
+                      <span className="text-right text-[10.5px] leading-snug text-muted-foreground">
+                        {skill.context}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </GsapReveal>
           ))}
         </div>
+
+        <GsapReveal className="mt-12">
+          <div
+            data-reveal
+            className="flex flex-col gap-2 border-t border-border/80 pt-5 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <p className="max-w-xl text-[10.5px] leading-relaxed text-muted-foreground">
+              Classification is about evidence and frequency, not a score. Tools
+              listed under monorepos are implemented and inspectable in the
+              linked repositories.
+            </p>
+            <a
+              href="#case-studies"
+              className="underline-sweep shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-primary transition-colors hover:text-foreground"
+            >
+              Inspect the evidence
+            </a>
+          </div>
+        </GsapReveal>
       </Container>
     </section>
   );

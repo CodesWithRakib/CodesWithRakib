@@ -2,344 +2,227 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { siteConfig } from "@/config/site";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { ArrowDownRight, ArrowUpRight, Mail } from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/Icons";
-import { TiltCard } from "@/components/shared/TiltCard";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
-import {
-  ArrowRight,
-  Mail,
-  FileText,
-  Layers,
-  Code2,
-  Database,
-  CheckCircle2,
-  ChevronDown,
-} from "lucide-react";
+import { HeroVisual } from "@/components/three/HeroVisual";
+import { siteConfig } from "@/config/site";
 
-type HeroTab = "architecture" | "contracts" | "fullstack";
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
 
 export function HeroSection() {
-  const [activeTab, setActiveTab] = React.useState<HeroTab>("architecture");
+  const root = React.useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        const timeline = gsap.timeline({
+          defaults: { ease: "power4.out" },
+        });
+
+        timeline
+          .from(".hero-eyebrow", { autoAlpha: 0, y: 12, duration: 0.7 }, 0.05)
+          .from(
+            ".hero-line",
+            { yPercent: 118, duration: 1.15, stagger: 0.09 },
+            0.14
+          )
+          .from(
+            ".hero-fade",
+            { autoAlpha: 0, y: 16, duration: 0.8, stagger: 0.1 },
+            0.48
+          )
+          .from(
+            ".hero-meta",
+            { autoAlpha: 0, y: 14, duration: 0.7, stagger: 0.06 },
+            0.7
+          )
+          .from(
+            ".hero-visual",
+            { autoAlpha: 0, y: 24, scale: 0.975, duration: 1.1 },
+            0.35
+          );
+
+        return () => {
+          timeline.kill();
+        };
+      });
+
+      return () => media.revert();
+    },
+    { scope: root, dependencies: [] }
+  );
 
   return (
-    <section className="relative pt-10 pb-16 sm:pt-16 sm:pb-24 md:pt-20 md:pb-28 overflow-hidden bg-tech-grid">
-      {/* Subtle Radial Gradient Overlay to soften the grid */}
+    <section ref={root} className="relative isolate overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-radial from-transparent via-background/80 to-background"
+        className="wash-light absolute inset-0 -z-20"
+      />
+      <div
+        aria-hidden="true"
+        className="blueprint-grid absolute inset-0 -z-10 [mask-image:radial-gradient(75%_65%_at_65%_35%,black,transparent)]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-b from-transparent to-background"
       />
 
-      <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Direct, Confident Messaging & Primary CTAs (7 cols) */}
-          <div className="lg:col-span-7 flex flex-col items-start space-y-6">
-            {/* Personal Status Pill */}
-            <ScrollReveal direction="up" delayMs={50}>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-subtle text-primary-subtle-foreground text-xs font-mono font-medium border border-primary/25 shadow-2xs">
-                <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-                <span>Open for Frontend &amp; Full-Stack Opportunities</span>
+      <Container className="relative">
+        <div className="grid min-h-[calc(100svh-72px)] grid-cols-1 items-center gap-14 pb-8 pt-12 lg:grid-cols-12 lg:gap-6 lg:pb-6 lg:pt-10">
+          <div className="lg:col-span-6 xl:col-span-6">
+            <div className="hero-eyebrow flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span aria-hidden="true" className="h-px w-9 bg-primary/70" />
+              <span className="eyebrow text-foreground">
+                Md. Rakib Islam — Frontend developer
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary-subtle/70 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-primary-subtle-foreground">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+                Open to work
+              </span>
+            </div>
+
+            <h1
+              aria-label="Interfaces with intent."
+              className="mt-7 font-display text-[clamp(3.4rem,8.4vw,6.35rem)] font-normal leading-[0.88] tracking-[-0.03em] text-foreground"
+            >
+              <span className="block overflow-hidden pb-[0.06em]">
+                <span className="hero-line block">Interfaces</span>
+              </span>
+              <span className="block overflow-hidden pb-[0.08em]">
+                <span className="hero-line block">
+                  with <span className="italic text-primary">intent.</span>
+                </span>
+              </span>
+            </h1>
+
+            <p className="hero-fade mt-8 max-w-[33rem] text-pretty text-[0.98rem] leading-relaxed text-muted-foreground sm:text-[1.05rem]">
+              I build production SaaS interfaces with{" "}
+              <strong className="font-medium text-foreground">
+                React, Next.js and TypeScript
+              </strong>{" "}
+              — and follow the work down the stack through{" "}
+              <strong className="font-medium text-foreground">
+                NestJS, PostgreSQL and Redis queues
+              </strong>
+              .
+            </p>
+
+            <div className="hero-fade mt-8 flex flex-wrap items-center gap-3">
+              <Link
+                href="#projects"
+                className={buttonVariants({
+                  variant: "primary",
+                  size: "lg",
+                  className: "group",
+                })}
+              >
+                <span>Explore selected work</span>
+                <ArrowDownRight
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                />
+              </Link>
+              <Link
+                href="/resume"
+                className={buttonVariants({ variant: "secondary", size: "lg" })}
+              >
+                <span>Résumé</span>
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <a
+                href="#contact"
+                className="underline-sweep ml-1 inline-flex items-center gap-1.5 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              >
+                <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>Or say hello</span>
+              </a>
+            </div>
+
+            <dl className="hero-meta mt-10 grid max-w-xl grid-cols-2 gap-x-6 gap-y-5 border-t border-border/80 pt-6 sm:grid-cols-3">
+              <div>
+                <dt className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                  Currently
+                </dt>
+                <dd className="mt-1.5 text-[12px] font-medium leading-snug text-foreground">
+                  Junior Frontend Developer
+                  <span className="block text-muted-foreground">SOFOF Tech</span>
+                </dd>
               </div>
-            </ScrollReveal>
-
-            {/* Main Headline */}
-            <ScrollReveal direction="up" delayMs={100}>
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight text-foreground leading-[1.12]">
-                I build thoughtful,{" "}
-                <span className="text-primary block sm:inline mt-1 sm:mt-0 underline decoration-primary/30 underline-offset-8">
-                  high-performance
-                </span>{" "}
-                web applications.
-              </h1>
-            </ScrollReveal>
-
-            {/* Concise Supporting Value Proposition */}
-            <ScrollReveal direction="up" delayMs={150}>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
-                Frontend engineer specializing in{" "}
-                <strong className="text-foreground font-semibold">React, Next.js, and TypeScript</strong>.
-                Designing scalable SaaS architectures, role-based dashboards, and resilient full-stack systems with{" "}
-                <strong className="text-foreground font-semibold">NestJS and PostgreSQL</strong>.
-              </p>
-            </ScrollReveal>
-
-            {/* Primary Action Buttons */}
-            <ScrollReveal direction="up" delayMs={200} className="w-full sm:w-auto">
-              <div className="flex flex-wrap items-center gap-3 pt-2 w-full sm:w-auto">
-                <a href="#projects" className="w-full sm:w-auto">
-                  <Button variant="primary" size="lg" className="w-full sm:w-auto gap-2 group shadow-sm">
-                    <span>Explore Flagship Work</span>
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </a>
-
-                <Link href="/resume" className="w-full sm:w-auto">
-                  <Button variant="secondary" size="lg" className="w-full sm:w-auto gap-2 font-mono text-xs">
-                    <FileText className="h-4 w-4 text-muted-foreground" />
-                    <span>Resume / CV</span>
-                  </Button>
-                </Link>
-
-                <a href="#contact" className="w-full sm:w-auto">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto gap-2">
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                    <span>Contact</span>
-                  </Button>
-                </a>
+              <div>
+                <dt className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                  Based in
+                </dt>
+                <dd className="mt-1.5 text-[12px] font-medium leading-snug text-foreground">
+                  Dhaka, Bangladesh
+                  <span className="block text-muted-foreground">UTC +6</span>
+                </dd>
               </div>
-            </ScrollReveal>
-
-            {/* Verified Social Profile Links */}
-            <ScrollReveal direction="up" delayMs={250} className="w-full">
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-4 border-t border-border/80 w-full text-xs font-mono text-muted-foreground">
-                <span className="text-foreground font-semibold">Verified Links:</span>
-                <a
-                  href={siteConfig.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 py-1.5 hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-primary rounded-xs"
-                  aria-label="GitHub Profile"
-                >
-                  <Icons.gitHub className="h-4 w-4" />
-                  <span>GitHub</span>
-                </a>
-                <a
-                  href={siteConfig.links.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 py-1.5 hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-primary rounded-xs"
-                  aria-label="LinkedIn Profile"
-                >
-                  <Icons.linkedIn className="h-4 w-4" />
-                  <span>LinkedIn</span>
-                </a>
-                <a
-                  href={siteConfig.links.email}
-                  className="inline-flex items-center gap-1.5 py-1.5 hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-primary rounded-xs"
-                  aria-label="Send direct email"
-                >
-                  <Mail className="h-4 w-4" />
-                  <span>Email</span>
-                </a>
+              <div className="col-span-2 sm:col-span-1">
+                <dt className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                  Focus
+                </dt>
+                <dd className="mt-1.5 text-[12px] font-medium leading-snug text-foreground">
+                  Interfaces &amp; systems
+                  <span className="block text-muted-foreground">
+                    Design-minded engineering
+                  </span>
+                </dd>
               </div>
-            </ScrollReveal>
+            </dl>
           </div>
 
-          {/* Right Column: Interactive 3D Engineering Workspace Showcase (5 cols) */}
-          <div className="lg:col-span-5 w-full relative">
-            <ScrollReveal direction="scale" delayMs={150}>
-              <TiltCard
-                maxTilt={6}
-                scale={1.02}
-                glare={true}
-                className="w-full shadow-lg rounded-2xl border border-border bg-card/95 backdrop-blur-md overflow-visible relative"
-              >
-                {/* 3D Floating Badge 1 - Top Left */}
-                <div
-                  aria-hidden="true"
-                  className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-border shadow-md absolute -top-4 -left-4 z-30 animate-float-slow font-mono text-[11px] text-foreground"
-                >
-                  <div className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-                  <span className="font-semibold text-primary">React 19 &amp; Next.js 16</span>
-                </div>
-
-                {/* 3D Floating Badge 2 - Bottom Right */}
-                <div
-                  aria-hidden="true"
-                  className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-border shadow-md absolute -bottom-4 -right-4 z-30 animate-float-reverse font-mono text-[11px] text-foreground"
-                >
-                  <Database className="h-3.5 w-3.5 text-accent" />
-                  <span>NestJS &amp; PostgreSQL</span>
-                </div>
-
-                {/* Window Chrome / Titlebar */}
-                <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/60 rounded-t-2xl">
-                  {/* Traffic light dots */}
-                  <div className="flex items-center gap-2">
-                    <span className="h-3 w-3 rounded-full bg-red-400/80 inline-block" />
-                    <span className="h-3 w-3 rounded-full bg-amber-400/80 inline-block" />
-                    <span className="h-3 w-3 rounded-full bg-emerald-400/80 inline-block" />
-                    <span className="ml-2 font-mono text-xs font-medium text-foreground/80">
-                      workspace.config.ts
-                    </span>
-                  </div>
-
-                  {/* Tab Selectors */}
-                  <div className="flex items-center gap-1 bg-background/80 p-0.5 rounded-lg border border-border text-[11px] font-mono">
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("architecture")}
-                      className={`px-2 py-1 rounded-md transition-colors ${
-                        activeTab === "architecture"
-                          ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      Topology
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("contracts")}
-                      className={`px-2 py-1 rounded-md transition-colors ${
-                        activeTab === "contracts"
-                          ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      Contracts
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab("fullstack")}
-                      className={`px-2 py-1 rounded-md transition-colors ${
-                        activeTab === "fullstack"
-                          ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      Metrics
-                    </button>
-                  </div>
-                </div>
-
-                {/* Interactive Viewport Body */}
-                <div className="p-5 font-mono text-xs space-y-4 min-h-[290px] flex flex-col justify-between">
-                  {activeTab === "architecture" && (
-                    <div className="space-y-3 animate-in fade-in duration-300">
-                      <div className="flex items-center justify-between text-muted-foreground text-[11px] pb-1 border-b border-border/50">
-                        <span>// Monorepo System Architecture</span>
-                        <span className="text-primary font-semibold">Strict Contracts</span>
-                      </div>
-
-                      {/* Architecture Topology Visual Nodes */}
-                      <div className="space-y-2 pt-1">
-                        <div className="p-2.5 rounded-lg border border-primary/20 bg-primary-subtle/40 flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Layers className="h-4 w-4 text-primary" />
-                            <span className="font-semibold text-foreground">Frontend Web App</span>
-                          </div>
-                          <Badge variant="default" className="text-[10px] px-1.5 py-0 font-normal">
-                            Next.js 16 RSC
-                          </Badge>
-                        </div>
-
-                        <div className="flex justify-center text-muted-foreground text-[10px]">
-                          ↕ Isomorphic Types (@ogroniedu/contracts)
-                        </div>
-
-                        <div className="p-2.5 rounded-lg border border-accent/20 bg-accent-subtle/40 flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Code2 className="h-4 w-4 text-accent" />
-                            <span className="font-semibold text-foreground">Modular Backend API</span>
-                          </div>
-                          <Badge variant="accent" className="text-[10px] px-1.5 py-0 font-normal">
-                            NestJS 12
-                          </Badge>
-                        </div>
-
-                        <div className="flex justify-center text-muted-foreground text-[10px]">
-                          ↕ TypeORM Migrations &amp; Queues
-                        </div>
-
-                        <div className="p-2.5 rounded-lg border border-border bg-muted/40 flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Database className="h-4 w-4 text-muted-foreground" />
-                            <span className="font-semibold text-foreground">Data Layer</span>
-                          </div>
-                          <span className="text-[11px] text-muted-foreground">PostgreSQL 18 + Redis</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeTab === "contracts" && (
-                    <div className="space-y-2 text-foreground/90 animate-in fade-in duration-300 leading-relaxed">
-                      <div className="text-muted-foreground text-[11px] pb-1 border-b border-border/50 flex justify-between">
-                        <span>// packages/contracts/src/booking.ts</span>
-                        <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Zod Schema</span>
-                      </div>
-                      <pre className="p-3 rounded-lg bg-muted/50 border border-border text-[11px] overflow-x-auto leading-relaxed text-foreground">
-{`export const LessonBookingSchema = z.object({
-  tutorId: z.string().uuid(),
-  guardianId: z.string().uuid(),
-  subjectCode: z.enum(["MATH", "PHYS", "CHEM"]),
-  scheduledAt: z.string().datetime(),
-  hourlyRate: z.number().positive(),
-  role: z.literal("GUARDIAN"),
-});
-
-export type LessonBooking = z.infer<typeof LessonBookingSchema>;`}
-                      </pre>
-                      <p className="text-[11px] text-muted-foreground italic">
-                        Shared between Next.js React Hook Form and NestJS ValidationPipe.
-                      </p>
-                    </div>
-                  )}
-
-                  {activeTab === "fullstack" && (
-                    <div className="space-y-3 animate-in fade-in duration-300">
-                      <div className="text-muted-foreground text-[11px] pb-1 border-b border-border/50 flex justify-between">
-                        <span>// Production Verification Metrics</span>
-                        <span className="text-primary font-semibold">100% Real Code</span>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-2.5 pt-1">
-                        <div className="p-3 rounded-xl border border-border bg-surface">
-                          <span className="text-muted-foreground text-[10px] block">State Management</span>
-                          <span className="text-lg font-bold text-foreground font-sans">18 Slices</span>
-                          <span className="text-[10px] text-primary block mt-0.5">RTK Query Services</span>
-                        </div>
-
-                        <div className="p-3 rounded-xl border border-border bg-surface">
-                          <span className="text-muted-foreground text-[10px] block">Logistics Engine</span>
-                          <span className="text-lg font-bold text-foreground font-sans">21 States</span>
-                          <span className="text-[10px] text-accent block mt-0.5">Parcel State Machine</span>
-                        </div>
-
-                        <div className="p-3 rounded-xl border border-border bg-surface">
-                          <span className="text-muted-foreground text-[10px] block">Accessibility Standard</span>
-                          <span className="text-lg font-bold text-foreground font-sans">WCAG 2.2</span>
-                          <span className="text-[10px] text-emerald-600 dark:text-emerald-400 block mt-0.5">Level AA Verified</span>
-                        </div>
-
-                        <div className="p-3 rounded-xl border border-border bg-surface">
-                          <span className="text-muted-foreground text-[10px] block">Client Localization</span>
-                          <span className="text-lg font-bold text-foreground font-sans">Bilingual</span>
-                          <span className="text-[10px] text-muted-foreground block mt-0.5">next-intl &amp; RTL</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Card Bottom Status Ribbon */}
-                  <div className="pt-2 border-t border-border flex items-center justify-between text-[11px] text-muted-foreground">
-                    <div className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                      <span>Monorepo Verified</span>
-                    </div>
-                    <span className="font-mono text-primary font-medium">CodesWithRakib</span>
-                  </div>
-                </div>
-              </TiltCard>
-            </ScrollReveal>
+          <div className="hero-visual relative lg:col-span-6 xl:col-span-6">
+            <HeroVisual />
           </div>
         </div>
 
-        {/* Tasteful Scroll Down Prompt */}
-        <div className="mt-12 sm:mt-16 flex justify-center">
+        <div className="flex flex-col gap-4 border-t border-border/70 py-5 sm:flex-row sm:items-center sm:justify-between">
           <a
             href="#projects"
-            className="group inline-flex flex-col items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-primary rounded-lg p-2"
-            aria-label="Scroll to projects showcase"
+            className="group inline-flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
           >
-            <span className="text-[11px] font-mono tracking-wider uppercase font-medium">
-              Explore Featured Work
+            <span className="relative h-8 w-px overflow-hidden bg-border">
+              <span className="absolute inset-x-0 top-0 h-3 animate-[scroll-cue_2.4s_ease-in-out_infinite] bg-primary" />
             </span>
-            <ChevronDown className="h-4 w-4 animate-bounce text-primary" />
+            Scroll to selected work
           </a>
+
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <a
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+            >
+              <Icons.gitHub className="h-3.5 w-3.5" aria-hidden="true" />
+              GitHub
+            </a>
+            <a
+              href={siteConfig.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+            >
+              <Icons.linkedIn className="h-3.5 w-3.5" aria-hidden="true" />
+              LinkedIn
+            </a>
+            <a
+              href={siteConfig.links.email}
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+            >
+              <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+              {siteConfig.author.email}
+            </a>
+          </div>
         </div>
       </Container>
     </section>

@@ -1,8 +1,12 @@
 # 10-Phase Implementation Roadmap & Status Tracker
 
-**Subject:** Md. Rakib Islam — Recruiter-Focused Developer Portfolio  
-**Status:** All 10 Phases Completed (Phase 00–09) — **100% Production Ready**  
+**Subject:** Md. Rakib Islam — Recruiter-Focused Developer Portfolio
+
+**Status:** All 10 phases completed (Phase 00–09), followed by the **V2 editorial visual redesign** (see section 8).
+
 **Methodology:** Sequential phase-by-phase execution with explicit verification gates.
+
+> **Latest visual state:** Section 6 below records the first visual pass (V1). That UI has since been superseded by V2: an editorial paper/midnight art direction, real Three.js hero, GSAP scroll storytelling, Framer Motion interactions, and reworked project/case-study presentation. Read [`V2_VISUAL_REDESIGN.md`](./V2_VISUAL_REDESIGN.md) before using section 6 as a description of the current UI.
 
 ---
 
@@ -214,4 +218,34 @@
 
 ## 7. Project Completion Summary
 
-All 10 foundational development phases (00 through 09) and the comprehensive **Visual Experience Redesign** for **Md. Rakib Islam** have been successfully implemented, verified across browsers and automated test suites, and committed to git. The portfolio is 100% production ready for deployment to Vercel at `https://codeswithrakib.vercel.app`.
+All 10 foundational development phases (00 through 09) were completed, then the visual layer was rebuilt again as **V2**. The site keeps the verified content model, routes, contact API, resume detection, SEO artifacts and test suite while replacing the card-heavy visual system with an editorial one.
+
+## 8. V2 Editorial Redesign (current visual state)
+
+**Status:** Implemented and verified on October 21, 2026.
+
+### What changed
+- Replaced the emerald/slate card system with a warm-paper / midnight-studio token system, Instrument Serif display type, Inter Tight reading type and JetBrains Mono labels.
+- Replaced the CSS-only “3D workspace” card with a real React Three Fiber interface atlas, lazy-mounted after first paint with a CSS fallback for WebGL/reduced motion.
+- Added GSAP for the hero timeline, scroll reveals, project clip reveals and experience timeline progress; added Framer Motion for the theme control, navbar/menu, tabs, tilt and form status.
+- Rebuilt the homepage sequence: Hero → Selected Work → Case Studies → Experience → Capabilities → Approach → Contact. Removed the standalone About section and duplicate strengths grid.
+- Rebuilt the project showcase as one flagship feature plus two offset compositions with labelled interface studies, and rebuilt case studies as a technical dossier with sticky contents.
+- Rebuilt the navbar around personal identity (no SOFOF Tech branding), added scroll-spy, a segmented theme switch with persistence/system preference, and an accessible mobile panel.
+- Rewrote `/resume` in the new visual language while keeping the honest no-PDF state.
+- Rebuilt the footer and contact area around recruiter conversion.
+
+### Packages
+`gsap@3.15.0`, `@gsap/react@2.1.2`, `framer-motion@14.4.0`, `three@0.186.1`, `@react-three/fiber@9.8.2`, `@react-three/drei@10.7.9`, and `@types/three@0.186.0` (dev). `next-themes` and `lucide-react` were already present and reused. No Lenis was added.
+
+### Verification
+- `pnpm test`: 14/14 passing.
+- `pnpm typecheck`: 0 errors; `pnpm lint`: 0 errors/warnings.
+- `pnpm build`: passes, 9 routes generated.
+- axe-core 4.14.0 (WCAG 2.0/2.1/2.2 A/AA): 0 violations on desktop light, desktop dark and mobile light.
+- Playwright: 320/390/768/1440/1920 widths with no horizontal overflow or clipped text; theme persistence, no-flash, mobile menu, tabs, clipboard, form validation and fallback states verified.
+- Performance and bundle measurements, including the deferred 3D chunk and limitations, are documented in `V2_VISUAL_REDESIGN.md` sections 11–14.
+
+### Documentation
+- [`V2_VISUAL_REDESIGN.md`](./V2_VISUAL_REDESIGN.md) — current implementation report.
+- [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) — current tokens, typography, components and motion rules.
+- [`screenshots/v2`](./screenshots/v2) — light/dark/mobile/resume/fallback screenshots.

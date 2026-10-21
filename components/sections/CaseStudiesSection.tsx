@@ -1,57 +1,45 @@
 "use client";
 
 import * as React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowUpRight,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  CircleDashed,
+  Copy,
+  GitBranch,
+} from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { SectionHeader } from "@/components/shared/SectionHeader";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
+import { GsapReveal } from "@/components/motion/GsapReveal";
 import { projectsData, earlyProjectsData } from "@/data/projects";
 import { Icons } from "@/components/shared/Icons";
-import {
-  ExternalLink,
-  CheckCircle2,
-  FileCode,
-  ShieldCheck,
-  AlertTriangle,
-  FolderGit2,
-  Users,
-  GitBranch,
-  Terminal,
-  Workflow,
-  Sparkles,
-  ArrowUpRight,
-  Clock,
-  Boxes,
-} from "lucide-react";
+import { panelTransition, springSoft } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 
 export function CaseStudiesSection() {
-  const [activeProjectId, setActiveProjectId] = React.useState<string>("ogroniedu");
-  const [copiedFile, setCopiedFile] = React.useState<string | null>(null);
+  const [activeProjectId, setActiveProjectId] = React.useState("ogroniedu");
+  const [copiedPath, setCopiedPath] = React.useState<string | null>(null);
 
-  // Sync tab with external events or hash
   React.useEffect(() => {
-    const handleSelectCaseStudy = (e: Event) => {
-      const customEvent = e as CustomEvent<string>;
-      if (customEvent.detail && projectsData.some((p) => p.id === customEvent.detail)) {
+    const handleSelectCaseStudy = (event: Event) => {
+      const customEvent = event as CustomEvent<string>;
+      if (projectsData.some((project) => project.id === customEvent.detail)) {
         setActiveProjectId(customEvent.detail);
       }
     };
 
     const handleHashChange = () => {
-      if (typeof window !== "undefined") {
-        const hash = window.location.hash.replace("#case-study-", "");
-        if (projectsData.some((p) => p.id === hash)) {
-          setActiveProjectId(hash);
-        }
+      const hash = window.location.hash.replace("#case-study-", "");
+      if (projectsData.some((project) => project.id === hash)) {
+        setActiveProjectId(hash);
       }
     };
 
     window.addEventListener("select-case-study", handleSelectCaseStudy);
     window.addEventListener("hashchange", handleHashChange);
-
-    // Initial check
     handleHashChange();
 
     return () => {
@@ -60,524 +48,501 @@ export function CaseStudiesSection() {
     };
   }, []);
 
-  const activeProject =
-    projectsData.find((p) => p.id === activeProjectId) || projectsData[0];
+  React.useEffect(() => {
+    if (!copiedPath) return;
+    const timer = window.setTimeout(() => setCopiedPath(null), 1800);
+    return () => window.clearTimeout(timer);
+  }, [copiedPath]);
 
-  const handleCopyPath = (path: string) => {
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText(path);
-      setCopiedFile(path);
-      setTimeout(() => setCopiedFile(null), 2000);
+  const activeProject =
+    projectsData.find((project) => project.id === activeProjectId) ??
+    projectsData[0];
+
+  const copyPath = (path: string) => {
+    navigator.clipboard?.writeText(path);
+    setCopiedPath(path);
+  };
+
+  const handleTabKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    let target = -1;
+    if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+      target = (index + 1) % projectsData.length;
+    } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+      target = (index - 1 + projectsData.length) % projectsData.length;
+    } else if (event.key === "Home") {
+      target = 0;
+    } else if (event.key === "End") {
+      target = projectsData.length - 1;
     }
+
+    if (target === -1) return;
+    event.preventDefault();
+    const next = projectsData[target];
+    setActiveProjectId(next.id);
+    document.getElementById(`case-tab-${next.id}`)?.focus();
+    window.history.replaceState(null, "", `#case-study-${next.id}`);
   };
 
   return (
-    <section id="case-studies" className="py-20 sm:py-24 border-t border-border bg-surface/30">
+    <section
+      id="case-studies"
+      className="scroll-mt-20 border-y border-border/70 bg-surface/45 py-20 sm:py-28"
+    >
       <Container>
-        {/* Section Header */}
-        <ScrollReveal direction="up">
-          <SectionHeader
-            badge="DEEP-DIVE TECHNICAL CASE STUDIES"
-            title="Under the Hood: Architecture, Contracts & Code"
-            description="In-depth technical evaluations of domain-specific architectures, type-safe API contracts, and trade-offs. Inspect exact repository file paths and verified status breakdowns."
-          />
-        </ScrollReveal>
+        <GsapReveal>
+          <div data-reveal>
+            <SectionHeader
+              index="02"
+              badge="Case studies"
+              title="The engineering behind the interface."
+              description="Problem, decisions and trade-offs — written from the repositories rather than from a pitch deck. Pick a project to inspect the build."
+            />
+          </div>
+        </GsapReveal>
 
-        {/* Project Selector Tabs */}
-        <ScrollReveal direction="up" delayMs={100}>
-          <div
-            role="tablist"
-            aria-label="Flagship Project Case Studies"
-            className="flex flex-wrap items-center gap-2 p-1.5 rounded-xl border border-border bg-card/80 backdrop-blur-xs mb-10 max-w-3xl"
-          >
-          {projectsData.map((project, index) => {
-            const isActive = project.id === activeProjectId;
-            return (
-              <button
-                key={project.id}
-                role="tab"
-                id={`tab-${project.id}`}
-                aria-selected={isActive}
-                aria-controls={`panel-${project.id}`}
-                tabIndex={isActive ? 0 : -1}
-                onKeyDown={(e) => {
-                  let targetIndex = -1;
-                  if (e.key === "ArrowRight") {
-                    targetIndex = (index + 1) % projectsData.length;
-                  } else if (e.key === "ArrowLeft") {
-                    targetIndex = (index - 1 + projectsData.length) % projectsData.length;
-                  } else if (e.key === "Home") {
-                    targetIndex = 0;
-                  } else if (e.key === "End") {
-                    targetIndex = projectsData.length - 1;
-                  }
-
-                  if (targetIndex !== -1) {
-                    e.preventDefault();
-                    const nextProject = projectsData[targetIndex];
-                    setActiveProjectId(nextProject.id);
-                    document.getElementById(`tab-${nextProject.id}`)?.focus();
-                    if (typeof window !== "undefined") {
-                      window.history.replaceState(null, "", `#case-study-${nextProject.id}`);
-                    }
-                  }
-                }}
-                onClick={() => {
-                  setActiveProjectId(project.id);
-                  if (typeof window !== "undefined") {
-                    window.history.replaceState(null, "", `#case-study-${project.id}`);
-                  }
-                }}
-                className={`flex-1 min-w-[200px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono font-medium transition-all focus-visible:ring-2 focus-visible:ring-primary ${
-                  isActive
-                    ? "bg-primary text-primary-foreground shadow-xs"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                }`}
-              >
-                <span>{project.title}</span>
-                <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded ${
-                    isActive
-                      ? "bg-primary-foreground/20 text-primary-foreground"
-                      : "bg-muted text-muted-foreground"
-                  }`}
-                >
-                  {project.category.split(" ")[0]}
+        <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <div className="flex items-center justify-between gap-2">
+                <span className="eyebrow">Contents</span>
+                <span className="font-mono text-[9px] text-muted-foreground">
+                  03 projects
                 </span>
-              </button>
-            );
-          })}
-        </div>
-      </ScrollReveal>
+              </div>
 
-        {/* Selected Project Case Study Panel */}
-        <div
-          id={`panel-${activeProject.id}`}
-          role="tabpanel"
-          aria-labelledby={`tab-${activeProject.id}`}
-          className="space-y-12"
-        >
-          {/* 1. Hero Summary Card */}
-          <div className="p-6 sm:p-8 rounded-2xl border border-border bg-card shadow-xs relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+              <div
+                role="tablist"
+                aria-label="Project case studies"
+                aria-orientation="vertical"
+                className="mt-3 border-t border-border/80"
+              >
+                {projectsData.map((project, index) => {
+                  const isActive = project.id === activeProject.id;
+                  return (
+                    <button
+                      key={project.id}
+                      id={`case-tab-${project.id}`}
+                      role="tab"
+                      type="button"
+                      aria-selected={isActive}
+                      aria-controls={`case-panel-${project.id}`}
+                      tabIndex={isActive ? 0 : -1}
+                      onClick={() => {
+                        setActiveProjectId(project.id);
+                        window.history.replaceState(
+                          null,
+                          "",
+                          `#case-study-${project.id}`
+                        );
+                      }}
+                      onKeyDown={(event) => handleTabKeyDown(event, index)}
+                      className={cn(
+                        "group relative flex w-full items-start gap-4 border-b border-border/80 py-5 pr-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-surface",
+                        isActive ? "text-foreground" : "text-muted-foreground"
+                      )}
+                    >
+                      {isActive && (
+                        <motion.span
+                          layoutId="case-study-active-rail"
+                          aria-hidden="true"
+                          className="absolute -left-3 top-4 bottom-4 w-px bg-primary sm:-left-4"
+                          transition={springSoft}
+                        />
+                      )}
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          "mt-1 font-mono text-[10px]",
+                          isActive ? "text-primary" : "text-muted-foreground"
+                        )}
+                      >
+                        0{index + 1}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span
+                          className={cn(
+                            "block font-display text-[1.55rem] leading-none transition-colors",
+                            isActive
+                              ? "text-foreground"
+                              : "text-muted-foreground group-hover:text-foreground"
+                          )}
+                        >
+                          {project.title}
+                        </span>
+                        {" "}
+                        <span className="mt-1.5 block truncate font-mono text-[8px] uppercase tracking-[0.14em] text-muted-foreground">
+                          {project.nativeTitle} · {project.category}
+                        </span>
+                      </span>
+                      <ArrowUpRight
+                        className={cn(
+                          "mt-1 h-3.5 w-3.5 shrink-0 transition-all duration-300",
+                          isActive
+                            ? "text-primary"
+                            : "text-border group-hover:text-muted-foreground"
+                        )}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
 
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-border/80 relative">
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <Badge variant="primary" className="text-xs font-mono">
+              <p className="mt-6 max-w-xs text-[11px] leading-relaxed text-muted-foreground">
+                Every technical claim below maps to a repository path or a
+                documented architecture note. No private client source is
+                reproduced.
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:col-span-8">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={activeProject.id}
+                id={`case-panel-${activeProject.id}`}
+                role="tabpanel"
+                aria-labelledby={`case-tab-${activeProject.id}`}
+                tabIndex={0}
+                initial={panelTransition.initial}
+                animate={panelTransition.animate}
+                exit={panelTransition.exit}
+                className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-surface"
+              >
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-primary">
                     {activeProject.category}
-                  </Badge>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                  </span>
+                  <span aria-hidden="true" className="h-px w-6 bg-border" />
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                     {activeProject.statusBreakdown.statusBadge}
                   </span>
                 </div>
 
-                <div className="flex items-baseline gap-3">
-                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-                    {activeProject.title}
-                  </h3>
-                  <span className="text-sm font-normal text-muted-foreground">
-                    ({activeProject.nativeTitle})
+                <h3 className="mt-3 font-display text-[clamp(2.5rem,5vw,3.9rem)] leading-[0.92] tracking-[-0.025em] text-foreground">
+                  {activeProject.title}{" "}
+                  <span className="align-middle font-sans text-sm tracking-normal text-muted-foreground">
+                    {activeProject.nativeTitle}
                   </span>
-                </div>
-
-                <p className="text-sm sm:text-base font-medium text-primary">
+                </h3>
+                <p className="mt-3 max-w-xl text-[14px] font-medium leading-snug text-primary">
                   {activeProject.tagline}
                 </p>
-              </div>
 
-              <div className="flex flex-wrap items-center gap-3 shrink-0">
-                <div className="px-3 py-1.5 rounded-lg bg-primary-subtle text-primary border border-primary/20 text-xs font-mono font-medium flex items-center gap-2">
-                  <Terminal className="h-3.5 w-3.5" />
-                  <span>{activeProject.role}</span>
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {activeProject.techStack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-full border border-border/80 px-2.5 py-1 font-mono text-[9px] leading-none text-muted-foreground"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
 
-                <a
-                  href={activeProject.repoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button variant="outline" size="sm" className="gap-2 font-mono text-xs">
-                    <Icons.gitHub className="h-3.5 w-3.5" />
-                    <span>View Repository</span>
-                    <ExternalLink className="h-3 w-3 text-muted-foreground" />
-                  </Button>
-                </a>
-              </div>
-            </div>
-
-            {/* Target Personas Bar */}
-            <div className="pt-6 flex flex-col sm:flex-row sm:items-center gap-3">
-              <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-1.5 shrink-0">
-                <Users className="h-3.5 w-3.5 text-primary" />
-                Target Stakeholders:
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {activeProject.targetUsers.map((user, idx) => (
-                  <span
-                    key={idx}
-                    className="text-xs px-2.5 py-1 rounded-md bg-muted text-foreground/90 border border-border/80 font-medium"
-                  >
-                    {user}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* 2. Core Problem & Engineering Architecture Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* The Problem (5 cols) */}
-            <div className="lg:col-span-5 space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="p-1.5 rounded-md bg-red-500/10 text-red-600 dark:text-red-400">
-                  <AlertTriangle className="h-4 w-4" />
-                </span>
-                <h4 className="text-lg font-bold text-foreground">The Operational Problem</h4>
-              </div>
-
-              <Card className="border-border bg-card p-6 leading-relaxed text-sm text-foreground/85">
-                <p className="mb-4">{activeProject.problem}</p>
-                <div className="pt-4 border-t border-border/60 text-xs text-muted-foreground font-mono space-y-1">
-                  <div className="text-foreground font-medium">Design Goal:</div>
-                  <div>Build reliable software that prevents data corruption and operational chaos without relying on third-party SaaS shortcuts.</div>
-                </div>
-              </Card>
-            </div>
-
-            {/* Technical Approach (7 cols) */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="p-1.5 rounded-md bg-primary-subtle text-primary">
-                  <Workflow className="h-4 w-4" />
-                </span>
-                <h4 className="text-lg font-bold text-foreground">Technical Approach & Decisions</h4>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {activeProject.technicalApproach.map((approach, idx) => (
-                  <div
-                    key={idx}
-                    className="p-4 rounded-xl border border-border bg-card hover:border-primary/30 transition-colors space-y-2"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary text-[10px] font-mono font-bold">
-                        {idx + 1}
-                      </span>
-                      <h5 className="text-xs font-bold text-foreground font-mono">
-                        {approach.title}
-                      </h5>
-                    </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {approach.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* 3. Verified Implementation Highlights & Exact File References */}
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <span className="p-1.5 rounded-md bg-primary-subtle text-primary">
-                  <FileCode className="h-4 w-4" />
-                </span>
-                <div>
-                  <h4 className="text-lg font-bold text-foreground">
-                    Verified Implementation Highlights & Real File References
-                  </h4>
-                  <p className="text-xs text-muted-foreground">
-                    Inspectable code paths in the repository demonstrating architectural depth.
+                <div className="mt-7 flex flex-col gap-4 border-y border-border/70 py-4 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="max-w-lg text-[11px] leading-relaxed text-muted-foreground">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-foreground">
+                      Role ·{" "}
+                    </span>
+                    {activeProject.role}
                   </p>
+                  <a
+                    href={activeProject.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex shrink-0 items-center gap-1.5 self-start text-[11px] font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-surface"
+                  >
+                    <Icons.gitHub className="h-3.5 w-3.5" aria-hidden="true" />
+                    <span className="underline-sweep">Repository</span>
+                    <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
+                  </a>
                 </div>
-              </div>
-              <span className="text-[11px] font-mono text-muted-foreground">
-                Click any path to copy
-              </span>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {activeProject.implementationDetails.map((detail, idx) => (
-                <div
-                  key={idx}
-                  className="p-5 rounded-xl border border-border bg-card hover:border-primary/40 transition-all space-y-3 group"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <h5 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
-                      <span>{detail.title}</span>
-                    </h5>
-                  </div>
-
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {detail.description}
+                {/* Problem */}
+                <div className="mt-10">
+                  <h4 className="eyebrow">01 — The problem</h4>
+                  <p className="mt-3 max-w-2xl text-pretty text-[13px] leading-relaxed text-muted-foreground">
+                    {activeProject.problem}
                   </p>
+                  <div className="mt-5">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                      Designed for
+                    </span>
+                    <ul className="mt-2 flex flex-wrap gap-1.5">
+                      {activeProject.targetUsers.map((user) => (
+                        <li
+                          key={user}
+                          className="rounded-full bg-background/70 px-2.5 py-1 font-mono text-[9px] text-foreground/80"
+                        >
+                          {user.split(" (")[0]}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
 
-                  {detail.fileRef && (
-                    <div className="pt-2">
-                      <button
-                        type="button"
-                        onClick={() => handleCopyPath(detail.fileRef!)}
-                        aria-label={`Copy repository path: ${detail.fileRef}`}
-                        className="w-full text-left flex items-center justify-between gap-2 px-2.5 py-1.5 rounded bg-muted/70 hover:bg-muted text-[11px] font-mono text-foreground/80 border border-border/80 transition-colors group-hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary min-h-[36px]"
-                        title="Click to copy file reference"
+                {/* Decisions */}
+                <div className="mt-10">
+                  <h4 className="eyebrow">02 — Engineering decisions</h4>
+                  <ol className="mt-4 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                    {activeProject.technicalApproach.map((approach, index) => (
+                      <li
+                        key={approach.title}
+                        className="border-t border-border/80 pt-3"
                       >
-                        <span className="truncate text-primary font-medium">
-                          {detail.fileRef}
-                        </span>
-                        <span className="text-[10px] text-muted-foreground shrink-0">
-                          {copiedFile === detail.fileRef ? "Copied!" : "Copy path"}
-                        </span>
-                      </button>
-                    </div>
-                  )}
+                        <div className="flex items-baseline gap-2">
+                          <span className="font-mono text-[9px] text-primary">
+                            0{index + 1}
+                          </span>
+                          <h5 className="text-[12px] font-semibold leading-snug text-foreground">
+                            {approach.title}
+                          </h5>
+                        </div>
+                        <p className="mt-2 text-[11.5px] leading-relaxed text-muted-foreground">
+                          {approach.description}
+                        </p>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          {/* 4. Technical Challenges & Architectural Trade-offs */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                <ShieldCheck className="h-4 w-4" />
-              </span>
-              <div>
-                <h4 className="text-lg font-bold text-foreground">
-                  Technical Challenges & Engineering Trade-offs
-                </h4>
-                <p className="text-xs text-muted-foreground">
-                  Deliberate engineering decisions made to solve non-trivial constraints.
-                </p>
-              </div>
-            </div>
+                {/* Trade-offs */}
+                <div className="mt-10">
+                  <h4 className="eyebrow">03 — Trade-offs</h4>
+                  <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    {activeProject.challenges.map((item, index) => (
+                      <div
+                        key={item.challenge}
+                        className="border-l border-primary/35 pl-4"
+                      >
+                        <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-primary">
+                          Challenge 0{index + 1}
+                        </span>
+                        <p className="mt-2 text-[12px] font-medium leading-snug text-foreground">
+                          {item.challenge}
+                        </p>
+                        <p className="mt-2 text-[11.5px] leading-relaxed text-muted-foreground">
+                          <span className="font-medium text-accent">
+                            Response ·{" "}
+                          </span>
+                          {item.solution}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {activeProject.challenges.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="p-6 rounded-xl border border-border bg-card space-y-3 relative overflow-hidden"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                      Challenge {idx + 1}
+                {/* Evidence */}
+                <div className="mt-10">
+                  <div className="flex flex-wrap items-end justify-between gap-2">
+                    <h4 className="eyebrow">04 — Verified in code</h4>
+                    <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-muted-foreground">
+                      Select a path to copy
                     </span>
                   </div>
-                  <p className="text-xs sm:text-sm font-medium text-foreground">
-                    {item.challenge}
-                  </p>
+                  <ul className="mt-3 border-t border-border/80">
+                    {activeProject.implementationDetails.map((detail) => (
+                      <li
+                        key={detail.title}
+                        className="flex flex-col gap-2 border-b border-border/80 py-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6"
+                      >
+                        <div className="min-w-0">
+                          <h5 className="flex items-start gap-1.5 text-[12px] font-semibold text-foreground">
+                            <CheckCircle2
+                              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary"
+                              aria-hidden="true"
+                            />
+                            <span>{detail.title}</span>
+                          </h5>
+                          <p className="mt-1.5 pl-5 text-[11.5px] leading-relaxed text-muted-foreground">
+                            {detail.description}
+                          </p>
+                        </div>
+                        {detail.fileRef && (
+                          <button
+                            type="button"
+                            onClick={() => copyPath(detail.fileRef!)}
+                            aria-label={`Copy repository path ${detail.fileRef}`}
+                            className="inline-flex max-w-full shrink-0 items-center gap-2 self-start rounded-full border border-border/80 px-2.5 py-1 font-mono text-[8.5px] text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                          >
+                            <span className="max-w-[220px] truncate text-primary">
+                              {detail.fileRef}
+                            </span>
+                            {copiedPath === detail.fileRef ? (
+                              <Check
+                                className="h-3 w-3 shrink-0 text-accent"
+                                aria-hidden="true"
+                              />
+                            ) : (
+                              <Copy
+                                className="h-3 w-3 shrink-0"
+                                aria-hidden="true"
+                              />
+                            )}
+                          </button>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                  <span aria-live="polite" className="sr-only">
+                    {copiedPath ? "Repository path copied to clipboard" : ""}
+                  </span>
+                </div>
 
-                  <div className="p-3.5 rounded-lg bg-surface border border-border text-xs leading-relaxed text-muted-foreground space-y-1">
-                    <div className="font-mono text-[11px] uppercase tracking-wider text-primary font-semibold flex items-center gap-1.5">
-                      <Sparkles className="h-3 w-3" />
-                      Architectural Solution & Trade-off:
+                {/* Delivery status */}
+                <details className="group mt-8 border-t border-border/80 pt-4">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-[12px] font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-surface">
+                    <span className="inline-flex items-center gap-2">
+                      <CircleDashed
+                        className="h-3.5 w-3.5 text-primary"
+                        aria-hidden="true"
+                      />
+                      Delivery status — implemented, active &amp; planned
+                    </span>
+                    <ChevronDown
+                      className="h-4 w-4 text-muted-foreground transition-transform duration-300 group-open:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </summary>
+
+                  <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-3">
+                    <div>
+                      <span className="flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.14em] text-foreground">
+                        <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        Implemented
+                      </span>
+                      <ul className="mt-2 space-y-2">
+                        {activeProject.statusBreakdown.implemented.map(
+                          (item) => (
+                            <li
+                              key={item}
+                              className="flex items-start gap-1.5 text-[11px] leading-relaxed text-muted-foreground"
+                            >
+                              <CheckCircle2
+                                className="mt-0.5 h-3 w-3 shrink-0 text-primary"
+                                aria-hidden="true"
+                              />
+                              <span>{item}</span>
+                            </li>
+                          )
+                        )}
+                      </ul>
                     </div>
-                    <p className="text-foreground/90">{item.solution}</p>
+                    <div>
+                      <span className="flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.14em] text-foreground">
+                        <span className="h-1.5 w-1.5 rounded-full bg-warning" />
+                        In progress
+                      </span>
+                      <ul className="mt-2 space-y-2">
+                        {activeProject.statusBreakdown.inProgress.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-1.5 text-[11px] leading-relaxed text-muted-foreground"
+                          >
+                            <GitBranch
+                              className="mt-0.5 h-3 w-3 shrink-0 text-warning"
+                              aria-hidden="true"
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <span className="flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.14em] text-foreground">
+                        <span className="h-1.5 w-1.5 rounded-full bg-border" />
+                        Planned
+                      </span>
+                      <ul className="mt-2 space-y-2">
+                        {activeProject.statusBreakdown.planned.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-1.5 text-[11px] leading-relaxed text-muted-foreground"
+                          >
+                            <ArrowUpRight
+                              className="mt-0.5 h-3 w-3 shrink-0 text-muted-foreground"
+                              aria-hidden="true"
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* 5. Status Breakdown (Verified Transparency Matrix) */}
-          <div className="p-6 sm:p-8 rounded-2xl border border-border bg-card space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-border/80">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-primary" />
-                <h4 className="text-base sm:text-lg font-bold text-foreground">
-                  Verified Status & Delivery Matrix
-                </h4>
-              </div>
-              <span className="text-xs font-mono text-muted-foreground">
-                Zero-hallucination engineering audit
-              </span>
-            </div>
+                  <p className="mt-5 text-[11px] leading-relaxed text-muted-foreground">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.14em] text-foreground">
+                      Environment ·{" "}
+                    </span>
+                    {activeProject.statusBreakdown.liveDemoStatus}
+                  </p>
+                </details>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Implemented */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  <span className="text-xs font-mono uppercase tracking-wider font-bold text-foreground">
-                    Implemented & Verified
+                {/* Reviewer path */}
+                <div className="mt-8 border-t border-border/80 pt-5">
+                  <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Reviewer path
                   </span>
+                  <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+                    {activeProject.inspectableAreas.map((area) => (
+                      <li
+                        key={area}
+                        className="font-mono text-[9px] leading-relaxed text-foreground/75"
+                      >
+                        {area}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-2">
-                  {activeProject.statusBreakdown.implemented.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="text-xs text-muted-foreground flex items-start gap-2 leading-relaxed"
-                    >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* In Progress */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
-                  <span className="text-xs font-mono uppercase tracking-wider font-bold text-foreground">
-                    Active In-Progress
-                  </span>
-                </div>
-                <ul className="space-y-2">
-                  {activeProject.statusBreakdown.inProgress.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="text-xs text-muted-foreground flex items-start gap-2 leading-relaxed"
-                    >
-                      <GitBranch className="h-3.5 w-3.5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Planned */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-zinc-400" />
-                  <span className="text-xs font-mono uppercase tracking-wider font-bold text-foreground">
-                    Roadmap & Next Steps
-                  </span>
-                </div>
-                <ul className="space-y-2">
-                  {activeProject.statusBreakdown.planned.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="text-xs text-muted-foreground flex items-start gap-2 leading-relaxed"
-                    >
-                      <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Live Demo Status Callout */}
-            <div className="p-3.5 rounded-lg bg-surface border border-border/80 flex items-start gap-3">
-              <Boxes className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-              <div className="text-xs text-muted-foreground leading-relaxed">
-                <strong className="text-foreground font-mono">Environment & Deployment Status: </strong>
-                {activeProject.statusBreakdown.liveDemoStatus}
-              </div>
-            </div>
-          </div>
-
-          {/* 6. Inspectable Code Areas for Reviewers */}
-          <div className="p-6 rounded-xl border border-primary/20 bg-primary-subtle/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <span className="text-xs font-mono uppercase tracking-wider text-primary font-bold flex items-center gap-1.5">
-                <FolderGit2 className="h-3.5 w-3.5" />
-                Recommended Repository Inspection Paths
-              </span>
-              <p className="text-xs text-muted-foreground">
-                When reviewing the codebase, open these directories to inspect architectural hygiene:
-              </p>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {activeProject.inspectableAreas.map((area, idx) => (
-                  <span
-                    key={idx}
-                    className="text-[11px] font-mono px-2.5 py-1 rounded-md bg-card text-foreground border border-border/80 font-medium"
-                  >
-                    {area}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <a
-              href={activeProject.repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0"
-            >
-              <Button variant="primary" size="sm" className="gap-2 font-mono text-xs">
-                <Icons.gitHub className="h-3.5 w-3.5" />
-                <span>Open {activeProject.title} on GitHub</span>
-                <ExternalLink className="h-3 w-3" />
-              </Button>
-            </a>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
-        {/* 7. Secondary / Foundational Projects Showcase */}
-        <ScrollReveal direction="up" delayMs={100}>
-          <div className="mt-20 pt-16 border-t border-border">
-            <div className="mb-8">
-              <span className="inline-block text-xs font-mono font-medium tracking-wider uppercase text-muted-foreground mb-1">
-                FOUNDATIONAL MILESTONES
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-                Early Exploratory & Client-Side Projects
+        <GsapReveal className="mt-20 border-t border-border/80 pt-8">
+          <div
+            data-reveal
+            className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between"
+          >
+            <div>
+              <span className="eyebrow">Foundational milestones</span>
+              <h3 className="mt-3 font-display text-2xl text-foreground sm:text-3xl">
+                Earlier builds that shaped the craft.
               </h3>
-              <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl leading-relaxed">
-                Earlier projects developed while building full-stack fundamentals in MERN workflows, authentication, and client-side state persistence prior to engineering enterprise monorepos.
-              </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {earlyProjectsData.map((project, idx) => (
-                <div
-                  key={idx}
-                  className="p-6 rounded-xl border border-border bg-card/60 backdrop-blur-xs flex flex-col justify-between space-y-4 hover:border-primary/30 transition-colors"
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-[11px] font-mono text-muted-foreground font-medium px-2 py-0.5 rounded bg-muted border border-border">
-                        {project.category}
-                      </span>
-                      <a
-                        href={project.repoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-muted-foreground hover:text-foreground transition-colors p-1"
-                        aria-label={`View ${project.title} on GitHub`}
-                      >
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    </div>
-
-                    <h4 className="text-base font-bold text-foreground">{project.title}</h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  <div className="space-y-3 pt-2 border-t border-border/60">
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.techStack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-foreground/80 border border-border/70"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
+            <ul className="grid flex-1 gap-5 sm:max-w-xl sm:grid-cols-2">
+              {earlyProjectsData.map((project) => (
+                <li key={project.title} className="border-t border-border/80 pt-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <h4 className="text-[13px] font-semibold text-foreground">
+                      {project.title}
+                    </h4>
                     <a
                       href={project.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex text-xs font-mono text-primary hover:underline items-center gap-1"
+                      aria-label={`View ${project.title} on GitHub`}
+                      className="text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
-                      <span>View Repository</span>
-                      <ArrowUpRight className="h-3 w-3" />
+                      <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                     </a>
                   </div>
-                </div>
+                  <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.12em] text-muted-foreground">
+                    {project.category}
+                  </p>
+                  <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">
+                    {project.description}
+                  </p>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-        </ScrollReveal>
+        </GsapReveal>
       </Container>
     </section>
   );

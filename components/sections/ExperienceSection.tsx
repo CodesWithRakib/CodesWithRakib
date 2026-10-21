@@ -1,155 +1,209 @@
 import * as React from "react";
+import Link from "next/link";
+import { ArrowUpRight, MapPin } from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { Badge } from "@/components/ui/badge";
 import { SectionHeader } from "@/components/shared/SectionHeader";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
+import { GsapReveal } from "@/components/motion/GsapReveal";
+import { TimelineProgress } from "@/components/motion/TimelineProgress";
 import { experienceData } from "@/data/experience";
-import {
-  MapPin,
-  Calendar,
-  CheckCircle2,
-  Terminal,
-  Globe,
-  Layers,
-} from "lucide-react";
+import { profileData } from "@/data/profile";
 
 export function ExperienceSection() {
-  const currentJob = experienceData[0];
+  const role = experienceData[0];
 
   return (
-    <section id="experience" className="py-20 sm:py-24 border-t border-border bg-background">
+    <section id="experience" className="scroll-mt-20 py-20 sm:py-28">
       <Container>
-        {/* Section Header */}
-        <ScrollReveal direction="up">
-          <SectionHeader
-            badge="PROFESSIONAL WORK EXPERIENCE"
-            title="Production Frontend Engineering at SOFOF Tech"
-            description="Real-world client deliverables, interactive SaaS portals, and bidirectional internationalization built with strict adherence to maintainable architecture."
-          />
-        </ScrollReveal>
+        <GsapReveal>
+          <div data-reveal>
+            <SectionHeader
+              index="03"
+              badge="Experience"
+              title="Shipping interfaces inside a real product team."
+              description="Commercial work at SOFOF Tech, plus the systems I build independently to understand the whole stack."
+            />
+          </div>
+        </GsapReveal>
 
-        {/* Experience Presentation Card */}
-        <ScrollReveal direction="up" delayMs={100}>
-          <div className="relative border border-border bg-card rounded-2xl p-6 sm:p-8 md:p-10 shadow-xs overflow-hidden">
-          {/* Subtle top indicator bar */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/30 via-primary to-accent/40 opacity-80" />
-
-          {/* Header Row: Company, Role, Meta Badges */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-border/70">
-            <div className="space-y-2">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Current Employment
-                </span>
-                <Badge variant="outline" className="text-xs font-mono">
-                  {currentJob.type}
-                </Badge>
+        <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14">
+          <GsapReveal className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <div data-reveal className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                <span className="eyebrow">Profile</span>
               </div>
+              <h3
+                data-reveal
+                className="mt-4 max-w-sm text-balance font-display text-[clamp(1.9rem,3vw,2.6rem)] leading-[1.02] tracking-[-0.02em] text-foreground"
+              >
+                A frontend engineer who reads the whole system.
+              </h3>
+              <p
+                data-reveal
+                className="mt-5 max-w-sm text-pretty text-[13px] leading-relaxed text-muted-foreground"
+              >
+                {profileData.aboutShort}
+              </p>
 
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-                  {currentJob.role}
-                </h3>
-                <div className="text-base sm:text-lg font-semibold text-primary mt-0.5">
-                  {currentJob.company}
+              <blockquote
+                data-reveal
+                className="mt-6 max-w-sm border-l border-primary/35 pl-4 text-[12px] leading-relaxed text-foreground/85"
+              >
+                {profileData.fullStackStatement}
+              </blockquote>
+
+              <dl
+                data-reveal
+                className="mt-8 space-y-3 border-t border-border/80 pt-5 text-[11px]"
+              >
+                <div className="flex items-baseline justify-between gap-4">
+                  <dt className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Based in
+                  </dt>
+                  <dd className="inline-flex items-center gap-1.5 font-medium text-foreground">
+                    <MapPin className="h-3 w-3 text-primary" aria-hidden="true" />
+                    Dhaka, Bangladesh
+                  </dd>
                 </div>
+                <div className="flex items-baseline justify-between gap-4">
+                  <dt className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Availability
+                  </dt>
+                  <dd className="font-medium text-foreground">
+                    Frontend &amp; full-stack roles
+                  </dd>
+                </div>
+              </dl>
+
+              <Link
+                data-reveal
+                href="/resume"
+                className="group mt-6 inline-flex items-center gap-1.5 text-[12px] font-medium text-primary transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              >
+                <span className="underline-sweep">Résumé &amp; CV</span>
+                <ArrowUpRight
+                  className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                />
+              </Link>
+            </div>
+          </GsapReveal>
+
+          <div className="lg:col-span-8">
+            <GsapReveal>
+              <div
+                data-reveal
+                className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-4"
+              >
+                <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary-subtle/60 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-primary-subtle-foreground">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+                  Current role
+                </span>
+                <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">
+                  {role.period} · {role.location}
+                </span>
               </div>
+
+              <h3
+                data-reveal
+                className="mt-5 font-display text-[clamp(2.3rem,4.6vw,3.6rem)] leading-[0.95] tracking-[-0.025em] text-foreground"
+              >
+                {role.role}
+              </h3>
+              <p data-reveal className="mt-2 text-[15px] font-medium text-primary">
+                {role.company}
+              </p>
+              <p
+                data-reveal
+                className="mt-1 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground"
+              >
+                {role.type}
+              </p>
+
+              <p
+                data-reveal
+                className="mt-6 max-w-2xl text-pretty text-[13.5px] leading-relaxed text-muted-foreground"
+              >
+                {role.overview}
+              </p>
+            </GsapReveal>
+
+            <div className="mt-10">
+              <span className="eyebrow">Selected contributions</span>
+              <TimelineProgress>
+                <GsapReveal className="mt-4">
+                  <ol className="space-y-7">
+                    {role.responsibilities.map((item, index) => (
+                      <li
+                        key={item.title}
+                        data-reveal
+                        className="group relative sm:pl-8"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="absolute left-0 top-1.5 hidden h-[7px] w-[7px] rounded-full border border-primary/60 bg-background transition-colors duration-300 group-hover:bg-primary sm:block"
+                        />
+                        <div className="flex items-baseline gap-2">
+                          <span className="font-mono text-[9px] text-primary">
+                            0{index + 1}
+                          </span>
+                          <h4 className="text-[13px] font-semibold leading-snug text-foreground">
+                            {item.title}
+                          </h4>
+                        </div>
+                        <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground">
+                          {item.description}
+                        </p>
+                      </li>
+                    ))}
+                  </ol>
+                </GsapReveal>
+              </TimelineProgress>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-muted-foreground shrink-0">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface border border-border">
-                <Calendar className="h-3.5 w-3.5 text-primary" />
-                <span>{currentJob.period}</span>
-              </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface border border-border">
-                <MapPin className="h-3.5 w-3.5 text-primary" />
-                <span>{currentJob.location}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Role Overview */}
-          <div className="py-6 border-b border-border/70">
-            <p className="text-sm sm:text-base text-foreground/90 leading-relaxed max-w-4xl">
-              {currentJob.overview}
-            </p>
-          </div>
-
-          {/* Responsibilities & Contributions (Action + Technical Context + Purpose/Outcome) */}
-          <div className="pt-6 space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-md bg-primary-subtle text-primary">
-                <Terminal className="h-4 w-4" />
-              </span>
-              <h4 className="text-base sm:text-lg font-bold text-foreground">
-                Verified Contributions & Practical Responsibilities
-              </h4>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {currentJob.responsibilities.map((item, idx) => (
+            {role.projectsMentioned && (
+              <GsapReveal className="mt-10">
                 <div
-                  key={idx}
-                  className="p-5 rounded-xl border border-border bg-surface/50 hover:border-primary/30 transition-all space-y-2 group"
+                  data-reveal
+                  className="border-t border-border/80 pt-5"
                 >
-                  <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                    <div className="space-y-1">
-                      <h5 className="text-xs sm:text-sm font-semibold text-foreground">
-                        {item.title}
-                      </h5>
-                      <p className="text-xs text-muted-foreground leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
+                  <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Client platforms in production
+                  </span>
+                  <ul className="mt-3 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-3">
+                    {role.projectsMentioned.map((project) => (
+                      <li
+                        key={project}
+                        className="text-[11px] leading-snug text-foreground/80"
+                      >
+                        {project}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ))}
-            </div>
-          </div>
+              </GsapReveal>
+            )}
 
-          {/* Client Projects / Practical Work Environments */}
-          {currentJob.projectsMentioned && (
-            <div className="mt-8 p-4 rounded-xl border border-primary/20 bg-primary-subtle/30 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-primary">
-                <Globe className="h-3.5 w-3.5" />
-                Production Client Platforms Built & Maintained
-              </div>
-              <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
-                {currentJob.projectsMentioned.map((proj, idx) => (
-                  <li
-                    key={idx}
-                    className="text-xs text-foreground/85 px-3 py-2 rounded-lg bg-card border border-border/80 flex items-start gap-2"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0 mt-1.5" />
-                    <span className="leading-snug">{proj}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Core Technologies Used In Production */}
-          <div className="mt-8 pt-6 border-t border-border/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-1.5 shrink-0">
-              <Layers className="h-3.5 w-3.5 text-primary" />
-              Technologies Applied in Daily Production:
-            </span>
-
-            <div className="flex flex-wrap gap-1.5">
-              {currentJob.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs font-mono px-2.5 py-1 rounded-md bg-muted text-foreground/90 border border-border/80 font-medium"
-                >
-                  {tech}
+            <GsapReveal className="mt-8">
+              <div
+                data-reveal
+                className="flex flex-wrap items-center gap-2 border-t border-border/80 pt-5"
+              >
+                <span className="mr-1 font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground">
+                  Daily stack
                 </span>
-              ))}
-            </div>
+                {role.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full border border-border/80 px-2 py-1 font-mono text-[9px] leading-none text-foreground/75"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </GsapReveal>
           </div>
         </div>
-      </ScrollReveal>
       </Container>
     </section>
   );

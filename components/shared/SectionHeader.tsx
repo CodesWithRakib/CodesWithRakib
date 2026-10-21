@@ -6,6 +6,7 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLDivElement>
   title: string;
   description?: string;
   align?: "left" | "center";
+  index?: string;
 }
 
 export function SectionHeader({
@@ -13,6 +14,7 @@ export function SectionHeader({
   title,
   description,
   align = "left",
+  index,
   className,
   ...props
 }: SectionHeaderProps) {
@@ -21,24 +23,35 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        "flex flex-col space-y-2 mb-8 md:mb-12",
+        "flex flex-col gap-5",
         isCenter && "items-center text-center",
         className
       )}
       {...props}
     >
-      {badge && (
-        <span className="inline-block text-xs font-mono font-medium tracking-wider uppercase text-primary mb-1">
-          {badge}
-        </span>
+      {(badge || index) && (
+        <div
+          className={cn(
+            "flex items-center gap-3",
+            isCenter && "justify-center"
+          )}
+        >
+          {index && (
+            <span className="font-mono text-[11px] font-medium text-primary">
+              {index}
+            </span>
+          )}
+          <span aria-hidden="true" className="h-px w-8 bg-primary/45" />
+          {badge && <span className="eyebrow">{badge}</span>}
+        </div>
       )}
-      <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+      <h2 className="max-w-3xl text-balance font-display text-[clamp(2.15rem,4.4vw,3.65rem)] leading-[0.98] tracking-[-0.02em] text-foreground">
         {title}
       </h2>
       {description && (
         <p
           className={cn(
-            "text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl",
+            "max-w-xl text-pretty text-sm leading-relaxed text-muted-foreground sm:text-[0.95rem]",
             isCenter && "mx-auto"
           )}
         >
