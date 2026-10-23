@@ -1,69 +1,72 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ClassicView } from "@/components/terminal/ClassicView";
+import { TerminalShell } from "@/components/terminal/TerminalShell";
+import { ViewToggle } from "@/components/terminal/ViewToggle";
 import { profile } from "@/content/profile";
-import { fadeUp, staggerContainer } from "@/lib/motion";
+import { useViewMode } from "@/hooks/useViewMode";
 
-/**
- * Deliberately minimal: name, role and tagline only. This is the canvas each
- * theme branch replaces — no theme-specific layout or 3D lives here.
- */
 export default function HomePage() {
+  const { view, setView } = useViewMode();
   const reducedMotion = useReducedMotion();
+  const fade = reducedMotion ? 0 : 0.22;
 
   return (
-    <section className="relative flex min-h-svh items-center justify-center overflow-hidden px-[var(--space-gutter)] py-[var(--space-section)]">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(60% 50% at 50% 20%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 70%)",
-        }}
-      />
+    <>
+      <ViewToggle view={view} onChange={setView} />
 
-      <motion.div
-        variants={staggerContainer}
-        initial={reducedMotion ? false : "hidden"}
-        animate="visible"
-        className="relative mx-auto w-full max-w-2xl text-center"
-      >
-        <motion.p
-          data-reveal
-          variants={fadeUp}
-          className="mb-6 font-mono text-[11px] uppercase tracking-[0.22em] text-fg-muted"
-        >
-          {profile.location} · Open to work
-        </motion.p>
+      <noscript>
+        <div className="term-noscript">
+          <h1 className="font-display text-4xl tracking-tight">{profile.name}</h1>
+          <p className="mt-2 text-lg text-fg-muted">{profile.role}</p>
+          <p className="mt-5 text-base leading-relaxed text-fg-muted">{profile.tagline}</p>
+          <p className="mt-5 text-base leading-relaxed text-fg-muted">{profile.bio}</p>
+          <p className="mt-5">
+            <a href={`mailto:${profile.email}`} className="text-accent underline">
+              {profile.email}
+            </a>
+          </p>
+          <ul className="mt-3 flex flex-wrap gap-4 text-sm">
+            {profile.socials.map((social) => (
+              <li key={social.label}>
+                <a href={social.url} className="text-accent underline">
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-sm text-fg-muted">
+            This site uses JavaScript for its terminal interface. Everything above works without
+            it.
+          </p>
+        </div>
+      </noscript>
 
-        <motion.h1
-          data-reveal
-          variants={fadeUp}
-          className="font-display text-5xl leading-[0.95] tracking-tight text-balance sm:text-6xl"
-        >
-          {profile.name}
-        </motion.h1>
-
-        <motion.p data-reveal variants={fadeUp} className="mt-4 text-2xl text-accent">
-          {profile.role}
-        </motion.p>
-
-        <motion.p
-          data-reveal
-          variants={fadeUp}
-          className="mx-auto mt-6 max-w-xl text-base text-fg-muted text-pretty"
-        >
-          {profile.tagline}
-        </motion.p>
-
-        <motion.p
-          data-reveal
-          variants={fadeUp}
-          className="mt-10 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted/70"
-        >
-          Foundation build · replace this page in a theme branch
-        </motion.p>
-      </motion.div>
-    </section>
+      <AnimatePresence mode="wait" initial={false}>
+        {view === "terminal" ? (
+          <motion.div
+            key="terminal"
+            className="terminal-page terminal-live"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: fade, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <TerminalShell onOpenClassic={() => setView("classic")} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="classic"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: fade, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <ClassicView onOpenTerminal={() => setView("terminal")} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

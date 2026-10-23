@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { MotionConfig } from "framer-motion";
 import "../styles/globals.css";
+import "../styles/terminal.css";
 import { Cursor } from "@/components/shared/Cursor";
-import { Loader } from "@/components/shared/Loader";
 import { ScrollProgress } from "@/components/shared/ScrollProgress";
 import { Seo } from "@/components/shared/Seo";
 import { SmoothScroll } from "@/components/shared/SmoothScroll";
@@ -22,13 +22,19 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
+
 export const metadata: Metadata = defaultMetadata;
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`dark ${inter.variable} ${spaceGrotesk.variable}`}
+      className={`dark ${inter.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body className="overflow-x-hidden bg-bg font-sans text-fg antialiased">
@@ -48,7 +54,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         </MotionConfig>
 
         <Cursor />
-        <Loader />
         <Seo />
       </body>
     </html>

@@ -1,30 +1,29 @@
 import type { Profile, SiteConfig } from "@/types";
 
 /**
- * Placeholder identity. Theme branches should replace the values here (or swap
- * this module for their own) without touching layout or metadata code.
+ * Identity is real; projects, skills and experience in this branch are still
+ * placeholder content and should be replaced before launch.
  */
 export const siteConfig = {
-  name: "Jordan Avery",
-  url: "https://jordanavery.dev",
+  name: "Md. Rakib Islam",
+  url: "https://codeswithrakib.github.io",
   ogImage: "/og.png",
   description:
-    "Frontend engineer building fast, accessible web interfaces with React, TypeScript and a bias for shipping.",
+    "Rakib Islam is a frontend developer in Dhaka building production web applications with React, Next.js and TypeScript — from typed interfaces to NestJS and PostgreSQL systems.",
 } satisfies SiteConfig;
 
 export const profile = {
-  name: "Jordan Avery",
-  role: "Frontend Engineer",
+  name: "Md. Rakib Islam",
+  role: "Frontend Developer",
   tagline:
-    "I build interfaces that stay fast, legible and pleasant to use — from the first sketch to production.",
-  bio: "Frontend engineer with a product mindset. I work across design systems, performance and accessibility, and I am happiest when a hard interaction problem turns into a small, obvious solution.",
-  location: "Berlin, Germany",
-  email: "hello@jordanavery.dev",
+    "I turn complex product requirements into fast, accessible interfaces — and follow the work down the stack when a feature needs it.",
+  bio: "I’m a frontend developer at SOFOF Tech in Dhaka, shipping production platforms for international clients — including full Arabic RTL interfaces and real-time consultation tools. My work sits between design and engineering: precise layout, accessible components, predictable state, and the backend work needed to make a feature genuinely complete.",
+  location: "Dhaka, Bangladesh",
+  email: "codeswithrakib@gmail.com",
   avatar: "/avatar.svg",
   socials: [
-    { label: "GitHub", url: "https://github.com/jordanavery", icon: "github" },
-    { label: "LinkedIn", url: "https://www.linkedin.com/in/jordanavery", icon: "linkedin" },
-    { label: "X", url: "https://x.com/jordanavery", icon: "x" },
-    { label: "Email", url: "mailto:hello@jordanavery.dev", icon: "email" },
+    { label: "GitHub", url: "https://github.com/CodesWithRakib", icon: "github" },
+    { label: "LinkedIn", url: "https://linkedin.com/in/codeswithrakib", icon: "linkedin" },
+    { label: "Email", url: "mailto:codeswithrakib@gmail.com", icon: "email" },
   ],
 } satisfies Profile;
