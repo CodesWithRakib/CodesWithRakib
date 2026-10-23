@@ -3,25 +3,21 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium leading-none transition-[background-color,border-color,color,transform,box-shadow] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-ring-offset disabled:pointer-events-none disabled:opacity-50 select-none cursor-pointer",
+  "inline-flex select-none items-center justify-center gap-2.5 whitespace-nowrap font-medium leading-none transition-[background-color,border-color,color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-ring-offset disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         primary:
-          "bg-primary text-primary-foreground hover:bg-primary-hover active:translate-y-px shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]",
+          "bg-primary text-primary-foreground hover:bg-primary-hover active:translate-y-px",
         secondary:
-          "border border-border bg-transparent text-foreground hover:border-foreground/45 hover:bg-surface active:translate-y-px",
-        outline:
-          "border border-border bg-transparent text-foreground hover:bg-muted hover:border-foreground/30",
-        ghost: "text-foreground hover:bg-muted",
-        link: "text-primary underline-offset-4 hover:underline p-0 h-auto font-medium",
+          "border border-border-strong text-foreground hover:border-foreground hover:bg-foreground hover:text-background active:translate-y-px",
+        ghost: "text-foreground hover:text-primary",
       },
       size: {
-        sm: "h-9 px-4 text-[12px] rounded-full",
-        md: "h-11 px-5 text-[13px] rounded-full",
-        lg: "h-12 px-6 text-sm rounded-full",
-        xl: "h-[52px] px-7 text-sm rounded-full",
-        icon: "h-9 w-9 rounded-full p-0",
+        sm: "h-10 rounded-xs px-4 text-sm",
+        md: "h-12 rounded-xs px-6 text-[0.95rem]",
+        lg: "h-14 rounded-xs px-7 text-base",
+        icon: "h-11 w-11 rounded-xs p-0",
       },
     },
     defaultVariants: {
@@ -33,14 +29,13 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
+    VariantProps<typeof buttonVariants> {}
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  ({ className, variant, size, type = "button", ...props }, ref) => {
     return (
       <button
+        type={type}
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}

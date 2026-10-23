@@ -28,9 +28,9 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   name: "Md. Rakib Islam",
-  title: "Md. Rakib Islam | Frontend Developer | React, Next.js, TypeScript",
+  title: "Rakib Islam — Frontend Developer | React, Next.js, TypeScript",
   description:
-    "Portfolio of Md. Rakib Islam, Frontend Developer at SOFOF Tech specializing in React, Next.js, TypeScript, and production SaaS architecture.",
+    "Rakib Islam is a frontend developer in Dhaka building production web applications with React, Next.js and TypeScript — from typed interfaces to NestJS and PostgreSQL systems.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://codeswithrakib.github.io",
   author: {
     name: "Md. Rakib Islam",
@@ -41,11 +41,9 @@ export const siteConfig: SiteConfig = {
     linkedin: "https://linkedin.com/in/codeswithrakib",
   },
   navItems: [
-    { label: "Work", href: "/#projects" },
-    { label: "Case Studies", href: "/#case-studies" },
+    { label: "Work", href: "/#work" },
+    { label: "About", href: "/#about" },
     { label: "Experience", href: "/#experience" },
-    { label: "Skills", href: "/#skills" },
-    { label: "Approach", href: "/#principles" },
     { label: "Contact", href: "/#contact" },
   ],
   links: {

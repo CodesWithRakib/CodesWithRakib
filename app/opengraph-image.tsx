@@ -9,7 +9,7 @@ export const size = {
 };
 
 export const contentType = "image/png";
-export const alt = "Md. Rakib Islam | Frontend Developer | React, Next.js, TypeScript";
+export const alt = "Rakib Islam — Frontend Developer | React, Next.js, TypeScript";
 
 export default function OpenGraphImage() {
   return new ImageResponse(
@@ -22,197 +22,89 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "64px 72px",
-          backgroundColor: "#09090b",
-          color: "#f4f4f5",
+          backgroundColor: "#101114",
+          color: "#f4f1e7",
           fontFamily: "system-ui, -apple-system, sans-serif",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Subtle decorative glow in top right */}
         <div
           style={{
             position: "absolute",
-            top: -100,
-            right: -100,
-            width: 450,
-            height: 450,
-            borderRadius: "50%",
-            backgroundColor: "#065f46",
-            opacity: 0.25,
-            filter: "blur(90px)",
+            top: 0,
+            right: 0,
+            width: 96,
+            height: 96,
+            backgroundColor: "#1b2ae0",
           }}
         />
 
-        {/* Top Bar: Brand Monogram & Domain */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             width: "100%",
+            fontFamily: "monospace",
+            fontSize: 18,
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            color: "#a7a49a",
           }}
         >
+          <span>Md. Rakib Islam</span>
+          <span>Frontend developer</span>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              gap: 16,
+              fontSize: 148,
+              fontWeight: 700,
+              lineHeight: 0.9,
+              letterSpacing: "-0.06em",
+              color: "#f4f1e7",
             }}
           >
-            <div
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: 10,
-                backgroundColor: "#065f46",
-                border: "1px solid #10b981",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 22,
-                fontWeight: 700,
-                color: "#ffffff",
-                fontFamily: "monospace",
-              }}
-            >
-              RI
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 22,
-                  fontWeight: 700,
-                  color: "#ffffff",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                Md. Rakib Islam
-              </span>
-              <span
-                style={{
-                  fontSize: 14,
-                  color: "#a1a1aa",
-                  fontFamily: "monospace",
-                }}
-              >
-                Frontend Developer @ SOFOF Tech
-              </span>
-            </div>
+            Rakib Islam<span style={{ color: "#8f9bff" }}>.</span>
           </div>
-
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "6px 14px",
-              borderRadius: 20,
-              backgroundColor: "#18181b",
-              border: "1px solid #27272a",
-              color: "#34d399",
-              fontSize: 13,
-              fontFamily: "monospace",
+              fontSize: 34,
+              lineHeight: 1.35,
+              color: "#c9c5ba",
+              maxWidth: 900,
             }}
           >
-            <div
-              style={{
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                backgroundColor: "#10b981",
-              }}
-            />
-            <span>Available for Opportunities</span>
+            Building production web applications with React, Next.js and
+            TypeScript.
           </div>
         </div>
 
-        {/* Center: Headline & Value Proposition */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 16,
-            maxWidth: 960,
-          }}
-        >
-          <h1
-            style={{
-              fontSize: 56,
-              fontWeight: 800,
-              lineHeight: 1.15,
-              color: "#ffffff",
-              letterSpacing: "-0.03em",
-              margin: 0,
-            }}
-          >
-            Building production-grade web systems with React, Next.js & TypeScript.
-          </h1>
-          <p
-            style={{
-              fontSize: 22,
-              lineHeight: 1.4,
-              color: "#a1a1aa",
-              margin: 0,
-            }}
-          >
-            Specializing in scalable frontend architecture, multi-role SaaS workflows,
-            strict type contracts, and real-time media.
-          </p>
-        </div>
-
-        {/* Bottom Bar: Stack Tags & Verification */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             width: "100%",
-            paddingTop: 24,
-            borderTop: "1px solid #27272a",
+            paddingTop: 26,
+            borderTop: "1px solid #35363c",
+            fontFamily: "monospace",
+            fontSize: 18,
+            color: "#a7a49a",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-            }}
-          >
-            {["React 19", "Next.js 16", "TypeScript", "Tailwind CSS", "NestJS", "PostgreSQL"].map(
-              (tag) => (
-                <div
-                  key={tag}
-                  style={{
-                    padding: "6px 12px",
-                    borderRadius: 6,
-                    backgroundColor: "#18181b",
-                    border: "1px solid #27272a",
-                    fontSize: 14,
-                    color: "#d4d4d8",
-                    fontFamily: "monospace",
-                  }}
-                >
-                  {tag}
-                </div>
-              )
-            )}
+          <div style={{ display: "flex", gap: 28 }}>
+            <span>OgroniEdu</span>
+            <span>Dhruto</span>
+            <span>Gramer Bazar</span>
           </div>
-
-          <div
-            style={{
-              fontSize: 15,
-              color: "#a1a1aa",
-              fontFamily: "monospace",
-            }}
-          >
+          <span style={{ color: "#a3adff" }}>
             {siteConfig.url.replace("https://", "")}
-          </div>
+          </span>
         </div>
       </div>
     ),

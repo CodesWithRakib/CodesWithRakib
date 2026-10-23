@@ -1,0 +1,366 @@
+{
+  "desktop-light": {
+    "scrollWidth": 1440,
+    "innerWidth": 1440,
+    "height": 7268,
+    "overflow": [],
+    "h1": {
+      "size": "128px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "h2": {
+      "size": "64px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(16, 17, 20)"
+    },
+    "projects": [
+      "OgroniEdu",
+      "Dhruto",
+      "Gramer Bazar"
+    ],
+    "sections": [
+      "about",
+      "work",
+      "experience",
+      "contact",
+      "footer"
+    ],
+    "consoleErrors": []
+  },
+  "desktop-dark": {
+    "scrollWidth": 1440,
+    "innerWidth": 1440,
+    "height": 7268,
+    "overflow": [],
+    "h1": {
+      "size": "128px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(240, 237, 229)"
+    },
+    "h2": {
+      "size": "64px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(240, 237, 229)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(240, 237, 229)"
+    },
+    "projects": [
+      "OgroniEdu",
+      "Dhruto",
+      "Gramer Bazar"
+    ],
+    "sections": [
+      "about",
+      "work",
+      "experience",
+      "contact",
+      "footer"
+    ],
+    "consoleErrors": []
+  },
+  "laptop-light": {
+    "scrollWidth": 1024,
+    "innerWidth": 1024,
+    "height": 7467,
+    "overflow": [],
+    "h1": {
+      "size": "110.592px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "h2": {
+      "size": "51.2px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(16, 17, 20)"
+    },
+    "projects": [
+      "OgroniEdu",
+      "Dhruto",
+      "Gramer Bazar"
+    ],
+    "sections": [
+      "about",
+      "work",
+      "experience",
+      "contact",
+      "footer"
+    ],
+    "consoleErrors": []
+  },
+  "tablet-light": {
+    "scrollWidth": 768,
+    "innerWidth": 768,
+    "height": 9558,
+    "overflow": [],
+    "h1": {
+      "size": "82.944px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "h2": {
+      "size": "40px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(16, 17, 20)"
+    },
+    "projects": [
+      "OgroniEdu",
+      "Dhruto",
+      "Gramer Bazar"
+    ],
+    "sections": [
+      "about",
+      "work",
+      "experience",
+      "contact",
+      "footer"
+    ],
+    "consoleErrors": []
+  },
+  "mobile-dark": {
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "height": 11329,
+    "overflow": [],
+    "h1": {
+      "size": "62.4px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(240, 237, 229)"
+    },
+    "h2": {
+      "size": "40px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(240, 237, 229)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(240, 237, 229)"
+    },
+    "projects": [
+      "OgroniEdu",
+      "Dhruto",
+      "Gramer Bazar"
+    ],
+    "sections": [
+      "about",
+      "work",
+      "experience",
+      "contact",
+      "footer"
+    ],
+    "consoleErrors": []
+  },
+  "mobile-light": {
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "height": 11329,
+    "overflow": [],
+    "h1": {
+      "size": "62.4px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "h2": {
+      "size": "40px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(16, 17, 20)"
+    },
+    "projects": [
+      "OgroniEdu",
+      "Dhruto",
+      "Gramer Bazar"
+    ],
+    "sections": [
+      "about",
+      "work",
+      "experience",
+      "contact",
+      "footer"
+    ],
+    "consoleErrors": []
+  },
+  "mobile-small": {
+    "scrollWidth": 360,
+    "innerWidth": 360,
+    "height": 11743,
+    "overflow": [],
+    "h1": {
+      "size": "62.4px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "h2": {
+      "size": "40px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(16, 17, 20)"
+    },
+    "projects": [
+      "OgroniEdu",
+      "Dhruto",
+      "Gramer Bazar"
+    ],
+    "sections": [
+      "about",
+      "work",
+      "experience",
+      "contact",
+      "footer"
+    ],
+    "consoleErrors": []
+  },
+  "wide-light": {
+    "scrollWidth": 1920,
+    "innerWidth": 1920,
+    "height": 7443,
+    "overflow": [],
+    "h1": {
+      "size": "128px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "h2": {
+      "size": "64px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(16, 17, 20)"
+    },
+    "projects": [
+      "OgroniEdu",
+      "Dhruto",
+      "Gramer Bazar"
+    ],
+    "sections": [
+      "about",
+      "work",
+      "experience",
+      "contact",
+      "footer"
+    ],
+    "consoleErrors": []
+  },
+  "resume-light": {
+    "scrollWidth": 1440,
+    "innerWidth": 1440,
+    "height": 2432,
+    "overflow": [],
+    "h1": {
+      "size": "64px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "h2": {
+      "size": "13px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(84, 86, 90)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(84, 86, 90)"
+    },
+    "projects": [],
+    "sections": [
+      "footer"
+    ],
+    "consoleErrors": []
+  },
+  "resume-mobile": {
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "height": 3631,
+    "overflow": [],
+    "h1": {
+      "size": "40px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(16, 17, 20)"
+    },
+    "h2": {
+      "size": "13px",
+      "family": "\"Bricolage Grotesque\"",
+      "weight": "550",
+      "color": "rgb(84, 86, 90)"
+    },
+    "bodyFont": "Manrope",
+    "label": {
+      "size": "13px",
+      "family": "\"JetBrains Mono\"",
+      "weight": "400",
+      "color": "rgb(84, 86, 90)"
+    },
+    "projects": [],
+    "sections": [
+      "footer"
+    ],
+    "consoleErrors": []
+  }
+}

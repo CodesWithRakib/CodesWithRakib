@@ -47,11 +47,9 @@ test("Site Configuration - Cross-Route Navigation Anchors", () => {
   const configContent = fs.readFileSync(path.resolve("config/site.ts"), "utf8");
 
   const requiredAnchors = [
-    "/#projects",
-    "/#case-studies",
+    "/#work",
+    "/#about",
     "/#experience",
-    "/#skills",
-    "/#principles",
     "/#contact",
   ];
 

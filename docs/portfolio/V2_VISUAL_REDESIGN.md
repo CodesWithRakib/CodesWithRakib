@@ -1,4 +1,6 @@
-# Portfolio V2 — Editorial Visual Redesign
+# Portfolio V2 — Editorial Visual Redesign (historical)
+
+> **Superseded by V3.** The current interface is “Signal / Studio” — see [`REDESIGN_PLAN.md`](./REDESIGN_PLAN.md) §9 and [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md). This document describes the V2 build and its now-removed components; keep it as a record, not as a map of the current code.
 
 **Subject:** Md. Rakib Islam — Frontend Developer Portfolio
 

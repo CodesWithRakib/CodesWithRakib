@@ -1,8 +1,10 @@
-# 10-Phase Implementation Roadmap & Status Tracker
+# 10-Phase Implementation Roadmap & Status Tracker (historical)
+
+> **Historical.** Phases 00–09 and the V1/V2 visual passes are recorded here. The current interface is **V3 “Signal / Studio”**; use [`REDESIGN_PLAN.md`](./REDESIGN_PLAN.md) and [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) for the shipping design, and [`ROUTE_AND_COMPONENT_MAP.md`](./ROUTE_AND_COMPONENT_MAP.md) for the live file structure. Files referenced in the V1/V2 sections below have been removed.
 
 **Subject:** Md. Rakib Islam — Recruiter-Focused Developer Portfolio
 
-**Status:** All 10 phases completed (Phase 00–09), followed by the **V2 editorial visual redesign** (see section 8).
+**Status:** All 10 phases completed (Phase 00–09), followed by the V2 editorial visual redesign (section 8) and the V3 redesign (October 22, 2026).
 
 **Methodology:** Sequential phase-by-phase execution with explicit verification gates.
 

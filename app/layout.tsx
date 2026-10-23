@@ -1,21 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono, Manrope } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SkipToContent } from "@/components/shared/SkipToContent";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import "./globals.css";
 
-const displayFace = Instrument_Serif({
+const displayFace = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
   variable: "--font-display-face",
   display: "swap",
 });
 
-const sansFace = Inter_Tight({
+const sansFace = Manrope({
   subsets: ["latin"],
   variable: "--font-sans-face",
   display: "swap",
@@ -116,8 +114,8 @@ const jsonLdWebSite = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4efe6" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0d10" },
+    { media: "(prefers-color-scheme: light)", color: "#f2f0ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b0d" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -150,14 +148,13 @@ export default function RootLayout({
           enableColorScheme
           disableTransitionOnChange
         >
-          <div aria-hidden="true" className="paper-grain" />
           <SkipToContent />
           <div className="relative flex min-h-screen flex-col">
-            <Navbar />
+            <SiteHeader />
             <main id="main-content" className="flex-1">
               {children}
             </main>
-            <Footer />
+            <SiteFooter />
           </div>
         </ThemeProvider>
       </body>

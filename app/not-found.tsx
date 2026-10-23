@@ -1,41 +1,50 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Home, Code2 } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <div className="py-24 sm:py-32 min-h-[70vh] flex items-center justify-center">
-      <Container className="max-w-2xl text-center space-y-6">
-        <div className="inline-flex items-center">
-          <Badge variant="outline" className="font-mono text-xs px-3 py-1 text-primary border-primary/30">
-            404 ERROR — ROUTE NOT FOUND
-          </Badge>
-        </div>
+    <div className="flex min-h-[78vh] items-center py-28">
+      <Container>
+        <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-8">
+            <p className="type-label text-muted-foreground">Error 404</p>
+            <h1 className="type-hero mt-6 text-foreground">
+              404<span className="text-primary">.</span>
+            </h1>
+            <h2 className="mt-8 max-w-[22ch] font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-tight tracking-[-0.03em] text-foreground">
+              This page does not exist.
+            </h2>
+            <p className="mt-4 max-w-[48ch] text-[1.0625rem] leading-[1.7] text-muted-foreground">
+              The route may have moved or never existed. Head back to the
+              homepage to see selected work and experience.
+            </p>
+          </div>
 
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
-          This page does not exist.
-        </h1>
-
-        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-lg mx-auto">
-          The requested URL could not be found. It may have been moved or removed.
-          You can return to the homepage to inspect my featured engineering work and commercial experience.
-        </p>
-
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link href="/" className="w-full sm:w-auto">
-            <Button variant="primary" size="lg" className="w-full sm:w-auto gap-2">
-              <Home className="h-4 w-4" />
-              <span>Return to Homepage</span>
-            </Button>
-          </Link>
-          <Link href="/#projects" className="w-full sm:w-auto">
-            <Button variant="secondary" size="lg" className="w-full sm:w-auto gap-2 font-mono text-xs">
-              <Code2 className="h-4 w-4 text-primary" />
-              <span>Explore Projects</span>
-            </Button>
-          </Link>
+          <div className="flex flex-col gap-3 lg:col-span-4 lg:items-end">
+            <Link
+              href="/"
+              className={buttonVariants({
+                variant: "primary",
+                size: "lg",
+                className: "w-full lg:w-auto",
+              })}
+            >
+              Return to Homepage
+            </Link>
+            <Link
+              href="/#work"
+              className={buttonVariants({
+                variant: "secondary",
+                size: "lg",
+                className: "w-full lg:w-auto",
+              })}
+            >
+              View selected work
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </Container>
     </div>

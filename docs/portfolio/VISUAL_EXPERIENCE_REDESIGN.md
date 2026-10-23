@@ -8,7 +8,7 @@
 
 **Completion Date:** October 21, 2026
 
-**Status:** **Superseded by V2** (2026-10-21). Kept as a historical record of the first visual pass.
+**Status:** **Superseded by V2 and V3.** Kept as a historical record of the first visual pass. Current docs: [`REDESIGN_PLAN.md`](./REDESIGN_PLAN.md), [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).
 
 > **Read this with care.** The V1 pass described below was judged insufficient: it remained card-heavy, used a CSS-only tilt card as a stand-in for 3D, had no GSAP/Framer Motion/Three.js, and treated dark mode as an inverted palette. V2 replaced the hero, project showcase, navigation, themes, motion system and 3D presentation. The current implementation and measurements are in [`V2_VISUAL_REDESIGN.md`](./V2_VISUAL_REDESIGN.md); current tokens and motion rules are in [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md). Do not treat the “zero-dependency motion”, “avoided Three.js” or “3D workspace” claims below as the current state.
 

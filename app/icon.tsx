@@ -13,17 +13,18 @@ export default function Icon() {
     (
       <div
         style={{
-          fontSize: 18,
-          background: "#065f46",
+          fontSize: 20,
+          background: "#1b2ae0",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "white",
-          borderRadius: 6,
+          color: "#fbfbff",
+          borderRadius: 4,
           fontWeight: 700,
-          fontFamily: "monospace",
+          letterSpacing: "-0.06em",
+          fontFamily: "system-ui, -apple-system, sans-serif",
         }}
       >
         RI
