@@ -1,0 +1,105 @@
+/**
+ * Design tokens — the only place in the app where raw values live.
+ * Everything else consumes these through CSS variables or Tailwind tokens.
+ *
+ * Light values live on :root, dark values on .dark. Themes (space, terminal,
+ * 3d-desk) should override these variables, never component styles.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Colour */
+  --bg: #f6f6f7;
+  --bg-elevated: #ffffff;
+  --fg: #131316;
+  --fg-muted: #5f5f6b;
+  --accent: #4f46e5;
+  --accent-2: #0f9d8f;
+  --accent-fg: #ffffff;
+  --border: #e2e2e8;
+  --ring: #4f46e5;
+
+  /* Typography */
+  --font-body:
+    var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: var(--font-space-grotesk), "Space Grotesk", var(--font-body);
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem;
+  --text-base--line-height: 1.65;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.55;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.5;
+  --text-2xl: clamp(1.4rem, 1.2rem + 0.6vw, 1.75rem);
+  --text-2xl--line-height: 1.25;
+  --text-3xl: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+  --text-3xl--line-height: 1.15;
+  --text-4xl: clamp(2.1rem, 1.6rem + 2vw, 3rem);
+  --text-4xl--line-height: 1.08;
+  --text-5xl: clamp(2.6rem, 1.9rem + 3vw, 4rem);
+  --text-5xl--line-height: 1;
+  --text-6xl: clamp(3.4rem, 2.2rem + 5vw, 6rem);
+  --text-6xl--line-height: 0.95;
+
+  /* Spacing */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --space-section: clamp(4.5rem, 10vw, 9rem);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-full: 999px;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgb(16 16 24 / 0.06);
+  --shadow-md: 0 12px 30px -12px rgb(16 16 24 / 0.18);
+  --shadow-lg: 0 32px 80px -32px rgb(16 16 24 / 0.28);
+
+  /* Layers */
+  --z-base: 0;
+  --z-sticky: 20;
+  --z-overlay: 40;
+  --z-cursor: 60;
+  --z-loader: 70;
+  --z-progress: 80;
+  --z-skip-link: 90;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: #08090c;
+  --bg-elevated: #111319;
+  --fg: #f1f1f5;
+  --fg-muted: #9696a3;
+  --accent: #8b8cf8;
+  --accent-2: #4fd1c5;
+  --accent-fg: #0a0a11;
+  --border: #23252d;
+  --ring: #8b8cf8;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 16px 40px -16px rgb(0 0 0 / 0.6);
+  --shadow-lg: 0 40px 100px -40px rgb(0 0 0 / 0.8);
+}

@@ -1,34 +1,31 @@
 {
-  "name": "codeswithrakib-portfolio",
-  "version": "1.0.0",
+  "name": "portfolio-foundation",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev -p 5001",
+    "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start -p 5001",
-    "typecheck": "tsc --noEmit",
+    "start": "next start -p 3000",
     "lint": "eslint .",
-    "test": "node --test tests/**/*.test.mjs"
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@gsap/react": "^2.1.2",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^14.4.0",
     "gsap": "^3.15.0",
-    "lucide-react": "^1.53.0",
+    "lenis": "^1.3.27",
     "next": "^16.4.0",
-    "next-themes": "^0.4.6",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tailwind-merge": "^3.7.0",
     "three": "^0.186.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.7",
     "@eslint/js": "^10.0.1",
     "@next/eslint-plugin-next": "^16.4.2",
     "@tailwindcss/postcss": "^4.3.3",
@@ -42,6 +39,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.13.0",
     "postcss": "^8.5.29",
+    "prettier": "^3.9.10",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.71.2"
