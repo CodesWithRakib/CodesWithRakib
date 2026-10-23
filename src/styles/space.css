@@ -1,0 +1,316 @@
+/* Space theme — scoped to the journey page. Shared tokens stay untouched. */
+
+.space-page {
+  position: relative;
+  min-height: 100svh;
+  background-color: var(--bg);
+}
+
+.space-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.space-canvas canvas {
+  display: block;
+}
+
+.space-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Keeps copy readable over the scene without flattening the centre of frame. */
+.space-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      120% 90% at 50% 45%,
+      transparent 32%,
+      color-mix(in oklab, var(--bg) 72%, transparent) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--bg) 74%, transparent),
+      transparent 22%,
+      transparent 76%,
+      color-mix(in oklab, var(--bg) 84%, transparent)
+    );
+}
+
+.space-shell {
+  width: 100%;
+  max-width: 74rem;
+  margin-inline: auto;
+  padding-inline: var(--space-gutter);
+}
+
+.space-hero {
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+}
+
+.space-section {
+  display: flex;
+  min-height: 140svh;
+  align-items: center;
+  padding-block: clamp(4rem, 14vh, 9rem);
+}
+
+/*
+ * A soft, borderless light-falloff behind the hero copy. It keeps the text
+ * legible over planets and stars without turning the opening into a card.
+ */
+.space-hero-copy {
+  position: relative;
+}
+
+.space-hero-copy::before {
+  content: "";
+  position: absolute;
+  inset: -14% -22% -16% -16%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    72% 82% at 24% 52%,
+    color-mix(in oklab, var(--bg) 94%, transparent) 0%,
+    color-mix(in oklab, var(--bg) 82%, transparent) 48%,
+    transparent 76%
+  );
+  filter: blur(6px);
+}
+
+.space-eyebrow {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.space-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  line-height: 1.03;
+  letter-spacing: 0.03em;
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+.space-panel {
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  border-radius: var(--radius-lg);
+  background-color: color-mix(in oklab, var(--bg-elevated) 58%, transparent);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(18px);
+}
+
+.space-card {
+  width: 100%;
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    155deg,
+    color-mix(in oklab, var(--bg-elevated) 88%, transparent),
+    color-mix(in oklab, var(--bg) 78%, transparent)
+  );
+  padding: 1.25rem;
+  box-shadow: var(--shadow-md);
+  transition:
+    border-color var(--dur-base) var(--ease-out-expo),
+    box-shadow var(--dur-base) var(--ease-out-expo);
+}
+
+.space-card:hover,
+.space-card:focus-visible {
+  border-color: color-mix(in oklab, var(--accent) 58%, var(--border));
+  box-shadow: 0 26px 70px -30px color-mix(in oklab, var(--accent) 70%, transparent);
+}
+
+.space-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  border-radius: var(--radius-full);
+  background-color: color-mix(in oklab, var(--bg) 55%, transparent);
+  padding: 0.2rem 0.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.space-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  border-radius: var(--radius-full);
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--fg);
+  transition:
+    border-color var(--dur-base) var(--ease-out-expo),
+    background-color var(--dur-base) var(--ease-out-expo),
+    color var(--dur-base) var(--ease-out-expo);
+}
+
+.space-link:hover,
+.space-link:focus-visible {
+  border-color: color-mix(in oklab, var(--accent) 70%, var(--border));
+  background-color: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+
+/* Projects ---------------------------------------------------------------- */
+
+.space-orbit {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+}
+
+.space-orbit-slot {
+  width: 100%;
+}
+
+.space-orbit-ring {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .space-orbit {
+    display: block;
+    height: 46rem;
+  }
+
+  .space-orbit-slot {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 17.5rem;
+    transform: translate(-50%, -50%);
+  }
+
+  .space-orbit-ring {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(70%, 36rem);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border: 1px dashed color-mix(in oklab, var(--accent) 28%, transparent);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+}
+
+/* Skills ------------------------------------------------------------------ */
+
+.space-constellation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.space-node-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  border-radius: var(--radius-full);
+  background-color: color-mix(in oklab, var(--bg) 72%, transparent);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+  transition:
+    color var(--dur-base) var(--ease-out-expo),
+    border-color var(--dur-base) var(--ease-out-expo),
+    background-color var(--dur-base) var(--ease-out-expo),
+    box-shadow var(--dur-base) var(--ease-out-expo);
+}
+
+.space-node-chip:hover,
+.space-node-chip:focus-visible,
+.space-node-active {
+  color: var(--fg);
+  border-color: color-mix(in oklab, var(--accent) 70%, var(--border));
+  background-color: color-mix(in oklab, var(--accent) 14%, var(--bg));
+  box-shadow: 0 0 26px -8px color-mix(in oklab, var(--accent) 70%, transparent);
+}
+
+@media (min-width: 768px) {
+  .space-constellation {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    min-height: 24rem;
+  }
+
+  .space-node {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+  }
+
+  .space-node-chip {
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Modal ------------------------------------------------------------------- */
+
+.space-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: color-mix(in oklab, var(--bg) 78%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.space-modal-panel {
+  max-height: 85svh;
+  overflow-y: auto;
+}
+
+/* Hero scroll hint -------------------------------------------------------- */
+
+.space-scroll-line {
+  display: block;
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  transform-origin: top;
+  animation: space-scroll-pulse 2.6s var(--ease-out-expo) infinite;
+}
+
+@keyframes space-scroll-pulse {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .space-scroll-line {
+    animation: none;
+  }
+}
